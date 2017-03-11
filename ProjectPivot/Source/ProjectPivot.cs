@@ -7,12 +7,12 @@ namespace ProjectPivot
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class ProjectPivot : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public Game1()
+        public ProjectPivot()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -74,10 +74,16 @@ namespace ProjectPivot
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+			Texture2D tex = new Texture2D(GraphicsDevice, 1, 1);
+			tex.SetData(new[] { Color.White });
 
-            // TODO: Add your drawing code here
 
+
+			// TODO: Add your drawing code here
+			spriteBatch.Begin();
+			spriteBatch.Draw(tex, new Rectangle(100, 100, 200, 200), Color.Black);
             base.Draw(gameTime);
+			spriteBatch.End();
         }
     }
 }
