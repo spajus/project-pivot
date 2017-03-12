@@ -15,13 +15,15 @@ namespace ProjectPivot {
         public Matrix Transform;
         public Matrix InverseTransform { get; protected set; }
         public Vector2 Position;
+        public Vector2 WorldPosition { get; protected set; }
+        public Rectangle VisibleArea { get; protected set; }
         public float Rotation;
         private Viewport viewport;
         private MouseState mouseState;
         private KeyboardState keyboardState;
         private Int32 prevMouseScrollValue;
 		private float cameraSpeed = 500f;
-		private float zoomSpeed = 30f;
+		private float zoomSpeed = 3f;
         #endregion
 
         #region Constructor
@@ -35,16 +37,28 @@ namespace ProjectPivot {
 
         #region Public Methods
         public Vector2 MouseWorldCoordinates() {
-            return Vector2.Transform(new Vector2(mouseState.X, mouseState.Y), InverseTransform);
+            return ToWorldCoordinates(new Vector2(mouseState.X, mouseState.Y));
         }
 
         public bool IsVisible(Vector2 position) {
-            // TODO
-            return true;
+            if (Vector2.DistanceSquared(position, Position) > (viewport.Width * Zoom) * 3) {
+                return false;
+            }
+            return VisibleArea.Contains(position);
+        }
+
+        public bool IsVisible(Rectangle position) {
+            return VisibleArea.Contains(position);
+        }
+
+        public Vector2 ToWorldCoordinates(Vector2 screenPosition) {
+            return Vector2.Transform(screenPosition, InverseTransform);
         }
 
         public void Update(GameTime gameTime) {
             ReactToUserInput(gameTime);
+            WorldPosition = ToWorldCoordinates(Position);
+            VisibleArea = CalculateVisibleArea();
             Zoom = MathHelper.Clamp(Zoom, 0.01f, 10.0f);
             // Rotation = ClampRotation();
             Transform = Matrix.CreateRotationZ(Rotation) *
@@ -76,6 +90,23 @@ namespace ProjectPivot {
             if (keyboardState.IsKeyDown(Keys.S)) {
 				Position.Y -= cameraSpeed * deltaTime;
             }
+        }
+        #endregion
+
+        #region Protected Functions
+        Rectangle CalculateVisibleArea() {
+            var tl = Vector2.Transform(Vector2.Zero, InverseTransform);
+            var tr = Vector2.Transform(new Vector2(viewport.Width * Zoom, 0), InverseTransform);
+            var bl = Vector2.Transform(new Vector2(0, viewport.Height * Zoom), InverseTransform);
+            var br = Vector2.Transform(new Vector2(viewport.Width * Zoom, viewport.Height * Zoom), InverseTransform);
+            var min = new Vector2(
+                MathHelper.Min(tl.X, MathHelper.Min(tr.X, MathHelper.Min(bl.X, br.X))),
+                MathHelper.Min(tl.Y, MathHelper.Min(tr.Y, MathHelper.Min(bl.Y, br.Y))));
+            var max = new Vector2(
+                MathHelper.Max(tl.X, MathHelper.Max(tr.X, MathHelper.Max(bl.X, br.X))),
+                MathHelper.Max(tl.Y, MathHelper.Max(tr.Y, MathHelper.Max(bl.Y, br.Y))));
+
+            return new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
         }
         #endregion
     }

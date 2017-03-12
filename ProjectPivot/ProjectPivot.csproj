@@ -46,6 +46,7 @@
     <Compile Include="Source\ProjectPivot.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Camera.cs" />
+    <Compile Include="Source\ProjectPivot\FPSCounter.cs" />
     <Compile Include="Source\ProjectPivot\Map.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -73,3 +73,10 @@
 /processorParam:TextureFormat=Color
 /build:Images/cell_100.png
 
+#begin Fonts/manaspc.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/manaspc.spritefont
+
