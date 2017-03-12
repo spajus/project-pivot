@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,6 +11,8 @@ namespace ProjectPivot
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Camera camera;
+        Map map;
         
         public ProjectPivot()
         {
@@ -28,6 +30,9 @@ namespace ProjectPivot
         {
             // TODO: Add your initialization logic here
 
+            camera = new Camera(GraphicsDevice.Viewport);
+            map = new Map(100, 100);
+            map.Generate();
             base.Initialize();
         }
 
@@ -39,6 +44,7 @@ namespace ProjectPivot
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Cell.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -64,6 +70,7 @@ namespace ProjectPivot
 
             // TODO: Add your update logic here
 
+            camera.Update();
             base.Update(gameTime);
         }
 
@@ -73,15 +80,13 @@ namespace ProjectPivot
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-			Texture2D tex = new Texture2D(GraphicsDevice, 1, 1);
-			tex.SetData(new[] { Color.White });
-
-
+            GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
-			spriteBatch.Begin();
-			spriteBatch.Draw(tex, new Rectangle(100, 100, 200, 200), Color.Black);
+			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, 
+                null, null, null, null, camera.Transform);
+
+            map.Draw(camera, spriteBatch);
             base.Draw(gameTime);
 			spriteBatch.End();
         }
