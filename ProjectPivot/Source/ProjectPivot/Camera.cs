@@ -20,6 +20,8 @@ namespace ProjectPivot {
         private MouseState mouseState;
         private KeyboardState keyboardState;
         private Int32 prevMouseScrollValue;
+		private float cameraSpeed = 500f;
+		private float zoomSpeed = 30f;
         #endregion
 
         #region Constructor
@@ -41,8 +43,8 @@ namespace ProjectPivot {
             return true;
         }
 
-        public void Update() {
-            ReactToUserInput();
+        public void Update(GameTime gameTime) {
+            ReactToUserInput(gameTime);
             Zoom = MathHelper.Clamp(Zoom, 0.01f, 10.0f);
             // Rotation = ClampRotation();
             Transform = Matrix.CreateRotationZ(Rotation) *
@@ -51,27 +53,28 @@ namespace ProjectPivot {
             InverseTransform = Matrix.Invert(Transform);
         }
 
-        public void ReactToUserInput() {
+        public void ReactToUserInput(GameTime gameTime) {
+			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             mouseState = Mouse.GetState();
             keyboardState = Keyboard.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
-                Zoom += 0.1f;
+                Zoom += zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             } else if (mouseState.ScrollWheelValue < prevMouseScrollValue) {
-                Zoom -= 0.1f;
+                Zoom -= zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             }
             if (keyboardState.IsKeyDown(Keys.A)) {
-                Position.X += 0.5f;
+				Position.X += cameraSpeed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.D)) {
-                Position.X -= 0.5f;
+				Position.X -= cameraSpeed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.W)) {
-                Position.Y += 0.5f;
+				Position.Y += cameraSpeed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.S)) {
-                Position.Y -= 0.5f;
+				Position.Y -= cameraSpeed * deltaTime;
             }
         }
         #endregion

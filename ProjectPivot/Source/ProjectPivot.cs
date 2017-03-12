@@ -70,7 +70,7 @@ namespace ProjectPivot
 
             // TODO: Add your update logic here
 
-            camera.Update();
+            camera.Update(gameTime);
             base.Update(gameTime);
         }
 

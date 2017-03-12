@@ -11,7 +11,7 @@ namespace ProjectPivot {
     public class Cell {
         private static Dictionary<int, Texture2D> textures;
 
-        public int Health { get; protected set; }
+        public float Health { get; protected set; }
         public Vector2 Position { get; protected set; }
         public int MapX { get; protected set; }
         public int MapY { get; protected set; }
@@ -42,7 +42,7 @@ namespace ProjectPivot {
         }
 
         Texture2D currentTexture() {
-            int textureNum = MathHelper.Clamp(Health / 25, 0, 4);
+			int textureNum = (int)MathHelper.Clamp(Health / 20f, 0, 4);
             return textures[textureNum];
         }
     }
