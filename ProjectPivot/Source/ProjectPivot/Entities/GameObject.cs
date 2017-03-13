@@ -52,11 +52,17 @@ namespace ProjectPivot.Entities {
         }
 
         public void Update(GameTime gameTime) {
-            components.ForEach(component => component.Update(gameTime));
+            OnUpdate(gameTime);
+			components.ForEach(component => component.Update(gameTime));
         }
 
         public void Draw(SpriteBatch spriteBatch) {
+			OnDraw(spriteBatch);
             components.ForEach(component => component.Draw(spriteBatch));
         }
+
+		protected virtual void OnUpdate(GameTime gameTime) { }
+
+		protected virtual void OnDraw(SpriteBatch spriteBatch) { }
     }
 }

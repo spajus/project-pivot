@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Entities;
 
 namespace ProjectPivot
 {
@@ -35,11 +36,10 @@ namespace ProjectPivot
             // TODO: Add your initialization logic here
 
             player = new Player(Vector2.Zero);
+			Gizmo.Initialize(GraphicsDevice);
             camera = new Camera(GraphicsDevice.Viewport);
             camera.Target = player;
             fpsCounter = new FPSCounter();
-            DebugPixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            DebugPixel.SetData(new[] { Color.White });
             map = new Map(300, 300);
             map.Generate();
             base.Initialize();
@@ -109,6 +109,9 @@ namespace ProjectPivot
             if (false) { //debug
                 spriteBatch.Draw(DebugPixel, camera.VisibleArea, Color.Red);
             }
+
+			Gizmo.Rectangle(new Rectangle(5, 5, 200, 100));
+			Gizmo.Draw(spriteBatch);
 
 			spriteBatch.End();
         }

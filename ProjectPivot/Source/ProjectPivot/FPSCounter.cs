@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjectPivot.Entities;
 
 namespace ProjectPivot {
     public class FPSCounter {
@@ -35,7 +36,7 @@ namespace ProjectPivot {
         public void Draw(SpriteBatch spriteBatch, Camera camera) {
             var fps = string.Format("FPS: {0}", Math.Round(AverageFPS));
             Vector2 bgSize = font.MeasureString(fps);
-            spriteBatch.Draw(ProjectPivot.DebugPixel, 
+			spriteBatch.Draw(Gizmo.Pixel, 
                 new Rectangle(0, 0, (int) bgSize.X, (int) bgSize.Y), 
                 Color.Black);
             spriteBatch.DrawString(font, fps, camera.ToWorldCoordinates(new Vector2(1, 1)), Color.Green);

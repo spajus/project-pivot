@@ -9,27 +9,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectPivot {
-    public class Camera {
+namespace ProjectPivot.Entities {
+	public class Camera : GameObject {
 
         #region Fields
         public float Zoom;
         public Matrix Transform;
         public Matrix InverseTransform { get; protected set; }
-        public Vector2 Position;
         public Vector2 WorldPosition { get; protected set; }
         public Rectangle VisibleArea { get; protected set; }
         public float Rotation;
         private Viewport viewport;
         private MouseState mouseState;
         private Int32 prevMouseScrollValue;
-		private float cameraSpeed = 500f;
+		private float cameraSpeed = 2f;
 		private float zoomSpeed = 3f;
         public GameObject Target;
         #endregion
 
         #region Constructor
-        public Camera(Viewport viewport) {
+		public Camera(Viewport viewport) : base(Vector2.Zero) {
             this.Zoom = 1.0f;
             this.Rotation = 0.0f;
             this.Position = Vector2.Zero;
@@ -54,55 +53,58 @@ namespace ProjectPivot {
             return Vector2.Transform(screenPosition, InverseTransform);
         }
 
-        public void Update(GameTime gameTime) {
-			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            ReactToUserInput(deltaTime);
-            LerpToTarget(deltaTime);
-            WorldPosition = ToWorldCoordinates(Position);
-            VisibleArea = CalculateVisibleArea();
-            Zoom = MathHelper.Clamp(Zoom, 0.01f, 10.0f);
-            // Rotation = ClampRotation();
-            Transform = Matrix.CreateRotationZ(Rotation) *
-                 Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-                 Matrix.CreateTranslation(Position.X, Position.Y, 0);
-            InverseTransform = Matrix.Invert(Transform);
-        }
-
-
         #endregion
 
         #region Protected Functions
-        void ReactToUserInput(float deltaTime) {
+        protected override void OnUpdate(GameTime gameTime)
+		{
+			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			ReactToUserInput(deltaTime);
+			Zoom = MathHelper.Clamp(Zoom, 0.5f, 1.5f);
+			LerpToTarget(deltaTime);
+			WorldPosition = ToWorldCoordinates(Position);
+			VisibleArea = CalculateVisibleArea();
+			// Rotation = ClampRotation();
+
+			Transform = 
+				Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0)) *
+				Matrix.CreateRotationZ(Rotation) *
+				 Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
+				      Matrix.CreateTranslation(viewport.Width * 0.5f, viewport.Height * 0.5f, 0);
+
+			InverseTransform = Matrix.Invert(Transform);
+
+			Gizmo.Rectangle(VisibleArea);
+			Gizmo.Line(Position, Target.Position);
+		}
+
+		void ReactToUserInput(float deltaTime) {
             mouseState = Mouse.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
                 Zoom += zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
+				Debug.WriteLine($"Zoom: {Zoom}");
+
             } else if (mouseState.ScrollWheelValue < prevMouseScrollValue) {
                 Zoom -= zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
+				Debug.WriteLine($"Zoom: {Zoom}");
             }
         }
 
         void LerpToTarget(float deltaTime) {
-            if (Target != null && Target.Position != null) {
-                Position = Vector2.Lerp(Position, CenterOffset(Target.Position), deltaTime);
-                if (Vector2.DistanceSquared(Position, Target.Position) < 1) {
-                    Position = Target.Position;
+			if (Target != null) {
+				if (Vector2.DistanceSquared(Position, Target.Position) > 500) {
+					Position = Vector2.Lerp(Position, Target.Position, deltaTime * cameraSpeed);
                 }
             }
         }
 
-        Vector2 CenterOffset(Vector2 position) {
-            return new Vector2(
-                ((viewport.Width / Zoom / 2) - position.X),
-                ((viewport.Height / Zoom / 2) - position.Y));
-        }
-
         Rectangle CalculateVisibleArea() {
             var tl = Vector2.Transform(Vector2.Zero, InverseTransform);
-            var tr = Vector2.Transform(new Vector2(viewport.Width / Zoom, 0), InverseTransform);
-            var bl = Vector2.Transform(new Vector2(0, viewport.Height / Zoom), InverseTransform);
-            var br = Vector2.Transform(new Vector2(viewport.Width / Zoom, viewport.Height / Zoom), InverseTransform);
+            var tr = Vector2.Transform(new Vector2(viewport.Width, 0), InverseTransform);
+            var bl = Vector2.Transform(new Vector2(0, viewport.Height), InverseTransform);
+            var br = Vector2.Transform(new Vector2(viewport.Width, viewport.Height), InverseTransform);
             var min = new Vector2(
                 MathHelper.Min(tl.X, MathHelper.Min(tr.X, MathHelper.Min(bl.X, br.X))),
                 MathHelper.Min(tl.Y, MathHelper.Min(tr.Y, MathHelper.Min(bl.Y, br.Y))));
