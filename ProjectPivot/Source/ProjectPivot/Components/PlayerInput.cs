@@ -6,31 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectPivot {
-    public class Input {
-        private Player player;
-        private Camera camera;
-
-        public Input(Player player, Camera camera) {
-            this.player = player;
-            this.camera = camera;
-        }
-
-        public void Update(GameTime gameTime) {
+namespace ProjectPivot.Components {
+    public class PlayerInput : Component {
+        float speed = 100f;
+        public override void Update(GameTime gameTime) {
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
+            float newX = GameObject.Position.X;
+            float newY = GameObject.Position.Y;
             if (keyboardState.IsKeyDown(Keys.A)) {
-				player.Position.X -= player.Speed * deltaTime;
+				newX -= speed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.D)) {
-				player.Position.X += player.Speed * deltaTime;
+				newX += speed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.W)) {
-				player.Position.Y -= player.Speed * deltaTime;
+				newY -= speed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.S)) {
-				player.Position.Y += player.Speed * deltaTime;
+				newY += speed * deltaTime;
             }
+            GameObject.Move(new Vector2(newX, newY));
         }
     }
 }

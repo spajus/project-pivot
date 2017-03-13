@@ -43,12 +43,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\ProjectPivot\Components\Component.cs" />
+    <Compile Include="Source\ProjectPivot\Components\PlayerGraphics.cs" />
+    <Compile Include="Source\ProjectPivot\Components\PlayerInput.cs" />
+    <Compile Include="Source\ProjectPivot\Entities\GameObject.cs" />
     <Compile Include="Source\ProjectPivot.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Camera.cs" />
     <Compile Include="Source\ProjectPivot\ContextManager.cs" />
     <Compile Include="Source\ProjectPivot\FPSCounter.cs" />
-    <Compile Include="Source\ProjectPivot\Input.cs" />
     <Compile Include="Source\ProjectPivot\Map.cs" />
     <Compile Include="Source\ProjectPivot\Player.cs" />
     <Compile Include="Source\ProjectPivot\Textures.cs" />

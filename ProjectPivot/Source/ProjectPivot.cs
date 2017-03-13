@@ -12,7 +12,6 @@ namespace ProjectPivot
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Camera camera;
-        Input input;
         Player player;
         FPSCounter fpsCounter;
         Map map;
@@ -21,8 +20,7 @@ namespace ProjectPivot
         
         public ProjectPivot()
         {
-            player = new Player();
-            input = new Input(player, camera);
+            player = new Player(Vector2.Zero);
             graphics = new GraphicsDeviceManager(this);
             fpsCounter = new FPSCounter();
             Content.RootDirectory = "Content";
@@ -84,7 +82,7 @@ namespace ProjectPivot
             // TODO: Add your update logic here
 
             camera.Update(gameTime);
-            input.Update(gameTime);
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
