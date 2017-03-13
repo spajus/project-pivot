@@ -20,7 +20,6 @@ namespace ProjectPivot {
         public float Rotation;
         private Viewport viewport;
         private MouseState mouseState;
-        private KeyboardState keyboardState;
         private Int32 prevMouseScrollValue;
 		private float cameraSpeed = 500f;
 		private float zoomSpeed = 3f;
@@ -41,9 +40,6 @@ namespace ProjectPivot {
         }
 
         public bool IsVisible(Vector2 position) {
-            if (Vector2.DistanceSquared(position, Position) > (viewport.Width * Zoom) * 3) {
-                return false;
-            }
             return VisibleArea.Contains(position);
         }
 
@@ -70,7 +66,6 @@ namespace ProjectPivot {
         public void ReactToUserInput(GameTime gameTime) {
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             mouseState = Mouse.GetState();
-            keyboardState = Keyboard.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
                 Zoom += zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
@@ -78,27 +73,15 @@ namespace ProjectPivot {
                 Zoom -= zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             }
-            if (keyboardState.IsKeyDown(Keys.A)) {
-				Position.X += cameraSpeed * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.D)) {
-				Position.X -= cameraSpeed * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.W)) {
-				Position.Y += cameraSpeed * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.S)) {
-				Position.Y -= cameraSpeed * deltaTime;
-            }
         }
         #endregion
 
         #region Protected Functions
         Rectangle CalculateVisibleArea() {
             var tl = Vector2.Transform(Vector2.Zero, InverseTransform);
-            var tr = Vector2.Transform(new Vector2(viewport.Width * Zoom, 0), InverseTransform);
-            var bl = Vector2.Transform(new Vector2(0, viewport.Height * Zoom), InverseTransform);
-            var br = Vector2.Transform(new Vector2(viewport.Width * Zoom, viewport.Height * Zoom), InverseTransform);
+            var tr = Vector2.Transform(new Vector2(viewport.Width / Zoom, 0), InverseTransform);
+            var bl = Vector2.Transform(new Vector2(0, viewport.Height / Zoom), InverseTransform);
+            var br = Vector2.Transform(new Vector2(viewport.Width / Zoom, viewport.Height / Zoom), InverseTransform);
             var min = new Vector2(
                 MathHelper.Min(tl.X, MathHelper.Min(tr.X, MathHelper.Min(bl.X, br.X))),
                 MathHelper.Min(tl.Y, MathHelper.Min(tr.Y, MathHelper.Min(bl.Y, br.Y))));

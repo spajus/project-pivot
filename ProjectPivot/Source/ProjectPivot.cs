@@ -12,6 +12,8 @@ namespace ProjectPivot
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Camera camera;
+        Input input;
+        Player player;
         FPSCounter fpsCounter;
         Map map;
 
@@ -19,6 +21,8 @@ namespace ProjectPivot
         
         public ProjectPivot()
         {
+            player = new Player();
+            input = new Input(player, camera);
             graphics = new GraphicsDeviceManager(this);
             fpsCounter = new FPSCounter();
             Content.RootDirectory = "Content";
@@ -37,7 +41,7 @@ namespace ProjectPivot
             debugPixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             debugPixel.SetData(new[] { Color.White });
             camera = new Camera(GraphicsDevice.Viewport);
-            map = new Map(1000, 1000);
+            map = new Map(300, 300);
             map.Generate();
             base.Initialize();
             this.IsFixedTimeStep = false;
@@ -52,6 +56,7 @@ namespace ProjectPivot
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             fpsCounter.LoadContent(Content);
+            Textures.LoadContent(Content);
             Cell.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
@@ -79,6 +84,7 @@ namespace ProjectPivot
             // TODO: Add your update logic here
 
             camera.Update(gameTime);
+            input.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -98,6 +104,8 @@ namespace ProjectPivot
             map.Draw(camera, spriteBatch);
             fpsCounter.Update(gameTime);
             fpsCounter.Draw(spriteBatch);
+
+            player.Draw(spriteBatch);
 
             if (false) { //debug
                 spriteBatch.Draw(debugPixel, camera.VisibleArea, Color.Red);

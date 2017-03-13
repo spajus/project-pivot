@@ -46,8 +46,12 @@
     <Compile Include="Source\ProjectPivot.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Camera.cs" />
+    <Compile Include="Source\ProjectPivot\ContextManager.cs" />
     <Compile Include="Source\ProjectPivot\FPSCounter.cs" />
+    <Compile Include="Source\ProjectPivot\Input.cs" />
     <Compile Include="Source\ProjectPivot\Map.cs" />
+    <Compile Include="Source\ProjectPivot\Player.cs" />
+    <Compile Include="Source\ProjectPivot\Textures.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Extended, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
