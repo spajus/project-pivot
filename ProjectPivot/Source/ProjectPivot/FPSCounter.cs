@@ -32,9 +32,13 @@ namespace ProjectPivot {
             }
         }
         
-        public void Draw(SpriteBatch spriteBatch) {
-            var fps = string.Format("FPS: {0}", AverageFPS);
-            spriteBatch.DrawString(font, fps, new Vector2(1, 1), Color.Green);
+        public void Draw(SpriteBatch spriteBatch, Camera camera) {
+            var fps = string.Format("FPS: {0}", Math.Round(AverageFPS));
+            Vector2 bgSize = font.MeasureString(fps);
+            spriteBatch.Draw(ProjectPivot.DebugPixel, 
+                new Rectangle(0, 0, (int) bgSize.X, (int) bgSize.Y), 
+                Color.Black);
+            spriteBatch.DrawString(font, fps, camera.ToWorldCoordinates(new Vector2(1, 1)), Color.Green);
         }
     }
 }

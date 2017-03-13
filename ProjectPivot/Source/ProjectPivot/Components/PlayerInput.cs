@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
-        float speed = 100f;
+        float speed = 300f;
         public override void Update(GameTime gameTime) {
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();

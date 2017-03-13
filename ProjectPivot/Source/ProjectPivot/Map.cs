@@ -17,6 +17,7 @@ namespace ProjectPivot {
         public int MapY { get; protected set; }
         public int Width { get; protected set; }
         public int Height { get; protected set; }
+        public Rectangle Area { get; protected set; }
 
         // 0 - no wall, 4 - full wall, 1-3 - in between
         public static void LoadContent(ContentManager content) {
@@ -35,7 +36,9 @@ namespace ProjectPivot {
             this.MapX = mapX;
             this.MapY = mapY;
             this.Position = new Vector2(MapX * Width, MapY * Height);
+            this.Area = new Rectangle((int) Position.X, (int) Position.Y, width, height);
         }
+
 
         public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(currentTexture(), Position, Color.White);
@@ -69,7 +72,7 @@ namespace ProjectPivot {
 
         public void Draw(Camera camera, SpriteBatch spriteBatch) {
             foreach (Cell cell in cells) {
-                if (camera.IsVisible(cell.Position)) {
+                if (camera.IsVisible(cell.Area)) {
                     cell.Draw(spriteBatch);
                 }
             }

@@ -16,13 +16,11 @@ namespace ProjectPivot
         FPSCounter fpsCounter;
         Map map;
 
-        Texture2D debugPixel;
+        public static Texture2D DebugPixel;
         
         public ProjectPivot()
         {
-            player = new Player(Vector2.Zero);
             graphics = new GraphicsDeviceManager(this);
-            fpsCounter = new FPSCounter();
             Content.RootDirectory = "Content";
         }
 
@@ -36,9 +34,12 @@ namespace ProjectPivot
         {
             // TODO: Add your initialization logic here
 
-            debugPixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            debugPixel.SetData(new[] { Color.White });
+            player = new Player(Vector2.Zero);
             camera = new Camera(GraphicsDevice.Viewport);
+            camera.Target = player;
+            fpsCounter = new FPSCounter();
+            DebugPixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            DebugPixel.SetData(new[] { Color.White });
             map = new Map(300, 300);
             map.Generate();
             base.Initialize();
@@ -101,12 +102,12 @@ namespace ProjectPivot
             base.Draw(gameTime);
             map.Draw(camera, spriteBatch);
             fpsCounter.Update(gameTime);
-            fpsCounter.Draw(spriteBatch);
+            fpsCounter.Draw(spriteBatch, camera);
 
             player.Draw(spriteBatch);
 
             if (false) { //debug
-                spriteBatch.Draw(debugPixel, camera.VisibleArea, Color.Red);
+                spriteBatch.Draw(DebugPixel, camera.VisibleArea, Color.Red);
             }
 
 			spriteBatch.End();

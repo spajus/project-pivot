@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,7 @@ namespace ProjectPivot {
         private Int32 prevMouseScrollValue;
 		private float cameraSpeed = 500f;
 		private float zoomSpeed = 3f;
+        public GameObject Target;
         #endregion
 
         #region Constructor
@@ -44,7 +47,7 @@ namespace ProjectPivot {
         }
 
         public bool IsVisible(Rectangle position) {
-            return VisibleArea.Contains(position);
+            return VisibleArea.Intersects(position);
         }
 
         public Vector2 ToWorldCoordinates(Vector2 screenPosition) {
@@ -52,7 +55,9 @@ namespace ProjectPivot {
         }
 
         public void Update(GameTime gameTime) {
-            ReactToUserInput(gameTime);
+			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            ReactToUserInput(deltaTime);
+            LerpToTarget(deltaTime);
             WorldPosition = ToWorldCoordinates(Position);
             VisibleArea = CalculateVisibleArea();
             Zoom = MathHelper.Clamp(Zoom, 0.01f, 10.0f);
@@ -63,8 +68,11 @@ namespace ProjectPivot {
             InverseTransform = Matrix.Invert(Transform);
         }
 
-        public void ReactToUserInput(GameTime gameTime) {
-			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+        #endregion
+
+        #region Protected Functions
+        void ReactToUserInput(float deltaTime) {
             mouseState = Mouse.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
                 Zoom += zoomSpeed * deltaTime;
@@ -74,9 +82,22 @@ namespace ProjectPivot {
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             }
         }
-        #endregion
 
-        #region Protected Functions
+        void LerpToTarget(float deltaTime) {
+            if (Target != null && Target.Position != null) {
+                Position = Vector2.Lerp(Position, CenterOffset(Target.Position), deltaTime);
+                if (Vector2.DistanceSquared(Position, Target.Position) < 1) {
+                    Position = Target.Position;
+                }
+            }
+        }
+
+        Vector2 CenterOffset(Vector2 position) {
+            return new Vector2(
+                ((viewport.Width / Zoom / 2) - position.X),
+                ((viewport.Height / Zoom / 2) - position.Y));
+        }
+
         Rectangle CalculateVisibleArea() {
             var tl = Vector2.Transform(Vector2.Zero, InverseTransform);
             var tr = Vector2.Transform(new Vector2(viewport.Width / Zoom, 0), InverseTransform);
