@@ -29,7 +29,7 @@ namespace ProjectPivot.Entities {
             float[,] noise = SimplexNoise.Calc2D(Width, Height, 0.04f);
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
-                    cells[x, y] = new Cell(x, y, 32, 32, (int) (noise[x,y] / 255 * 100 - 20) );
+                    cells[x, y] = new Cell(x, y, 32, 32, (int) ((noise[x,y] + 10) / 255 * 100) );
                 }
             }
         }
