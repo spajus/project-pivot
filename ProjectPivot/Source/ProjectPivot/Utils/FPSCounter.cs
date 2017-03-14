@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjectPivot.Entities;
 
-namespace ProjectPivot {
+namespace ProjectPivot.Utils {
     public class FPSCounter {
         private SpriteFont font;
         public double AverageFPS { get; private set; }

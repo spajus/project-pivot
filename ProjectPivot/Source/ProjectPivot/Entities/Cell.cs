@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjectPivot.Entities;
 
-namespace ProjectPivot {
+namespace ProjectPivot.Entities {
     public class Cell {
         private static Dictionary<int, Texture2D> textures;
 
@@ -48,35 +47,6 @@ namespace ProjectPivot {
         Texture2D currentTexture() {
 			int textureNum = (int)MathHelper.Clamp(Health / 20f, 0, 4);
             return textures[textureNum];
-        }
-    }
-    class Map {
-        // in tiles
-        public int Width { get; protected set; }
-        public int Height { get; protected set; }
-        private Cell[,] cells;
-
-        public Map(int width, int height) {
-            this.Width = width;
-            this.Height = height;
-            this.cells = new Cell[width, height];
-        }
-
-        public void Generate() {
-            Random rand = new Random();
-            for (int x = 0; x < Width; x++) {
-                for (int y = 0; y < Height; y++) {
-                    cells[x, y] = new Cell(x, y, 32, 32, rand.Next(0, 100));
-                }
-            }
-        }
-
-        public void Draw(Camera camera, SpriteBatch spriteBatch) {
-            foreach (Cell cell in cells) {
-                if (camera.IsVisible(cell.Area)) {
-                    cell.Draw(spriteBatch);
-                }
-            }
         }
     }
 }

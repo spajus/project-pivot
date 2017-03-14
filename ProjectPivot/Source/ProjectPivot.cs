@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectPivot.Entities;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot
 {
@@ -37,6 +38,7 @@ namespace ProjectPivot
 
             player = new Player(Vector2.Zero);
 			Gizmo.Initialize(GraphicsDevice);
+            //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             camera = new Camera(GraphicsDevice.Viewport);
             camera.Target = player;
             fpsCounter = new FPSCounter();
