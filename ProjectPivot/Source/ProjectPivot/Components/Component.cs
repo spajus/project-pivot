@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Entities;
 using System;
@@ -9,14 +10,9 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class Component {
-
         public GameObject GameObject;
-
-        public virtual void Update(GameTime gameTime) {
-            
-        }
-        public virtual void Draw(SpriteBatch spriteBatch) {
-
-        }
+        public virtual void Initialize() {}
+        public virtual void Update(GameTime gameTime) { }
+        public virtual void Draw(SpriteBatch spriteBatch) { }
     }
 }

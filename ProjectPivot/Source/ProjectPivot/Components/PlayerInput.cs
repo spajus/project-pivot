@@ -1,3 +1,4 @@
+using FarseerPhysics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -9,6 +10,11 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
         float speed = 300f;
+        PlayerBody playerBody;
+
+        public override void Initialize() {
+            playerBody = GameObject.GetComponent<PlayerBody>();
+        }
         public override void Update(GameTime gameTime) {
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
@@ -26,7 +32,7 @@ namespace ProjectPivot.Components {
             if (keyboardState.IsKeyDown(Keys.S)) {
 				newY += speed * deltaTime;
             }
-            GameObject.Move(new Vector2(newX, newY));
+            playerBody.Body.Position = ConvertUnits.ToSimUnits(new Vector2(newX, newY));
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Entities {
 	public class Camera : GameObject {
 
+        public static Camera Main;
+
         #region Fields
         public float Zoom;
         public Matrix Transform;
@@ -34,6 +36,7 @@ namespace ProjectPivot.Entities {
             this.Rotation = 0.0f;
             this.Position = Vector2.Zero;
             this.viewport = viewport;
+            Initialize();
         }
         #endregion
 

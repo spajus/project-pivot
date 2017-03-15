@@ -12,9 +12,10 @@ namespace ProjectPivot.Entities {
 
         public GameObject Parent { get; protected set; }
         public List<GameObject> Children { get; protected set; }
-        List<Component> components = new List<Component>();
 
-        public Vector2 Position { get; protected set; }
+
+        public Vector2 Position;
+        List<Component> components = new List<Component>();
 
         #region Constructor
 
@@ -51,6 +52,12 @@ namespace ProjectPivot.Entities {
             Position = newPosition;
         }
 
+        public void Initialize() {
+            OnInitialize();
+            components.ForEach(component => component.Initialize());
+        }
+
+
         public void Update(GameTime gameTime) {
             OnUpdate(gameTime);
 			components.ForEach(component => component.Update(gameTime));
@@ -61,8 +68,16 @@ namespace ProjectPivot.Entities {
             components.ForEach(component => component.Draw(spriteBatch));
         }
 
-		protected virtual void OnUpdate(GameTime gameTime) { }
+        public T GetComponent<T>() {
+            return (T) (components.FirstOrDefault(t => t is T) as object);
+        }
 
+        public virtual bool IsVisible(Camera camera) {
+            return true;
+        }
+
+		protected virtual void OnInitialize() { }
+		protected virtual void OnUpdate(GameTime gameTime) { }
 		protected virtual void OnDraw(SpriteBatch spriteBatch) { }
     }
 }

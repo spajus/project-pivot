@@ -13,6 +13,8 @@ namespace ProjectPivot.Entities {
         public Player(Vector2 position) : base(position) {
             AddComponent(new PlayerGraphics());
             AddComponent(new PlayerInput());
+            AddComponent(new PlayerBody());
+            Initialize();
         }
         public float Speed = 200f;
     }

@@ -1,8 +1,11 @@
+using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Components;
 using ProjectPivot.Entities;
 using ProjectPivot.Utils;
+using System;
 
 namespace ProjectPivot
 {
@@ -17,11 +20,13 @@ namespace ProjectPivot
         Player player;
         FPSCounter fpsCounter;
         Map map;
+        public static World World { get; protected set; }
 
         public static Texture2D DebugPixel;
         
         public ProjectPivot()
         {
+            World = new World(Vector2.Zero);
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1600;
             graphics.PreferredBackBufferHeight = 900;
@@ -39,11 +44,15 @@ namespace ProjectPivot
             // TODO: Add your initialization logic here
 
             player = new Player(Vector2.Zero);
+            GameObjects.Add(player);
+            camera = new Camera(GraphicsDevice.Viewport);
+            Camera.Main = camera;
+            camera.Target = player;
+            GameObjects.Add(camera);
 			Gizmo.Initialize(GraphicsDevice);
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
-            camera = new Camera(GraphicsDevice.Viewport);
-            camera.Target = player;
             fpsCounter = new FPSCounter();
+
             map = new Map(300, 300);
             map.Generate();
             base.Initialize();
@@ -60,7 +69,7 @@ namespace ProjectPivot
             spriteBatch = new SpriteBatch(GraphicsDevice);
             fpsCounter.LoadContent(Content);
             Textures.LoadContent(Content);
-            Cell.LoadContent(Content);
+            CellGraphics.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -86,6 +95,8 @@ namespace ProjectPivot
 
             // TODO: Add your update logic here
 
+            // variable time step but never less then 30 Hz
+            World.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
             camera.Update(gameTime);
             player.Update(gameTime);
             base.Update(gameTime);
@@ -100,15 +111,15 @@ namespace ProjectPivot
             GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
-			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, 
+			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, 
                 null, null, null, null, camera.Transform);
 
             base.Draw(gameTime);
-            map.Draw(camera, spriteBatch);
+
             fpsCounter.Update(gameTime);
             fpsCounter.Draw(spriteBatch, camera);
 
-            player.Draw(spriteBatch);
+            GameObjects.Draw(spriteBatch);
 
             if (false) { //debug
                 spriteBatch.Draw(DebugPixel, camera.VisibleArea, Color.Red);
