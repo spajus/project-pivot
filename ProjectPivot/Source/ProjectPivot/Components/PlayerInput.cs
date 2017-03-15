@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
-        float speed = 100f;
+        float speed = 200f;
         PlayerBody playerBody;
 
         public override void Initialize() {

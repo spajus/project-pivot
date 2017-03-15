@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components {
     internal class PlayerBody : Component {
@@ -19,7 +21,7 @@ namespace ProjectPivot.Components {
                 ConvertUnits.ToSimUnits(32),
                 ConvertUnits.ToSimUnits(32),
                 1.0f);
-            Body.Mass = 4f;
+            Body.Mass = 0.1f;
             Body.BodyType = BodyType.Dynamic;
 			Body.Friction = 0.5f;
             Body.Restitution = .2f; //bounce
@@ -28,7 +30,6 @@ namespace ProjectPivot.Components {
 
         public override void Update(GameTime gameTime) {
             GameObject.Position = ConvertUnits.ToDisplayUnits(Body.Position);
-
         }
     }
 }

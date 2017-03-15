@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework.Graphics;
+using ProjectPivot.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,10 @@ namespace ProjectPivot.Components {
         }
         public void Decrease(float amount) {
             Value -= amount;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch) {
+            Gizmo.Text(Value.ToString(), GameObject.Position);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
@@ -10,7 +10,7 @@ namespace ProjectPivot.Components {
 
         public override void Initialize() {
             this.health = GameObject.GetComponent<Health>();
-            if (health.Value >= 75) {
+            if (health.Value >= 40) {
                 this.Body = BodyFactory.CreateCircle(
                     ProjectPivot.World,
                     ConvertUnits.ToSimUnits(16),

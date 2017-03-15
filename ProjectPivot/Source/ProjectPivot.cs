@@ -1,3 +1,4 @@
+using FarseerPhysics.DebugView;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +21,7 @@ namespace ProjectPivot
         Player player;
         FPSCounter fpsCounter;
         Map map;
+        PhysicsDebug physicsDebug;
         public static World World { get; protected set; }
 
         public static Texture2D DebugPixel;
@@ -27,6 +29,8 @@ namespace ProjectPivot
         public ProjectPivot()
         {
 			World = new World(Vector2.Zero);
+
+            physicsDebug = new PhysicsDebug(World);
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
@@ -53,7 +57,7 @@ namespace ProjectPivot
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
-            map = new Map(300, 300);
+            map = new Map(20, 10);
             map.Generate();
             base.Initialize();
             this.IsFixedTimeStep = false;
@@ -67,10 +71,12 @@ namespace ProjectPivot
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            Gizmo.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             fpsCounter.LoadContent(Content);
             Textures.LoadContent(Content);
             CellGraphics.LoadContent(Content);
+            physicsDebug.LoadContent(GraphicsDevice, Content);
 
             // TODO: use this.Content to load your game content here
         }
@@ -110,8 +116,13 @@ namespace ProjectPivot
             GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
-			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, 
-                null, null, null, null, camera.Transform);
+			spriteBatch.Begin(SpriteSortMode.BackToFront,
+                BlendState.AlphaBlend,
+                null,
+                null, 
+                null, 
+                null, 
+                camera.Transform);
 
             base.Draw(gameTime);
 
@@ -128,6 +139,7 @@ namespace ProjectPivot
 			Gizmo.Draw(spriteBatch);
 
 			spriteBatch.End();
+            physicsDebug.Draw();
         }
     }
 }

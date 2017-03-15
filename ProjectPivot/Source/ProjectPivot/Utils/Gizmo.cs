@@ -2,8 +2,23 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
 namespace ProjectPivot.Utils {
 	public static class Gizmo {
+        class GizmoText {
+            Vector2 position;
+            string text;
+            public GizmoText(string what, Vector2 position) {
+                this.position = position;
+                this.text = what;
+            }
+            public void Draw(SpriteBatch sb, SpriteFont font) {
+                sb.DrawString(font, text, position, Color.Red);
+
+
+            }
+        }
         class GizmoLine {
             Vector2 start;
             Vector2 end;
@@ -30,17 +45,28 @@ namespace ProjectPivot.Utils {
                     0);
             }
         }
+        public static SpriteFont Font;
 		public static Texture2D Pixel;
+
 		static Queue<GizmoLine> lines = new Queue<GizmoLine>();
+		static Queue<GizmoText> texts = new Queue<GizmoText>();
 
 		public static void Initialize(GraphicsDevice graphics) {
 			Pixel = new Texture2D(graphics, 1, 1, false, SurfaceFormat.Color);
 			Pixel.SetData(new[] { Color.White });
 		}
 
+        public static void LoadContent(ContentManager content) {
+            Font = content.Load<SpriteFont>("Fonts/debugText");
+        }
+
 		public static void Line(Vector2 from, Vector2 to) {
 			lines.Enqueue(new GizmoLine(from, to));
 		}
+
+        public static void Text(string what, Vector2 position) {
+            texts.Enqueue(new GizmoText(what, position));
+        }
 
 		public static void Rectangle(Rectangle rect) {
 			Line(
@@ -61,6 +87,10 @@ namespace ProjectPivot.Utils {
 			while (lines.Count > 0) {
 				lines.Dequeue().Draw(spriteBatch, Pixel);
 			}
+			while (texts.Count > 0) {
+				texts.Dequeue().Draw(spriteBatch, Font);
+			}
 		}
+
 	}
 }

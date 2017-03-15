@@ -92,3 +92,10 @@
 /processorParam:TextureFormat=Color
 /build:Images/tilesheet_pa1.png
 
+#begin Fonts/debugText.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/debugText.spritefont
+
