@@ -19,8 +19,9 @@ namespace ProjectPivot.Components {
                 ConvertUnits.ToSimUnits(32),
                 ConvertUnits.ToSimUnits(32),
                 1.0f);
-            Body.Mass = .01f;
+            Body.Mass = 4f;
             Body.BodyType = BodyType.Dynamic;
+			Body.Friction = 0.5f;
             Body.Restitution = .2f; //bounce
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
         }

@@ -64,7 +64,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\ProjectPivot\Components\CellGraphics.cs" />
     <Compile Include="Source\ProjectPivot\Components\Health.cs" />
-    <Compile Include="Source\ProjectPivot\Components\Collider.cs" />
     <Compile Include="Source\ProjectPivot\Components\Component.cs" />
     <Compile Include="Source\ProjectPivot\Components\PlayerGraphics.cs" />
     <Compile Include="Source\ProjectPivot\Components\PlayerInput.cs" />
@@ -82,6 +81,7 @@
     <Compile Include="Source\ProjectPivot\Utils\Gizmo.cs" />
     <Compile Include="Source\ProjectPivot\Utils\Perlin.cs" />
     <Compile Include="Source\ProjectPivot\Utils\SimplexNoise.cs" />
+    <Compile Include="Source\ProjectPivot\Components\CellBody.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FarseerPhysics.Portable, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">

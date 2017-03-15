@@ -25,6 +25,7 @@ namespace ProjectPivot.Entities {
             this.Area = new Rectangle((int) Position.X, (int) Position.Y, width, height);
             AddComponent(new CellGraphics());
             AddComponent(new Health(health));
+            AddComponent(new CellBody());
         }
 
         public override bool IsVisible(Camera camera) {
