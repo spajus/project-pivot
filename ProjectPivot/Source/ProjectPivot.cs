@@ -22,6 +22,8 @@ namespace ProjectPivot
         FPSCounter fpsCounter;
         Map map;
         PhysicsDebug physicsDebug;
+        const double minPhysicsStepTime = 1.0 / 30.0;
+
         public static World World { get; protected set; }
 
         public static Texture2D DebugPixel;
@@ -35,6 +37,7 @@ namespace ProjectPivot
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
+            this.IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -47,21 +50,21 @@ namespace ProjectPivot
         {
             // TODO: Add your initialization logic here
 
-            player = new Player(Vector2.Zero);
-            GameObjects.Add(player);
-            camera = new Camera(GraphicsDevice.Viewport);
-            Camera.Main = camera;
-            camera.Target = player;
-            GameObjects.Add(camera);
 			Gizmo.Initialize(GraphicsDevice);
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
             map = new Map(20, 10);
             map.Generate();
-            base.Initialize();
-            this.IsFixedTimeStep = false;
+            player = new Player(map.RandomHollowCell().Position);
+            GameObjects.Add(player);
+            camera = new Camera(GraphicsDevice.Viewport, player.Position);
+            Camera.Main = camera;
 
+            camera.Target = player;
+            GameObjects.Add(camera);
+
+            base.Initialize();
         }
 
         /// <summary>
@@ -95,15 +98,15 @@ namespace ProjectPivot
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             base.Update(gameTime);
 
             // variable time step but never less then 30 Hz
-            World.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
+            double frameTime = gameTime.ElapsedGameTime.TotalSeconds;
+            World.Step((float) Math.Min(frameTime, minPhysicsStepTime));
 			GameObjects.Update(gameTime);
         }
 

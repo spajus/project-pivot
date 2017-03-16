@@ -31,12 +31,10 @@ namespace ProjectPivot.Entities {
         #endregion
 
         #region Constructor
-		public Camera(Viewport viewport) : base(Vector2.Zero) {
+		public Camera(Viewport viewport, Vector2 position) : base(position) {
             this.Zoom = 1.0f;
             this.Rotation = 0.0f;
-            this.Position = Vector2.Zero;
             this.viewport = viewport;
-            Initialize();
         }
         #endregion
 

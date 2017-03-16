@@ -1,4 +1,6 @@
 using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -9,8 +11,11 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
-        float speed = 200f;
+        float speed = 500f;
         PlayerBody playerBody;
+        Vector2 velocity;
+
+        public object ConvertUtils { get; private set; }
 
         public override void Initialize() {
             playerBody = GameObject.GetComponent<PlayerBody>();
@@ -22,26 +27,29 @@ namespace ProjectPivot.Components {
 			float newY = 0f; //GameObject.Position.Y;
 			bool changed = false;
             if (keyboardState.IsKeyDown(Keys.A)) {
-				newX -= speed * deltaTime;
+				newX -= speed;
 				changed = true;
             }
             if (keyboardState.IsKeyDown(Keys.D)) {
-				newX += speed * deltaTime;
+				newX += speed;
 				changed = true;
             }
             if (keyboardState.IsKeyDown(Keys.W)) {
-				newY -= speed * deltaTime;
+				newY -= speed;
 				changed = true;
             }
             if (keyboardState.IsKeyDown(Keys.S)) {
-				newY += speed * deltaTime;
+				newY += speed;
 				changed = true;
             }
 			if (changed) {
-				playerBody.Body.LinearVelocity = new Vector2(newX, newY);
-			} else {
-				playerBody.Body.LinearVelocity = Vector2.Zero;
-			}
+                velocity = new Vector2(newX, newY);
+                velocity.Normalize();
+                if (velocity.LengthSquared() > 0.5) {
+                    playerBody.Body.ApplyLinearImpulse(velocity * deltaTime);
+                } 
+                //playerBody.Body.LinearVelocity = (new Vector2(newX, newY) * deltaTime);
+            }
         }
     }
 }

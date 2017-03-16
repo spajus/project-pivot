@@ -17,6 +17,9 @@ namespace ProjectPivot.Entities {
         public int Height { get; protected set; }
         public Rectangle Area { get; protected set; }
 
+        private Health health;
+        public bool IsHealthy { get { return health.IsHealthy; } }
+
         public Cell(int mapX, int mapY, int width, int height, int health) : base(position: new Vector2(mapX * width, mapY * height)) {
             this.Width = width;
             this.Height = height;
@@ -24,7 +27,7 @@ namespace ProjectPivot.Entities {
             this.MapY = mapY;
             this.Area = new Rectangle((int) Position.X, (int) Position.Y, width, height);
             AddComponent(new CellGraphics());
-            AddComponent(new Health(health));
+            this.health = AddComponent<Health>(new Health(health));
             AddComponent(new CellBody());
         }
 

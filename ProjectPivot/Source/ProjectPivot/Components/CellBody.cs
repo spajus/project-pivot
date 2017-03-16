@@ -2,6 +2,7 @@ using System;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using ProjectPivot.Entities;
 
 namespace ProjectPivot.Components {
     public class CellBody : Component {
@@ -10,11 +11,11 @@ namespace ProjectPivot.Components {
 
         public override void Initialize() {
             this.health = GameObject.GetComponent<Health>();
-            if (health.Value >= 40) {
-                this.Body = BodyFactory.CreateCircle(
+            if (health.IsHealthy) {
+                this.Body = BodyFactory.CreateRectangle(
                     ProjectPivot.World,
-                    ConvertUnits.ToSimUnits(16),
-                    //ConvertUnits.ToSimUnits(32),
+                    ConvertUnits.ToSimUnits(32),
+                    ConvertUnits.ToSimUnits(32),
                     1.0f);
                 Body.Mass = 0.1f;
                 Body.BodyType = BodyType.Static;

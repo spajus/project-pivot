@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Components {
     public class Health : Component {
         public float Value { get; protected set; }
+        public bool IsHealthy { get { return Value >= 40; } }
 
         public Health(float value) {
             Value = value;

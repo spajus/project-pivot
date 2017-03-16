@@ -29,9 +29,14 @@ namespace ProjectPivot.Entities {
 
         #endregion
 
-        public void AddComponent(Component component) {
+        public object AddComponent(Component component) {
+            return this.AddComponent<object>(component);
+        }
+
+        public T AddComponent<T>(Component component) {
             this.components.Add(component);
             component.GameObject = this;
+            return (T) ((object) component);
         }
 
         public int X {
