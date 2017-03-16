@@ -22,7 +22,9 @@ namespace ProjectPivot
         FPSCounter fpsCounter;
         Map map;
         PhysicsDebug physicsDebug;
+
         const double minPhysicsStepTime = 1.0 / 30.0;
+        const bool physicsDebugEnabled = false;
 
         public static World World { get; protected set; }
 
@@ -32,7 +34,9 @@ namespace ProjectPivot
         {
 			World = new World(Vector2.Zero);
 
-            physicsDebug = new PhysicsDebug(World);
+            if (physicsDebugEnabled) {
+                physicsDebug = new PhysicsDebug(World);
+            }
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
@@ -54,7 +58,7 @@ namespace ProjectPivot
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
-            map = new Map(20, 10);
+            map = new Map(200, 200);
             map.Generate();
             player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player);
@@ -79,7 +83,9 @@ namespace ProjectPivot
             fpsCounter.LoadContent(Content);
             Textures.LoadContent(Content);
             CellGraphics.LoadContent(Content);
-            physicsDebug.LoadContent(GraphicsDevice, Content);
+            if (physicsDebugEnabled) {
+                physicsDebug.LoadContent(GraphicsDevice, Content);
+            }
 
             // TODO: use this.Content to load your game content here
         }
@@ -142,7 +148,9 @@ namespace ProjectPivot
 			Gizmo.Draw(spriteBatch);
 
 			spriteBatch.End();
-            physicsDebug.Draw();
+            if (physicsDebugEnabled) {
+                physicsDebug.Draw();
+            }
         }
     }
 }

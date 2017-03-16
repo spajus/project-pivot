@@ -23,13 +23,13 @@ namespace ProjectPivot.Components {
                 ConvertUnits.ToSimUnits(16),
                 //ConvertUnits.ToSimUnits(32),
                 1.0f);
-            Body.Mass = 100f;
+            Body.Mass = 10f;
             Body.BodyType = BodyType.Dynamic;
 			Body.Friction = 0.01f;
             Body.FixedRotation = true;
             Body.Restitution = .0f; //bounce
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
-            Body.LinearDamping = 5f;
+            Body.LinearDamping = 3f;
         }
 
         public override void Update(GameTime gameTime) {

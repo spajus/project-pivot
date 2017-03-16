@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
-        float speed = 500f;
+        float speed = 1000f;
         PlayerBody playerBody;
         Vector2 velocity;
 
@@ -42,13 +42,16 @@ namespace ProjectPivot.Components {
 				newY += speed;
 				changed = true;
             }
-			if (changed) {
+            if (changed) {
                 velocity = new Vector2(newX, newY);
                 velocity.Normalize();
                 if (velocity.LengthSquared() > 0.5) {
+                    playerBody.Body.LinearDamping = 2f;
                     playerBody.Body.ApplyLinearImpulse(velocity * deltaTime);
-                } 
+                }
                 //playerBody.Body.LinearVelocity = (new Vector2(newX, newY) * deltaTime);
+            } else {
+                playerBody.Body.LinearDamping = 10f;
             }
         }
     }
