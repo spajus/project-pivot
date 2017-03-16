@@ -17,7 +17,7 @@ namespace ProjectPivot.Utils {
 
         public QuadTree(AABB boundary) {
             this.boundary = boundary;
-            Gizmo.Rectangle(boundary.ToRectangle(), Color.Yellow, true);
+            //Gizmo.Rectangle(boundary.ToRectangle(), Color.Yellow, true);
             this.gameObjects = new List<GameObject>();
         }
 

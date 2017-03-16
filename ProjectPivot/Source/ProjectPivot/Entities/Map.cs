@@ -32,6 +32,7 @@ namespace ProjectPivot.Entities {
             Boundary = new AABB(mapBounds, Color.Brown);
             Gizmo.Rectangle(mapBounds, Color.Violet, true);
             Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
+            Gizmo.Text("x", Boundary.Center, Color.Brown, true);
         }
 
 

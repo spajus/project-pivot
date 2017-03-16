@@ -55,6 +55,7 @@ namespace ProjectPivot.Utils {
 		static Queue<GizmoLine> lines = new Queue<GizmoLine>();
 		static Queue<GizmoText> texts = new Queue<GizmoText>();
         static List<GizmoLine> permalines = new List<GizmoLine>();
+        static List<GizmoText> permatexts = new List<GizmoText>();
 
 		public static void Initialize(GraphicsDevice graphics) {
 			Pixel = new Texture2D(graphics, 1, 1, false, SurfaceFormat.Color);
@@ -73,8 +74,12 @@ namespace ProjectPivot.Utils {
             }
 		}
 
-        public static void Text(string what, Vector2 position, Color color) {
-            texts.Enqueue(new GizmoText(what, position, color));
+        public static void Text(string what, Vector2 position, Color color, bool permanent = false) {
+            if (permanent) {
+                permatexts.Add(new GizmoText(what, position, color)); 
+            } else {
+                texts.Enqueue(new GizmoText(what, position, color));
+            }
         }
 
 		public static void Rectangle(Rectangle rect, Color color, bool permanent = false) {
@@ -110,6 +115,9 @@ namespace ProjectPivot.Utils {
 			}
             foreach (GizmoLine line in permalines) {
                 line.Draw(spriteBatch, Pixel);
+            }
+            foreach (GizmoText text in permatexts) {
+                text.Draw(spriteBatch, Font);
             }
 		}
 

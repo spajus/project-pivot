@@ -13,8 +13,10 @@ namespace ProjectPivot.Utils {
         public float DhX { get; protected set; }
         public float DhY { get; protected set; }
         public Color Color = Color.Green;
+        public Rectangle origRect;
 
         public AABB(Rectangle rect)  {
+            this.origRect = rect;
 
             Center = CenterOf(rect);
             HalfDimension = new Vector2(
@@ -24,6 +26,7 @@ namespace ProjectPivot.Utils {
         }
         public AABB(Rectangle rect, Color color)  {
             Color = color;
+            this.origRect = rect;
             Center = CenterOf(rect);
             HalfDimension = new Vector2(
                 (Center.X + rect.Width / 2f),
@@ -50,10 +53,10 @@ namespace ProjectPivot.Utils {
         public Rectangle ToRectangle() {
             // FIXME broken
             return new Rectangle(
-                (int) (Center.X - HalfDimension.X / 2),
-                (int) (Center.Y - HalfDimension.Y / 2),
-                (int) Math.Abs(HalfDimension.X), 
-                (int) Math.Abs(HalfDimension.Y));
+                (int) (Center.X - DhX),
+                (int) (Center.Y - DhY),
+                (int) DhX * 2, 
+                (int) DhY * 2);
         }
 
         public override string ToString() {
@@ -110,12 +113,13 @@ namespace ProjectPivot.Utils {
             DhX = Math.Abs(HalfDimension.X - Center.X);
             DhY = Math.Abs(HalfDimension.Y - Center.Y);
             Gizmo.Rectangle(this.ToRectangle(), Color); 
+            Gizmo.Text("O", Center, Color);
         }
 
         private Vector2 CenterOf(Rectangle rectangle) {
             return new Vector2(
-                (rectangle.X + rectangle.Width) / 2f,
-                (rectangle.Y + rectangle.Height) / 2f);
+                (rectangle.X) + rectangle.Width / 2f,
+                (rectangle.Y) + rectangle.Height / 2f);
         }
 
     }

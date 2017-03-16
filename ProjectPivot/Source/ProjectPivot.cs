@@ -154,9 +154,10 @@ namespace ProjectPivot
             }
 
 			//Gizmo.Rectangle(new Rectangle(5, 5, 200, 100));
-			Gizmo.Draw(spriteBatch);
 
+            Gizmo.Draw(spriteBatch);
 			spriteBatch.End();
+
             if (physicsDebugEnabled) {
                 physicsDebug.Draw();
             }
