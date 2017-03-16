@@ -20,16 +20,16 @@ namespace ProjectPivot.Components {
         public override void Initialize() {
             this.Body = BodyFactory.CreateCircle(
                 ProjectPivot.World,
-                ConvertUnits.ToSimUnits(16),
+                ConvertUnits.ToSimUnits(15),
                 //ConvertUnits.ToSimUnits(32),
                 1.0f);
-            Body.Mass = 10f;
+            Body.Mass = 1f;
             Body.BodyType = BodyType.Dynamic;
-			Body.Friction = 0.01f;
+			Body.Friction = 0.001f;
             Body.FixedRotation = true;
             Body.Restitution = .0f; //bounce
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
-            Body.LinearDamping = 3f;
+            Body.LinearDamping = 0.001f;
         }
 
         public override void Update(GameTime gameTime) {

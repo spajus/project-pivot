@@ -58,7 +58,7 @@ namespace ProjectPivot
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
-            map = new Map(200, 200);
+            map = new Map(400, 400);
             map.Generate();
             player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player);

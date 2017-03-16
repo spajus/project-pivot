@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : Component {
-        float speed = 1000f;
+        float speed = 100f;
         PlayerBody playerBody;
         Vector2 velocity;
+        const float maxSpeed = 5f;
 
         public object ConvertUtils { get; private set; }
 
@@ -45,12 +46,18 @@ namespace ProjectPivot.Components {
             if (changed) {
                 velocity = new Vector2(newX, newY);
                 velocity.Normalize();
+
                 if (velocity.LengthSquared() > 0.5) {
-                    playerBody.Body.LinearDamping = 2f;
+                    if (playerBody.Body.LinearVelocity.LengthSquared() < maxSpeed) {
+                        playerBody.Body.LinearDamping = 0.00f;
+                    } else {
+                        playerBody.Body.LinearDamping = 3f;
+                    }
                     playerBody.Body.ApplyLinearImpulse(velocity * deltaTime);
                 }
                 //playerBody.Body.LinearVelocity = (new Vector2(newX, newY) * deltaTime);
             } else {
+                //playerBody.Body.LinearVelocity = Vector2.Zero;
                 playerBody.Body.LinearDamping = 10f;
             }
         }

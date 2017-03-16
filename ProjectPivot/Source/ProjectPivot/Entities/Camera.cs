@@ -25,7 +25,7 @@ namespace ProjectPivot.Entities {
         private Viewport viewport;
         private MouseState mouseState;
         private Int32 prevMouseScrollValue;
-		private float cameraSpeed = 2f;
+		private float cameraSpeed = 4f;
 		private float zoomSpeed = 3f;
         public GameObject Target;
         #endregion
