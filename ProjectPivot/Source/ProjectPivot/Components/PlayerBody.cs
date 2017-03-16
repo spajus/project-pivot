@@ -34,6 +34,7 @@ namespace ProjectPivot.Components {
 
         public override void Update(GameTime gameTime) {
             GameObject.Position = ConvertUnits.ToDisplayUnits(Body.Position);
+            Gizmo.Text($"{GameObject.Position}", GameObject.Position, Color.White);
         }
     }
 }

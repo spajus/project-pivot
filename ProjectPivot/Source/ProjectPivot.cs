@@ -15,6 +15,16 @@ namespace ProjectPivot
     /// </summary>
     public class ProjectPivot : Game
     {
+        // CONSTANTS
+        public const double minPhysicsStepTime = 1.0 / 30.0;
+        public const bool physicsDebugEnabled = false;
+        public const bool cellsDebugEnabled = true;
+        public const int mapWidth = 10;
+        public const int mapHeight = 4;
+        public const int screenWidth = 800;
+        public const int screenHeight = 600;
+
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Camera camera;
@@ -23,8 +33,6 @@ namespace ProjectPivot
         Map map;
         PhysicsDebug physicsDebug;
 
-        const double minPhysicsStepTime = 1.0 / 30.0;
-        const bool physicsDebugEnabled = false;
 
         public static World World { get; protected set; }
 
@@ -38,8 +46,8 @@ namespace ProjectPivot
                 physicsDebug = new PhysicsDebug(World);
             }
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = false;
         }
@@ -58,15 +66,16 @@ namespace ProjectPivot
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
-            map = new Map(400, 400);
+            map = new Map(mapWidth, mapHeight, new Vector2(2 * 32, 4 * 32) );
+            GameObjects.Initialize(map);
             map.Generate();
             player = new Player(map.RandomHollowCell().Position);
-            GameObjects.Add(player);
+            GameObjects.Add(player, true);
             camera = new Camera(GraphicsDevice.Viewport, player.Position);
             Camera.Main = camera;
 
             camera.Target = player;
-            GameObjects.Add(camera);
+            GameObjects.Add(camera, true);
 
             base.Initialize();
         }

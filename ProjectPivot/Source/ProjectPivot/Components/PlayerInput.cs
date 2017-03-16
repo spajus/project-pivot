@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace ProjectPivot.Components {
             playerBody = GameObject.GetComponent<PlayerBody>();
         }
         public override void Update(GameTime gameTime) {
+            Gizmo.Rectangle(
+                new Rectangle((int)GameObject.Position.X, (int)GameObject.Position.Y, 32, 32), Color.Beige);
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
 			float newX = 0f; //GameObject.Position.X;

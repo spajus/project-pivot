@@ -21,6 +21,9 @@ namespace ProjectPivot.Entities {
         public Matrix InverseTransform { get; protected set; }
         public Vector2 WorldPosition { get; protected set; }
         public Rectangle VisibleArea { get; protected set; }
+        public AABB VisibleAreaAABB { get {
+                return new AABB(VisibleArea, Color.YellowGreen);}
+        }
         public float Rotation;
         private Viewport viewport;
         private MouseState mouseState;
@@ -66,6 +69,7 @@ namespace ProjectPivot.Entities {
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();
+            Gizmo.Rectangle(VisibleArea, Color.Pink);
 			// Rotation = ClampRotation();
 
 			Transform = 
@@ -76,8 +80,8 @@ namespace ProjectPivot.Entities {
 
 			InverseTransform = Matrix.Invert(Transform);
 
-			Gizmo.Rectangle(VisibleArea);
-			Gizmo.Line(Position, Target.Position);
+			Gizmo.Rectangle(VisibleArea, Color.Blue);
+			Gizmo.Line(Position, Target.Position, Color.Red);
 		}
 
 		void ReactToUserInput(float deltaTime) {
@@ -114,7 +118,11 @@ namespace ProjectPivot.Entities {
                 MathHelper.Max(tl.X, MathHelper.Max(tr.X, MathHelper.Max(bl.X, br.X))),
                 MathHelper.Max(tl.Y, MathHelper.Max(tr.Y, MathHelper.Max(bl.Y, br.Y))));
 
-            return new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
+            return new Rectangle(
+                (int)min.X,
+                (int)min.Y,
+                (int)(max.X - min.X),
+                (int)(max.Y - min.Y));
         }
         #endregion
     }

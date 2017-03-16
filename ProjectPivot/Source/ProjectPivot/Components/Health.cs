@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Utils;
 using System;
@@ -26,8 +27,8 @@ namespace ProjectPivot.Components {
             Value -= amount;
         }
 
-        public override void Draw(SpriteBatch spriteBatch) {
-            Gizmo.Text(Value.ToString(), GameObject.Position);
+        public void DrawHealth() {
+            Gizmo.Text(Value.ToString(), GameObject.Position, Color.Green);
         }
     }
 }

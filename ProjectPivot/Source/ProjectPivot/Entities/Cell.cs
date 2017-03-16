@@ -20,7 +20,8 @@ namespace ProjectPivot.Entities {
         private Health health;
         public bool IsHealthy { get { return health.IsHealthy; } }
 
-        public Cell(int mapX, int mapY, int width, int height, int health) : base(position: new Vector2(mapX * width, mapY * height)) {
+        public Cell(int mapX, int mapY, int width, int height, int health, Vector2 offset) : 
+                base(position: new Vector2(mapX * width, mapY * height) + offset) {
             this.Width = width;
             this.Height = height;
             this.MapX = mapX;
@@ -33,6 +34,12 @@ namespace ProjectPivot.Entities {
 
         public override bool IsVisible(Camera camera) {
             return camera.IsVisible(Area);
+        }
+
+        public virtual void OnUpdate(GameTime gameTime) {
+            if (ProjectPivot.cellsDebugEnabled) {
+                health.DrawHealth();
+            }
         }
     }
 }

@@ -9,22 +9,26 @@ namespace ProjectPivot.Utils {
         class GizmoText {
             Vector2 position;
             string text;
-            public GizmoText(string what, Vector2 position) {
+            Color color;
+            public GizmoText(string what, Vector2 position, Color color) {
                 this.position = position;
                 this.text = what;
+                this.color = color;
             }
             public void Draw(SpriteBatch sb, SpriteFont font) {
-                sb.DrawString(font, text, position, Color.Red);
-
-
+                sb.DrawString(font, text, position, color);
             }
         }
         class GizmoLine {
             Vector2 start;
             Vector2 end;
-            public GizmoLine(Vector2 from, Vector2 to) {
+            Color color;
+            int thickness;
+            public GizmoLine(Vector2 from, Vector2 to, Color color, int thickness = 3) {
                 this.start = from;
                 this.end = to;
+                this.color = color;
+                this.thickness = thickness;
             }
             public void Draw(SpriteBatch sb, Texture2D pixel) {
                 Vector2 edge = end - start;
@@ -36,9 +40,9 @@ namespace ProjectPivot.Utils {
                         (int)start.X,
                         (int)start.Y,
                         (int)edge.Length(), //sb will strech the texture to fill this rectangle
-                        3), //width of line, change this to make thicker line
+                        thickness), //width of line, change this to make thicker line
                     null,
-                    Color.Red, //colour of line
+                    color, //colour of line
                     angle,     //angle of line (calulated above)
                     new Vector2(0, 0), // point in line about which to rotate
                     SpriteEffects.None,
@@ -50,6 +54,7 @@ namespace ProjectPivot.Utils {
 
 		static Queue<GizmoLine> lines = new Queue<GizmoLine>();
 		static Queue<GizmoText> texts = new Queue<GizmoText>();
+        static List<GizmoLine> permalines = new List<GizmoLine>();
 
 		public static void Initialize(GraphicsDevice graphics) {
 			Pixel = new Texture2D(graphics, 1, 1, false, SurfaceFormat.Color);
@@ -60,36 +65,52 @@ namespace ProjectPivot.Utils {
             Font = content.Load<SpriteFont>("Fonts/debugText");
         }
 
-		public static void Line(Vector2 from, Vector2 to) {
-			lines.Enqueue(new GizmoLine(from, to));
+        public static void Line(Vector2 from, Vector2 to, Color color, bool permanent = false) {
+            if (permanent) {
+			    permalines.Add(new GizmoLine(from, to, color));
+            } else {
+			    lines.Enqueue(new GizmoLine(from, to, color));
+            }
 		}
 
-        public static void Text(string what, Vector2 position) {
-            texts.Enqueue(new GizmoText(what, position));
+        public static void Text(string what, Vector2 position, Color color) {
+            texts.Enqueue(new GizmoText(what, position, color));
         }
 
-		public static void Rectangle(Rectangle rect) {
+		public static void Rectangle(Rectangle rect, Color color, bool permanent = false) {
 			Line(
 				new Vector2(rect.Left, rect.Top),
-				new Vector2(rect.Right, rect.Top));
+				new Vector2(rect.Right, rect.Top), color, permanent);
 			Line(
 				new Vector2(rect.Left, rect.Bottom),
-				new Vector2(rect.Right, rect.Bottom));
+				new Vector2(rect.Right, rect.Bottom), color, permanent);
 			Line(
 				new Vector2(rect.Left, rect.Top),
-				new Vector2(rect.Left, rect.Bottom));
+				new Vector2(rect.Left, rect.Bottom), color, permanent);
 			Line(
 				new Vector2(rect.Right, rect.Top),
-				new Vector2(rect.Right, rect.Bottom));
+				new Vector2(rect.Right, rect.Bottom), color, permanent);
 		}
 
-		public static void Draw(SpriteBatch spriteBatch) {
+        public static void Draw(SpriteBatch spriteBatch, bool grid = true) {
+            if (grid) {
+                new GizmoText("(X)", Vector2.Zero, Color.WhiteSmoke).Draw(spriteBatch, Font);
+                for (int x = -200 * 32; x < 200 * 32; x+= 32) {
+                    new GizmoLine(new Vector2(x, -200 * 32), new Vector2(x, 200 * 32), Color.LightGray, 1).Draw(spriteBatch, Pixel);
+                }
+                for (int y = -200 * 32; y < 200 * 32; y+= 32) {
+                    new GizmoLine(new Vector2(-200 * 32, y), new Vector2(200 * 32, y), Color.LightGray, 1).Draw(spriteBatch, Pixel);
+                }
+            }
 			while (lines.Count > 0) {
 				lines.Dequeue().Draw(spriteBatch, Pixel);
 			}
 			while (texts.Count > 0) {
 				texts.Dequeue().Draw(spriteBatch, Font);
 			}
+            foreach (GizmoLine line in permalines) {
+                line.Draw(spriteBatch, Pixel);
+            }
 		}
 
 	}
