@@ -32,10 +32,6 @@ namespace ProjectPivot.Utils {
                 (Center.X + rect.Width / 2f),
                 (Center.Y + rect.Height / 2f));
             InitDh();
-            Rectangle rekt2 = ToRectangle();
-            if (rect != rekt2) {
-                Console.WriteLine("noo");
-            }
         }
 
         public AABB(Vector2 center, Vector2 halfDimension) {

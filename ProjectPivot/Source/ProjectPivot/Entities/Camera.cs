@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjectPivot.Components;
 
 namespace ProjectPivot.Entities {
 	public class Camera : GameObject {
@@ -22,7 +23,7 @@ namespace ProjectPivot.Entities {
         public Vector2 WorldPosition { get; protected set; }
         public Rectangle VisibleArea { get; protected set; }
         public AABB VisibleAreaAABB { get {
-                return new AABB(VisibleArea, Color.YellowGreen);}
+                return new AABB(EnlargeRect(VisibleArea, 32), Color.YellowGreen);}
         }
         public float Rotation;
         private Viewport viewport;
@@ -30,7 +31,12 @@ namespace ProjectPivot.Entities {
         private Int32 prevMouseScrollValue;
 		private float cameraSpeed = 4f;
 		private float zoomSpeed = 3f;
+
         public GameObject Target;
+
+        protected Crosshair crosshair;
+
+
         #endregion
 
         #region Constructor
@@ -38,10 +44,16 @@ namespace ProjectPivot.Entities {
             this.Zoom = 1.0f;
             this.Rotation = 0.0f;
             this.viewport = viewport;
+            this.crosshair = AddComponent<Crosshair>(new Crosshair());
         }
         #endregion
 
         #region Public Methods
+        public Rectangle EnlargeRect(Rectangle input, int amount) {
+            return new Rectangle(
+                input.X - amount, input.Y - amount, 
+                input.Width + amount, input.Height + amount);
+        }
         public Vector2 MouseWorldCoordinates() {
             return ToWorldCoordinates(new Vector2(mouseState.X, mouseState.Y));
         }

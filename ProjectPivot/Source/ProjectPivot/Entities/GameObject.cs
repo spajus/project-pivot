@@ -6,13 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.Contracts;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Entities {
     public class GameObject {
 
         public GameObject Parent { get; protected set; }
         public List<GameObject> Children { get; protected set; }
+        private AABB box;
 
+        // A bit bigger than actual object to prevent cutting
+        public AABB QuadTreeBox {
+            get {
+                if (box == null) {
+                    box = new AABB(
+                        new Rectangle((int)Position.X, 
+                                      (int)Position.Y, 
+                                      32, 
+                                      32));
+                }
+                return box;
+            }
+            protected set {
+                box = value;
+            }
+        }
 
         public Vector2 Position;
         List<Component> components = new List<Component>();

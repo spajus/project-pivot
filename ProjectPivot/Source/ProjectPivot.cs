@@ -18,11 +18,13 @@ namespace ProjectPivot
         // CONSTANTS
         public const double minPhysicsStepTime = 1.0 / 30.0;
         public const bool physicsDebugEnabled = false;
-        public const bool cellsDebugEnabled = true;
-        public const int mapWidth = 10;
-        public const int mapHeight = 4;
-        public const int screenWidth = 800;
-        public const int screenHeight = 600;
+        public const bool cellsDebugEnabled = false;
+        public const bool gizmosEnabled = true;
+        public const bool gizmoGridEnabled = false;
+        public const int mapWidth = 300;
+        public const int mapHeight = 300;
+        public const int screenWidth = 1200;
+        public const int screenHeight = 800;
 
 
         GraphicsDeviceManager graphics;
@@ -155,7 +157,7 @@ namespace ProjectPivot
 
 			//Gizmo.Rectangle(new Rectangle(5, 5, 200, 100));
 
-            Gizmo.Draw(spriteBatch);
+            Gizmo.Draw(spriteBatch, gizmoGridEnabled);
 			spriteBatch.End();
 
             if (physicsDebugEnabled) {
