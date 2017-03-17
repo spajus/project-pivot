@@ -66,6 +66,9 @@ namespace ProjectPivot.Entities {
             return VisibleArea.Intersects(position);
         }
 
+        public Vector2 ToWorldCoordinates(int x, int y) {
+            return ToWorldCoordinates(new Vector2(x, y));
+        }
         public Vector2 ToWorldCoordinates(Vector2 screenPosition) {
             return Vector2.Transform(screenPosition, InverseTransform);
         }
@@ -111,9 +114,10 @@ namespace ProjectPivot.Entities {
         }
 
         void LerpToTarget(float deltaTime) {
+            Vector2 wantPosition = Vector2.Lerp(Target.Position, crosshair.WorldPosition, 0.3f);
 			if (Target != null) {
-				if (Vector2.DistanceSquared(Position, Target.Position) > 500) {
-					Position = Vector2.Lerp(Position, Target.Position, deltaTime * cameraSpeed);
+				if (Vector2.DistanceSquared(Position, wantPosition) > 500) {
+					Position = Vector2.Lerp(Position, wantPosition, deltaTime * cameraSpeed);
                 }
             }
         }

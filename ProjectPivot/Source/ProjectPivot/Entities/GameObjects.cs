@@ -72,7 +72,6 @@ namespace ProjectPivot.Entities {
             if (useQuadTree) {
                 foreach (GameObject go in alwaysUpdated) {
                     go.Draw(spriteBatch);
-
                 }
                 Gizmo.Text($"Rekt: #{Camera.Main.VisibleAreaAABB}", 
                     Camera.Main.ToWorldCoordinates(new Vector2(0, 140)), Color.White);
