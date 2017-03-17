@@ -34,7 +34,7 @@ namespace ProjectPivot.Entities {
 
         public GameObject Target;
 
-        protected Crosshair crosshair;
+        public Crosshair Crosshair;
 
 
         #endregion
@@ -44,7 +44,7 @@ namespace ProjectPivot.Entities {
             this.Zoom = 1.0f;
             this.Rotation = 0.0f;
             this.viewport = viewport;
-            this.crosshair = AddComponent<Crosshair>(new Crosshair());
+            this.Crosshair = AddComponent<Crosshair>(new Crosshair());
         }
         #endregion
 
@@ -84,7 +84,7 @@ namespace ProjectPivot.Entities {
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();
-            Gizmo.Rectangle(VisibleArea, Color.Pink);
+            // Gizmo.Rectangle(VisibleArea, Color.Pink);
 			// Rotation = ClampRotation();
 
 			Transform = 
@@ -95,8 +95,8 @@ namespace ProjectPivot.Entities {
 
 			InverseTransform = Matrix.Invert(Transform);
 
-			Gizmo.Rectangle(VisibleArea, Color.Blue);
-			Gizmo.Line(Position, Target.Position, Color.Red);
+			// Gizmo.Rectangle(VisibleArea, Color.Blue);
+			// Gizmo.Line(Position, Target.Position, Color.Red);
 		}
 
 		void ReactToUserInput(float deltaTime) {
@@ -104,17 +104,14 @@ namespace ProjectPivot.Entities {
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
                 Zoom += zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
-				Debug.WriteLine($"Zoom: {Zoom}");
-
             } else if (mouseState.ScrollWheelValue < prevMouseScrollValue) {
                 Zoom -= zoomSpeed * deltaTime;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
-				Debug.WriteLine($"Zoom: {Zoom}");
             }
         }
 
         void LerpToTarget(float deltaTime) {
-            Vector2 wantPosition = Vector2.Lerp(Target.Position, crosshair.WorldPosition, 0.3f);
+            Vector2 wantPosition = Vector2.Lerp(Target.Position, Crosshair.WorldPosition, 0.3f);
 			if (Target != null) {
 				if (Vector2.DistanceSquared(Position, wantPosition) > 500) {
 					Position = Vector2.Lerp(Position, wantPosition, deltaTime * cameraSpeed);

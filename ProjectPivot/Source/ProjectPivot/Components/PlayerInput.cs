@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Entities;
 using ProjectPivot.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace ProjectPivot.Components {
     public class PlayerInput : Component {
         float speed = 100f;
         PlayerBody playerBody;
+        public Direction direction;
+        public float Rotation = 0f;
         Vector2 velocity;
         const float maxSpeed = 5f;
 
@@ -63,6 +66,16 @@ namespace ProjectPivot.Components {
                 //playerBody.Body.LinearVelocity = Vector2.Zero;
                 playerBody.Body.LinearDamping = 10f;
             }
+            changeDirection();
+        }
+
+        void changeDirection() {
+            Vector2 xPos = Camera.Main.Crosshair.WorldPosition;
+            Rotation = (float) Math.Atan2(xPos.Y - GameObject.Position.Y,
+                xPos.X - GameObject.Position.X);
+            Gizmo.Text($"Angle: {Rotation}", 
+                GameObject.Position, Color.Yellow);
+            
         }
     }
 }

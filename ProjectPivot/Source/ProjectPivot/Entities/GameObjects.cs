@@ -55,16 +55,21 @@ namespace ProjectPivot.Entities {
         }
 
         public static void Update(GameTime gameTime) {
+            uint updates = 0;
             if (useQuadTree) {
                 foreach (GameObject go in alwaysUpdated) {
                     go.Update(gameTime);
+                    updates++;
                 }
                 foreach (GameObject visibleObject in gameObjectTree.QueryRange(Camera.Main.VisibleAreaAABB)) {
                     visibleObject.Update(gameTime);
+                    updates++;
                 }
             } else { 
                 gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
+                updates++;
             }
+            Gizmo.Text($"Updates: {updates}", Camera.Main.Crosshair.WorldPosition, Color.Green);
         }
 
         public static void Draw(SpriteBatch spriteBatch) {
@@ -73,10 +78,6 @@ namespace ProjectPivot.Entities {
                 foreach (GameObject go in alwaysUpdated) {
                     go.Draw(spriteBatch);
                 }
-                Gizmo.Text($"Rekt: #{Camera.Main.VisibleAreaAABB}", 
-                    Camera.Main.ToWorldCoordinates(new Vector2(0, 140)), Color.White);
-                Gizmo.Text($"Map Rekt: #{gameObjectTree}", 
-                    Camera.Main.ToWorldCoordinates(new Vector2(0, 160)), Color.White);
                 visibleObjects = gameObjectTree.QueryRange(Camera.Main.VisibleAreaAABB);
                 foreach (GameObject visibleObject in visibleObjects) {
                     if (visibleObject.IsVisible(Camera.Main)) {

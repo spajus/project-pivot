@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Components;
+using ProjectPivot.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +37,15 @@ namespace ProjectPivot.Entities {
             return camera.IsVisible(Area);
         }
 
-        public virtual void OnUpdate(GameTime gameTime) {
+        protected override void OnUpdate(GameTime gameTime) {
             if (ProjectPivot.cellsDebugEnabled) {
-                health.DrawHealth();
+                Rectangle xhrect = new Rectangle(
+                    Camera.Main.Crosshair.WorldPosition.ToPoint(), new Point(1, 1));
+                if (Area.Intersects(xhrect)) {
+                    Gizmo.Rectangle(Area, Color.Red);
+                    Gizmo.Rectangle(xhrect, Color.Red);
+                    health.DrawHealth();
+                }
             }
         }
     }

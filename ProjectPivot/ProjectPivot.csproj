@@ -76,6 +76,7 @@
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObjects.cs" />
     <Compile Include="Source\ProjectPivot\Utils\AABB.cs" />
+    <Compile Include="Source\ProjectPivot\Utils\Direction.cs" />
     <Compile Include="Source\ProjectPivot\Utils\FPSCounter.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Map.cs" />
     <Compile Include="Source\ProjectPivot\Textures.cs" />

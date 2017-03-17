@@ -30,9 +30,9 @@ namespace ProjectPivot.Entities {
             this.offset = offset;
             Rectangle mapBounds = new Rectangle((int)offset.X, (int) offset.Y, width * 32, height * 32);
             Boundary = new AABB(mapBounds, Color.Brown);
-            Gizmo.Rectangle(mapBounds, Color.Violet, true);
-            Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
-            Gizmo.Text("x", Boundary.Center, Color.Brown, true);
+            //Gizmo.Rectangle(mapBounds, Color.Violet, true);
+            //Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
+            //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
         }
 
 

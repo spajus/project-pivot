@@ -9,6 +9,7 @@ namespace ProjectPivot.Components {
     public class Crosshair : Component {
         public Vector2 Position { get; protected set; }
         public Vector2 WorldPosition { get; protected set; }
+        public Vector2 spriteCenter = new Vector2(16, 16);
         private Camera camera;
         public Crosshair() {
 
@@ -26,7 +27,7 @@ namespace ProjectPivot.Components {
 
         public override void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(Textures.Texture("crosshair"),
-                WorldPosition,
+                WorldPosition - spriteCenter / Camera.Main.Zoom,
                 new Rectangle(0, 0, 32, 32),
                 Color.White, 0f,
                 Vector2.Zero,

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Utils {
     public class QuadTree {
-        private const int NODE_CAPACITY = 12;
+        private const int NODE_CAPACITY = 24;
         private QuadTree ne, nw, se, sw;
         List<GameObject> gameObjects;
         AABB boundary;

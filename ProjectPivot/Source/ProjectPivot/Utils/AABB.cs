@@ -12,12 +12,8 @@ namespace ProjectPivot.Utils {
         public Vector2 HalfDimension { get; protected set; }
         public float DhX { get; protected set; }
         public float DhY { get; protected set; }
-        public Color Color = Color.Green;
-        public Rectangle origRect;
 
         public AABB(Rectangle rect)  {
-            this.origRect = rect;
-
             Center = CenterOf(rect);
             HalfDimension = new Vector2(
                 (Center.X + rect.Width / 2f),
@@ -25,8 +21,6 @@ namespace ProjectPivot.Utils {
             InitDh();
         }
         public AABB(Rectangle rect, Color color)  {
-            Color = color;
-            this.origRect = rect;
             Center = CenterOf(rect);
             HalfDimension = new Vector2(
                 (Center.X + rect.Width / 2f),
@@ -108,8 +102,6 @@ namespace ProjectPivot.Utils {
         private void InitDh() {
             DhX = Math.Abs(HalfDimension.X - Center.X);
             DhY = Math.Abs(HalfDimension.Y - Center.Y);
-            Gizmo.Rectangle(this.ToRectangle(), Color); 
-            Gizmo.Text("O", Center, Color);
         }
 
         private Vector2 CenterOf(Rectangle rectangle) {
@@ -117,6 +109,5 @@ namespace ProjectPivot.Utils {
                 (rectangle.X) + rectangle.Width / 2f,
                 (rectangle.Y) + rectangle.Height / 2f);
         }
-
     }
 }
