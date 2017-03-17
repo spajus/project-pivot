@@ -77,7 +77,7 @@ namespace ProjectPivot.Entities {
 		{
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			ReactToUserInput(deltaTime);
-			Zoom = MathHelper.Clamp(Zoom, 0.5f, 1.5f);
+			Zoom = MathHelper.Clamp(Zoom, 0.8f, 1.5f);
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();

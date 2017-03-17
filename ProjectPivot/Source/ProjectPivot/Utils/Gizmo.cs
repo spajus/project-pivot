@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using ProjectPivot.Entities;
 
 namespace ProjectPivot.Utils {
     public static class Gizmo {
@@ -93,7 +94,29 @@ namespace ProjectPivot.Utils {
                 this.color = color;
             }
             public void Draw(SpriteBatch sb, SpriteFont font) {
-                sb.DrawString(font, text, position, color);
+                Vector2 p;
+                Vector2 scale = Vector2.One / Camera.Main.Zoom; // 12f;// * Camera.Main.Zoom;
+                float layerDepth = 0.1f;
+
+                p = position + new Vector2(-1, -1);
+                sb.DrawString(font, text, p, Color.Black, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+                p = position + new Vector2(1, -1);
+                sb.DrawString(font, text, p, Color.Black, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+                p = position + new Vector2(-1, 1);
+                sb.DrawString(font, text, p, Color.Black, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+                p = position + new Vector2(1, 1);
+                sb.DrawString(font, text, p, Color.Black, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+                p = position + new Vector2(1, 1);
+                sb.DrawString(font, text, p, Color.Black, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, layerDepth);
+
+                sb.DrawString(font, text, position, color, 
+                    0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
             }
         }
         #endregion
