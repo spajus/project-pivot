@@ -52,7 +52,7 @@ namespace ProjectPivot.Entities {
         public Rectangle EnlargeRect(Rectangle input, int amount) {
             return new Rectangle(
                 input.X - amount, input.Y - amount, 
-                input.Width + amount, input.Height + amount);
+                input.Width + amount * 2, input.Height + amount * 2);
         }
         public Vector2 MouseWorldCoordinates() {
             return ToWorldCoordinates(new Vector2(mouseState.X, mouseState.Y));

@@ -17,7 +17,7 @@ namespace ProjectPivot
     {
         // CONSTANTS
         public const double minPhysicsStepTime = 1.0 / 30.0;
-        public const bool physicsDebugEnabled = true;
+        public const bool physicsDebugEnabled = false;
         public const bool cellsDebugEnabled = true;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;

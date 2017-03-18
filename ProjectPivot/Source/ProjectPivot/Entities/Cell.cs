@@ -27,7 +27,7 @@ namespace ProjectPivot.Entities {
             this.Height = height;
             this.MapX = mapX;
             this.MapY = mapY;
-            this.Area = new Rectangle((int) Position.X, (int) Position.Y, width, height);
+            this.Area = new Rectangle((int) Position.X - 16, (int) Position.Y - 16, width, height);
             AddComponent(new CellGraphics());
             this.health = AddComponent<Health>(new Health(health));
             AddComponent(new CellBody());
@@ -43,7 +43,7 @@ namespace ProjectPivot.Entities {
                     Camera.Main.Crosshair.WorldPosition.ToPoint(), new Point(1, 1));
                 if (Area.Intersects(xhrect)) {
                     Gizmo.Rectangle(Area, Color.Red);
-                    Gizmo.Rectangle(xhrect, Color.Red);
+                    Gizmo.Rectangle(xhrect, Color.Blue);
                     health.DrawHealth();
                 }
             }
