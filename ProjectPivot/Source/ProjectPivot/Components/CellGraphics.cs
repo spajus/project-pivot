@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Components {
     public class CellGraphics : Component {
         private Health health;
+        private static Vector2 cellOrigin = new Vector2(16, 16);
         private static Dictionary<int, Texture2D> textures;
         // 0 - no wall, 4 - full wall, 1-3 - in between
         public static void LoadContent(ContentManager content) {
@@ -32,7 +33,7 @@ namespace ProjectPivot.Components {
                 null, // Source rectangle
                 Color.White,
                 0f, // rotation
-                Vector2.Zero, // Origin
+                cellOrigin, // Origin
                 1f, // scale
                 SpriteEffects.None,
                 1f // layer depth

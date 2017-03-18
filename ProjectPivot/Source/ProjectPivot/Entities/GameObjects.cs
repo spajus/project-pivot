@@ -69,7 +69,6 @@ namespace ProjectPivot.Entities {
                 gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
                 updates++;
             }
-            Gizmo.Text($"Updates: {updates}", Camera.Main.Crosshair.WorldPosition, Color.Green);
         }
 
         public static void Draw(SpriteBatch spriteBatch) {
@@ -94,10 +93,10 @@ namespace ProjectPivot.Entities {
             if (true) {
                 Gizmo.Text(
                     $"Visible objects: {visibleObjects.Count}",
-                    Camera.Main.ToWorldCoordinates(new Vector2(0, 100)), Color.White);
+                    Camera.Main.ToWorldCoordinates(new Vector2(0, 40)), Color.White);
                 Gizmo.Text(
                     $"All objects: {gameObjects.Count}",
-                    Camera.Main.ToWorldCoordinates(new Vector2(0, 120)), Color.White);
+                    Camera.Main.ToWorldCoordinates(new Vector2(0, 58)), Color.White);
             }
         }
     }

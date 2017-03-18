@@ -17,12 +17,12 @@ namespace ProjectPivot
     {
         // CONSTANTS
         public const double minPhysicsStepTime = 1.0 / 30.0;
-        public const bool physicsDebugEnabled = false;
+        public const bool physicsDebugEnabled = true;
         public const bool cellsDebugEnabled = true;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 500;
-        public const int mapHeight = 500;
+        public const int mapWidth = 100;
+        public const int mapHeight = 100;
         public const int screenWidth = 1200;
         public const int screenHeight = 800;
 

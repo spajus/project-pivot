@@ -17,6 +17,8 @@ namespace ProjectPivot.Components {
         PlayerBody playerBody;
         public Direction direction;
         public float Rotation = 0f;
+        public float RotationDeg { get { return MathHelper.ToDegrees(Rotation) + 180; } }
+        public bool IsMoving;
         Vector2 velocity;
         const float maxSpeed = 5f;
 
@@ -26,8 +28,6 @@ namespace ProjectPivot.Components {
             playerBody = GameObject.GetComponent<PlayerBody>();
         }
         public override void Update(GameTime gameTime) {
-            Gizmo.Rectangle(
-                new Rectangle((int)GameObject.Position.X, (int)GameObject.Position.Y, 32, 32), Color.Beige);
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
 			float newX = 0f; //GameObject.Position.X;
@@ -49,6 +49,8 @@ namespace ProjectPivot.Components {
 				newY += speed;
 				changed = true;
             }
+            IsMoving = false;
+
             if (changed) {
                 velocity = new Vector2(newX, newY);
                 velocity.Normalize();
@@ -60,6 +62,7 @@ namespace ProjectPivot.Components {
                         playerBody.Body.LinearDamping = 3f;
                     }
                     playerBody.Body.ApplyLinearImpulse(velocity * deltaTime);
+                    IsMoving = true;
                 }
                 //playerBody.Body.LinearVelocity = (new Vector2(newX, newY) * deltaTime);
             } else {
@@ -73,9 +76,6 @@ namespace ProjectPivot.Components {
             Vector2 xPos = Camera.Main.Crosshair.WorldPosition;
             Rotation = (float) Math.Atan2(xPos.Y - GameObject.Position.Y,
                 xPos.X - GameObject.Position.X);
-            Gizmo.Text($"Angle: {Rotation}", 
-                GameObject.Position, Color.Yellow);
-            
         }
     }
 }

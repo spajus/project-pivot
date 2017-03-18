@@ -12,13 +12,25 @@ namespace ProjectPivot {
         public string Name { get; protected set; }
         public string AtlasName { get; protected set; }
         private Rectangle region;
-        public TextureRegion(string atlasName, string name, int x, int y, int width, int height) {
+        private float initRotation;
+        public TextureRegion(string atlasName, string name, int x, int y, int width, int height, float initRotation = 0f) {
             this.Name = name;
             this.AtlasName = atlasName;
             this.region = new Rectangle(x, y, width, height);
+            this.initRotation = MathHelper.ToRadians(initRotation);
         }
-        public void Draw(SpriteBatch spriteBatch, Vector2 position) {
-            spriteBatch.Draw(Textures.Atlas(AtlasName), position, region, Color.White);
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float layerDepth = 0f, float rotation = 0f, SpriteEffects sfx = SpriteEffects.None) {
+            spriteBatch.Draw(
+                Textures.Atlas(AtlasName), 
+                position, 
+                region, 
+                Color.White, 
+                initRotation + rotation, 
+                new Vector2(region.Width/2, region.Height/2), 
+                Vector2.One,
+                sfx,
+                layerDepth);
+
         }
     }
     public static class Textures {
@@ -29,6 +41,9 @@ namespace ProjectPivot {
         public static void LoadContent(ContentManager content) {
             AddAtlas(content, "tilesheet_pa1", "Images/tilesheet_pa1");
             AddRegion(new TextureRegion("tilesheet_pa1", "player_down", 602, 226, 38, 38));
+            AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));
+            AddRegion(new TextureRegion("tilesheet_pa1", "player_left", 676, 226, 38, 38));
+            AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
             AddTexture(content, "crosshair", "Images/crosshair");
         }
 
@@ -36,14 +51,14 @@ namespace ProjectPivot {
             return atlases[name];
         }
 
-        public static void Draw(SpriteBatch spriteBatch, string regionName, Vector2 position) {
-            regions[regionName].Draw(spriteBatch, position);
+        public static void Draw(SpriteBatch spriteBatch, string regionName, Vector2 position, 
+            float layerDepth = 0f, float rotation = 0f, SpriteEffects sfx = SpriteEffects.None) {
+            regions[regionName].Draw(spriteBatch, position, layerDepth, rotation, sfx);
         }
 
         public static Texture2D Texture(string name) {
             return textures[name];
         }
-
 
         public static void AddRegion(TextureRegion region) {
             regions.Add(region.Name, region);
