@@ -17,7 +17,8 @@ namespace ProjectPivot.Entities {
         public static Camera Main;
 
         #region Fields
-        public float Zoom;
+        private int zoom = 100;
+        public float Zoom { get { return zoom / 100f; } }
         public Matrix Transform;
         public Matrix InverseTransform { get; protected set; }
         public Vector2 WorldPosition { get; protected set; }
@@ -30,7 +31,7 @@ namespace ProjectPivot.Entities {
         private MouseState mouseState;
         private Int32 prevMouseScrollValue;
 		private float cameraSpeed = 4f;
-		private float zoomSpeed = 3f;
+        private int zoomSpeed = 5;
 
         public GameObject Target;
 
@@ -41,7 +42,6 @@ namespace ProjectPivot.Entities {
 
         #region Constructor
 		public Camera(Viewport viewport, Vector2 position) : base(position) {
-            this.Zoom = 1.0f;
             this.Rotation = 0.0f;
             this.viewport = viewport;
             this.Crosshair = AddComponent<Crosshair>(new Crosshair());
@@ -80,7 +80,7 @@ namespace ProjectPivot.Entities {
 		{
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			ReactToUserInput(deltaTime);
-			Zoom = MathHelper.Clamp(Zoom, 0.8f, 1.5f);
+			zoom = MathHelper.Clamp(zoom, 75, 150);
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();
@@ -102,10 +102,10 @@ namespace ProjectPivot.Entities {
 		void ReactToUserInput(float deltaTime) {
             mouseState = Mouse.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
-                Zoom += zoomSpeed * deltaTime;
+                zoom += zoomSpeed;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             } else if (mouseState.ScrollWheelValue < prevMouseScrollValue) {
-                Zoom -= zoomSpeed * deltaTime;
+                zoom -= zoomSpeed;
                 prevMouseScrollValue = mouseState.ScrollWheelValue;
             }
         }

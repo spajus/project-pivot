@@ -16,6 +16,7 @@ namespace ProjectPivot
     public class ProjectPivot : Game
     {
         // CONSTANTS
+        public SamplerState globalSamplerState = SamplerState.AnisotropicWrap;
         public const double minPhysicsStepTime = 1.0 / 30.0;
         public const bool physicsDebugEnabled = false;
         public const bool cellsDebugEnabled = true;
@@ -64,7 +65,11 @@ namespace ProjectPivot
         {
             // TODO: Add your initialization logic here
 
-			Gizmo.Initialize(GraphicsDevice);
+            for (int i = 0; i < 16; i++) {
+                GraphicsDevice.SamplerStates[0] = globalSamplerState;
+            }
+                
+            Gizmo.Initialize(GraphicsDevice);
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
@@ -137,11 +142,11 @@ namespace ProjectPivot
 
 			// TODO: Add your drawing code here
 			spriteBatch.Begin(SpriteSortMode.BackToFront,
-                BlendState.AlphaBlend,
-                null,
-                null, 
-                null, 
-                null, 
+                              BlendState.AlphaBlend, 
+                              globalSamplerState,
+                              DepthStencilState.Default,
+                              RasterizerState.CullNone,
+                              null,
                 camera.Transform);
 
             base.Draw(gameTime);
