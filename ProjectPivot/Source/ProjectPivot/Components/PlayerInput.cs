@@ -17,6 +17,7 @@ namespace ProjectPivot.Components {
         PlayerBody playerBody;
         public Direction direction;
         public float Rotation = 0f;
+        // 0 deg = 9 o'clock
         public float RotationDeg { get { return MathHelper.ToDegrees(Rotation) + 180; } }
         public bool IsMoving;
         Vector2 velocity;
@@ -76,6 +77,7 @@ namespace ProjectPivot.Components {
             Vector2 xPos = Camera.Main.Crosshair.WorldPosition;
             Rotation = (float) Math.Atan2(xPos.Y - GameObject.Position.Y,
                 xPos.X - GameObject.Position.X);
+            //Gizmo.Text(RotationDeg.ToString(), xPos, Color.White);
         }
     }
 }
