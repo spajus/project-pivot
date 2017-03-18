@@ -27,10 +27,10 @@ namespace ProjectPivot.Components {
 
         public override void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(Textures.Texture("crosshair"),
-                WorldPosition / Camera.Main.Zoom,
+                WorldPosition,
                 new Rectangle(0, 0, 32, 32),
                 Color.White, 0f,
-                             spriteCenter,
+                spriteCenter,
                 Vector2.One / Camera.Main.Zoom,
                 SpriteEffects.None,
                 0f);
