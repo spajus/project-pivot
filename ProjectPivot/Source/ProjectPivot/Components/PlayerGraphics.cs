@@ -16,12 +16,6 @@ namespace ProjectPivot.Components {
             input = GameObject.GetComponent<PlayerInput>();
         }
         public override void Draw(SpriteBatch spriteBatch) {
-            float gunDepth = 0.1f;
-            SpriteEffects gunSfx = SpriteEffects.None;
-            float gunAngleAdjustment = 0.0f;
-            Vector2 gunOffset = new Vector2(8, 4);
-
-
             if (input.IsMoving) {
                 if (input.RotationDeg <= 90 || input.RotationDeg > 270) {
                     Textures.Draw(spriteBatch, "player_left", GameObject.Position, layerDepth);
@@ -33,31 +27,9 @@ namespace ProjectPivot.Components {
                     Textures.Draw(spriteBatch, "player_down", GameObject.Position, layerDepth);
                 } else {
                     Textures.Draw(spriteBatch, "player_up", GameObject.Position, layerDepth);
-                    gunDepth = 0.3f;
-                    gunOffset = new Vector2(8, -6);
                 }
             }
 
-            // gun adj
-            if (input.RotationDeg <= 90 || input.RotationDeg > 270) {
-                gunSfx = SpriteEffects.FlipHorizontally;
-                gunAngleAdjustment = MathHelper.ToRadians(90);
-                if (input.RotationDeg <= 90) {
-                    // aiming top-left
-                    if (input.IsMoving) {
-                        gunOffset = new Vector2(-8, 4);
-                    } else { 
-                        gunOffset = new Vector2(-8, -4);
-                    }
-                } else {
-                    //aiming top-right
-                    gunOffset = new Vector2(-8, 4);
-
-                }
-            }
-
-            Textures.Draw(spriteBatch, "sniper_rifle", GameObject.Position + gunOffset, 
-                gunDepth, input.Rotation + gunAngleAdjustment, gunSfx);
         }
     }
 }

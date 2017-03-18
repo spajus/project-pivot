@@ -78,6 +78,10 @@ namespace ProjectPivot
             map.Generate();
             player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player, true);
+
+            Weapon w = new Weapon(player.Position, player);
+            GameObjects.Add(w, true);
+
             camera = new Camera(GraphicsDevice.Viewport, player.Position);
             Camera.Main = camera;
 

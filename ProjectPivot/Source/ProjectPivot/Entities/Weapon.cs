@@ -7,8 +7,20 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Entities {
     class Weapon : GameObject {
-        public Weapon(Vector2 position) : base(position) {
+        public GameObject Owner { get; protected set; } 
+        public float Rotation { get; set; }
+        public float RotationDeg { get { return MathHelper.ToDegrees(Rotation); } }
 
+        public Weapon(Vector2 position, GameObject owner = null) : base(position) {
+            this.Owner = owner;
+            AddComponent(new WeaponGraphics());
+        }
+
+        protected override void OnUpdate(GameTime gameTime) {
+            if (Owner != null) {
+                Position = Owner.Position;
+                // todo sway
+            }
         }
     }
 }
