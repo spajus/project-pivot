@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 using ProjectPivot.Utils;
+using FarseerPhysics.Dynamics;
 
 namespace ProjectPivot.Entities {
     public class GameObject {
@@ -15,6 +16,7 @@ namespace ProjectPivot.Entities {
         public GameObject Parent { get; protected set; }
         public List<GameObject> Children { get; protected set; }
         private AABB box;
+        public bool IsMarkedForDestruction { get; protected set; }
 
         // A bit bigger than actual object to prevent cutting
         public AABB QuadTreeBox {
@@ -87,6 +89,10 @@ namespace ProjectPivot.Entities {
 			components.ForEach(component => component.Update(gameTime));
         }
 
+        public void Destroy() {
+            OnDestroy();
+        }
+
         public void Draw(SpriteBatch spriteBatch) {
 			OnDraw(spriteBatch);
             components.ForEach(component => component.Draw(spriteBatch));
@@ -100,8 +106,11 @@ namespace ProjectPivot.Entities {
             return true;
         }
 
+        public virtual Body PhysicsBody() { return null; }
+
 		protected virtual void OnInitialize() { }
 		protected virtual void OnUpdate(GameTime gameTime) { }
 		protected virtual void OnDraw(SpriteBatch spriteBatch) { }
+        protected virtual void OnDestroy() { }
     }
 }

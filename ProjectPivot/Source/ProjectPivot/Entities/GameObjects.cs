@@ -15,6 +15,7 @@ namespace ProjectPivot.Entities {
 
         private static List<GameObject> gameObjects = new List<GameObject>();
         private static List<GameObject> alwaysUpdated = new List<GameObject>();
+        private static Queue<GameObject> pendingDestruction = new Queue<GameObject>();
         private static QuadTree gameObjectTree;
 
         public static void Add(GameObject gameObject, bool alwaysUpdate = false) {
@@ -29,7 +30,11 @@ namespace ProjectPivot.Entities {
             gameObject.Initialize();
         }
 
-        public static void Remove(GameObject gameObject) {
+        public static void Destroy(GameObject gameObject) {
+            pendingDestruction.Enqueue(gameObject);
+        }
+
+        public static GameObject Remove(GameObject gameObject) {
             gameObjects.Remove(gameObject);
             if (useQuadTree) {
                 if (alwaysUpdated.Contains(gameObject)) {
@@ -38,7 +43,7 @@ namespace ProjectPivot.Entities {
                     gameObjectTree.Remove(gameObject);
                 }
             }
-            // TODO: gameObject.Destroy();
+            return gameObject;
         }
 
         public static void Initialize(Map map) {
@@ -55,10 +60,13 @@ namespace ProjectPivot.Entities {
         }
 
         public static void Update(GameTime gameTime) {
+            while (pendingDestruction.Count > 0) {
+                Remove(pendingDestruction.Dequeue()).Destroy();
+            }
             uint updates = 0;
             if (useQuadTree) {
-                foreach (GameObject go in alwaysUpdated) {
-                    go.Update(gameTime);
+                for (int i = 0; i < alwaysUpdated.Count; i++) {
+                    alwaysUpdated[i].Update(gameTime);
                     updates++;
                 }
                 foreach (GameObject visibleObject in gameObjectTree.QueryRange(Camera.Main.VisibleAreaAABB)) {

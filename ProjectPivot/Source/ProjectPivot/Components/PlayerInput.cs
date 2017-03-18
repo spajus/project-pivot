@@ -15,6 +15,7 @@ namespace ProjectPivot.Components {
     public class PlayerInput : Component {
         float speed = 100f;
         PlayerBody playerBody;
+        public Weapon Weapon;
         public Direction direction;
         public float Rotation = 0f;
         // 0 deg = 9 o'clock
@@ -28,9 +29,11 @@ namespace ProjectPivot.Components {
         public override void Initialize() {
             playerBody = GameObject.GetComponent<PlayerBody>();
         }
+
         public override void Update(GameTime gameTime) {
 			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
 			float newX = 0f; //GameObject.Position.X;
 			float newY = 0f; //GameObject.Position.Y;
 			bool changed = false;
@@ -71,6 +74,11 @@ namespace ProjectPivot.Components {
                 playerBody.Body.LinearDamping = 10f;
             }
             changeDirection();
+
+            if (mouseState.LeftButton == ButtonState.Pressed) {
+                Weapon.Fire(Camera.Main.Crosshair.WorldPosition);
+                
+            }
         }
 
         void changeDirection() {

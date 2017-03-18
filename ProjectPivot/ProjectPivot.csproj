@@ -64,12 +64,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\FarseerPhysics\DebugViewXNA.cs" />
     <Compile Include="Source\FarseerPhysics\PrimitiveBatch.cs" />
+    <Compile Include="Source\ProjectPivot\Components\BulletGraphics.cs" />
+    <Compile Include="Source\ProjectPivot\Components\BulletPhysics.cs" />
     <Compile Include="Source\ProjectPivot\Components\CellGraphics.cs" />
     <Compile Include="Source\ProjectPivot\Components\Health.cs" />
     <Compile Include="Source\ProjectPivot\Components\Component.cs" />
     <Compile Include="Source\ProjectPivot\Components\PlayerGraphics.cs" />
     <Compile Include="Source\ProjectPivot\Components\PlayerInput.cs" />
     <Compile Include="Source\ProjectPivot\Components\PlayerBody.cs" />
+    <Compile Include="Source\ProjectPivot\Entities\Bullet.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Cell.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObject.cs" />
     <Compile Include="Source\ProjectPivot.cs" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Components;
@@ -14,6 +14,7 @@ namespace ProjectPivot.Entities {
             owner = ((Weapon) GameObject).Owner;
             input = owner.GetComponent<PlayerInput>();
         }
+
         public override void Draw(SpriteBatch spriteBatch) {
             SpriteEffects gunSfx = SpriteEffects.None;
             float gunAngleAdjustment = 0.0f;

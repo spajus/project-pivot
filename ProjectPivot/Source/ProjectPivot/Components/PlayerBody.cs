@@ -15,8 +15,6 @@ using FarseerPhysics.Dynamics.Contacts;
 namespace ProjectPivot.Components {
     internal class PlayerBody : Component {
         public Body Body { get; protected set; }
-        public bool IsColliding { get; protected set; }
-
         public override void Initialize() {
             this.Body = BodyFactory.CreateCircle(
                 ProjectPivot.World,
@@ -30,6 +28,7 @@ namespace ProjectPivot.Components {
             Body.Restitution = .0f; //bounce
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
             Body.LinearDamping = 0.001f;
+            Body.UserData = GameObject;
         }
 
         public override void Update(GameTime gameTime) {

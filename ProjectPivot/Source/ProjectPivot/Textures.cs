@@ -44,6 +44,7 @@ namespace ProjectPivot {
             AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_left", 676, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
+            AddRegion(new TextureRegion("tilesheet_pa1", "small_bullet", 196, 308, 22, 22));
             AddTexture(content, "crosshair", "Images/crosshair");
         }
 
