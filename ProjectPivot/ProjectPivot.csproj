@@ -78,6 +78,7 @@
     <Compile Include="Source\ProjectPivot.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObjects.cs" />
+    <Compile Include="Source\ProjectPivot\Entities\WeaponPrototype.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Weapons.cs" />
     <Compile Include="Source\ProjectPivot\Utils\AABB.cs" />
     <Compile Include="Source\ProjectPivot\Utils\Direction.cs" />
