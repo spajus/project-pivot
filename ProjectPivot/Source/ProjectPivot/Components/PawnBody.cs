@@ -13,7 +13,7 @@ using ProjectPivot.Utils;
 using FarseerPhysics.Dynamics.Contacts;
 
 namespace ProjectPivot.Components {
-    internal class PlayerBody : Component {
+    public class PawnBody : Component {
         public Body Body { get; protected set; }
         public override void Initialize() {
             this.Body = BodyFactory.CreateCircle(
@@ -32,7 +32,11 @@ namespace ProjectPivot.Components {
         }
 
         public override void Update(GameTime gameTime) {
+            Vector2 lastPos = GameObject.Position;
             GameObject.Position = ConvertUnits.ToDisplayUnits(Body.Position);
+            if (lastPos != GameObject.Position) {
+                GameObjects.UpdatePosition(GameObject);
+            }
         }
     }
 }

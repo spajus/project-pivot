@@ -14,11 +14,11 @@ namespace ProjectPivot.Entities {
         public float Speed = 200f;
         public Weapon Weapon { get; protected set; }
         private PlayerInput input;
-        private PlayerBody body;
+        private PawnBody body;
 
         public Player(Vector2 position) : base(position) {
-            AddComponent(new PlayerGraphics());
-            body = AddComponent<PlayerBody>(new PlayerBody());
+            AddComponent(new PawnGraphics());
+            body = AddComponent<PawnBody>(new PawnBody());
             input = AddComponent<PlayerInput>(new PlayerInput()); //must go after body
         }
 

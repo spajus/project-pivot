@@ -80,6 +80,14 @@ namespace ProjectPivot
             player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player, true);
 
+            Enemy enemy1 = new Enemy(map.RandomHollowCell().Position);
+            Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
+            Enemy enemy3 = new Enemy(map.RandomHollowCell().Position);
+
+            GameObjects.Add(enemy1, true);
+            GameObjects.Add(enemy2, true);
+            GameObjects.Add(enemy3, true);
+
             Weapon w = Weapons.Build("sniper_rifle");
             player.TakeWeapon(w);
 

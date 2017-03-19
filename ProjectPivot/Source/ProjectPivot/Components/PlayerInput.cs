@@ -12,26 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
-    public class PlayerInput : Component {
-        float speed = 100f;
-        PlayerBody playerBody;
-        public Weapon Weapon;
-        public Direction direction;
-        public float Rotation = 0f;
-        // 0 deg = 9 o'clock
-        public float RotationDeg { get { return MathHelper.ToDegrees(Rotation) + 180; } }
-        public bool IsMoving;
-        Vector2 velocity;
-        const float maxSpeed = 5f;
-
-        public object ConvertUtils { get; private set; }
-
-        public override void Initialize() {
-            playerBody = GameObject.GetComponent<PlayerBody>();
-        }
-
+    public class PlayerInput : PawnInput {
         public override void Update(GameTime gameTime) {
-			float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 			float newX = 0f; //GameObject.Position.X;
@@ -53,31 +35,13 @@ namespace ProjectPivot.Components {
 				newY += speed;
 				changed = true;
             }
-            IsMoving = false;
 
-            if (changed) {
-                velocity = new Vector2(newX, newY);
-                velocity.Normalize();
+            ApplyVelocity(gameTime, newX, newY, changed);
 
-                if (velocity.LengthSquared() > 0.5) {
-                    if (playerBody.Body.LinearVelocity.LengthSquared() < maxSpeed) {
-                        playerBody.Body.LinearDamping = 0.00f;
-                    } else {
-                        playerBody.Body.LinearDamping = 3f;
-                    }
-                    playerBody.Body.ApplyLinearImpulse(velocity * deltaTime);
-                    IsMoving = true;
-                }
-                //playerBody.Body.LinearVelocity = (new Vector2(newX, newY) * deltaTime);
-            } else {
-                //playerBody.Body.LinearVelocity = Vector2.Zero;
-                playerBody.Body.LinearDamping = 10f;
-            }
             changeDirection();
 
             if (mouseState.LeftButton == ButtonState.Pressed) {
                 Weapon.Fire(Camera.Main.Crosshair.WorldPosition);
-                
             }
         }
 

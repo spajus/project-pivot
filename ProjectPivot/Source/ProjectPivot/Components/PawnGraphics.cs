@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
-    class PlayerGraphics : Component {
-        PlayerInput input;
+    class PawnGraphics : Component {
+        PawnInput input;
         float layerDepth = 0.2f;
         public override void Initialize() {
-            input = GameObject.GetComponent<PlayerInput>();
+            input = GameObject.GetComponent<PawnInput>();
         }
         public override void Draw(SpriteBatch spriteBatch) {
             if (input.IsMoving) {

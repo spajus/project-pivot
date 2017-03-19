@@ -38,6 +38,8 @@ namespace ProjectPivot.Entities {
         List<Component> components = new List<Component>();
 
         #region Constructor
+        public GameObject() {
+        }
 
         public GameObject(Vector2 position) {
             this.Position = position;
@@ -94,6 +96,10 @@ namespace ProjectPivot.Entities {
         }
 
         public void Destroy() {
+            GameObjects.Destroy(this);
+        }
+
+        public void AfterDestroy() {
             OnDestroy();
         }
 

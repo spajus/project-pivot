@@ -54,14 +54,16 @@ namespace ProjectPivot.Entities {
 
         public static void UpdatePosition(GameObject gameObject) {
             if (useQuadTree) {
-                gameObjectTree.Remove(gameObject);
-                gameObjectTree.Insert(gameObject);
+                if (!alwaysUpdated.Contains(gameObject)) {
+                    gameObjectTree.Remove(gameObject);
+                    gameObjectTree.Insert(gameObject);
+                }
             }
         }
 
         public static void Update(GameTime gameTime) {
             while (pendingDestruction.Count > 0) {
-                Remove(pendingDestruction.Dequeue()).Destroy();
+                Remove(pendingDestruction.Dequeue()).AfterDestroy();
             }
             uint updates = 0;
             if (useQuadTree) {
