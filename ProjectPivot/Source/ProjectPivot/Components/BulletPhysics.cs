@@ -50,7 +50,11 @@ namespace ProjectPivot.Components {
                 int damage = (int)Math.Round(Body.LinearVelocity.LengthSquared() / 100);
                 bool hit = ((Damageable)fixtureB.Body.UserData).TakeDamage(damage, GameObject);
                 if (hit) {
-                    Gizmo.Text(damage.ToString(), GameObject.Position, Color.Pink, true);
+                    TempText.Write(GameObject.Position,
+                                   damage.ToString(),
+                                   Color.Pink,
+                                   1000f,
+                                   2f);
                 }
                 return hit;
             }
