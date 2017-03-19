@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace ProjectPivot.Utils {
             InitDh();
         }
 
+        [JsonConstructor]
         public AABB(Vector2 center, Vector2 halfDimension) {
             Center = center;
             HalfDimension = halfDimension;

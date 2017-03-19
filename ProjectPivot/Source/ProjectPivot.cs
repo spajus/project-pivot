@@ -22,8 +22,8 @@ namespace ProjectPivot
         public const bool cellsDebugEnabled = true;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 300;
-        public const int mapHeight = 300;
+        public const int mapWidth = 100;
+        public const int mapHeight = 100;
         public const int screenWidth = 1280;
         public const int screenHeight = 720;
 
@@ -70,6 +70,7 @@ namespace ProjectPivot
             }
                 
             Gizmo.Initialize(GraphicsDevice);
+            Weapons.Initialize();
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
@@ -79,7 +80,7 @@ namespace ProjectPivot
             player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player, true);
 
-            Weapon w = new Weapon(player.Position);
+            Weapon w = Weapons.Build("sniper_rifle");
             player.TakeWeapon(w);
 
             GameObjects.Add(w, true);

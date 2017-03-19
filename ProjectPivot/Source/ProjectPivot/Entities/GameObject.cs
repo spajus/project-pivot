@@ -16,7 +16,6 @@ namespace ProjectPivot.Entities {
         public GameObject Parent { get; protected set; }
         public List<GameObject> Children { get; protected set; }
         private AABB box;
-        public bool IsMarkedForDestruction { get; protected set; }
 
         // A bit bigger than actual object to prevent cutting
         public AABB QuadTreeBox {
@@ -79,6 +78,11 @@ namespace ProjectPivot.Entities {
         }
 
         public void Initialize() {
+            OnInitialize();
+            components.ForEach(component => component.Initialize());
+        }
+
+        public void Reinitialize() {
             OnInitialize();
             components.ForEach(component => component.Initialize());
         }

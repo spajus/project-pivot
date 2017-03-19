@@ -6,9 +6,14 @@ namespace ProjectPivot.Entities {
     public class WeaponGraphics : Component {
         private GameObject owner;
         private PlayerInput input;
+        public string sprite;
+
         public WeaponGraphics() {
 
+        }
 
+        public WeaponGraphics(string sprite) {
+            this.sprite = sprite;
         }
         public override void Initialize() {
             owner = ((Weapon) GameObject).Owner;
@@ -20,7 +25,7 @@ namespace ProjectPivot.Entities {
             float gunAngleAdjustment = 0.0f;
             if (input == null) {
                 Textures.Draw(
-                    spriteBatch, "sniper_rifle",
+                    spriteBatch, sprite,
                     GameObject.Position,
                     0.3f, // behind player, on ground
                     gunAngleAdjustment,

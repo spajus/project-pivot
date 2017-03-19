@@ -1,0 +1,20 @@
+﻿{
+  "sniper_rifle": {
+    "CooldownTime": 250.0,
+    "Position": "10, 100",
+    "Owner": null,
+    "Rotation": 0.0,
+    "RotationDeg": 0.0,
+    "Parent": null,
+    "Children": null,
+    "IsMarkedForDestruction": false,
+    "QuadTreeBox": {
+      "Center": "26, 116",
+      "HalfDimension": "42, 132",
+      "DhX": 16.0,
+      "DhY": 16.0
+    },
+    "X": 10,
+    "Y": 100
+  }
+}

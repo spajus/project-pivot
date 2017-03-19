@@ -16,7 +16,7 @@ namespace ProjectPivot.Entities {
 
         public Weapon(Vector2 position, GameObject owner = null) : base(position) {
             this.Owner = owner;
-            AddComponent(new WeaponGraphics());
+            AddComponent(new WeaponGraphics("snipe_rifle"));
         }
 
         protected override void OnUpdate(GameTime gameTime) {
