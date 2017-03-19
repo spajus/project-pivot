@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectPivot.Entities {
-    public class Cell : GameObject {
+    public class Cell : GameObject, Damageable {
 
         public int MapX { get; protected set; }
         public int MapY { get; protected set; }
@@ -47,6 +47,11 @@ namespace ProjectPivot.Entities {
                     health.DrawHealth();
                 }
             }
+        }
+
+        public bool TakeDamage(int damage, GameObject source) {
+            health.Decrease(damage / 2);
+            return true;
         }
     }
 }

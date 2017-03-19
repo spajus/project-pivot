@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace ProjectPivot.Components {
     class BulletGraphics : Component {
-        static Vector2 offset = new Vector2(11, 11);
+        static Vector2 offset = new Vector2(1, 0);
         public override void Draw(SpriteBatch spriteBatch) {
             Textures.Draw(spriteBatch, "small_bullet", GameObject.Position + offset, 0.05f);
         }

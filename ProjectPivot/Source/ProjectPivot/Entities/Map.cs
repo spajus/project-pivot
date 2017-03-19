@@ -9,9 +9,13 @@ using System.Threading.Tasks;
 using ProjectPivot.Entities;
 using ProjectPivot.Utils;
 using System.Diagnostics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics;
 
 namespace ProjectPivot.Entities {
     public class Map {
+        public static Map Current;
         // in tiles
         public int Width { get; protected set; }
         public int Height { get; protected set; }
@@ -28,11 +32,13 @@ namespace ProjectPivot.Entities {
             cells = new Cell[width, height];
             rand = new Random();
             this.offset = offset;
-            Rectangle mapBounds = new Rectangle((int)offset.X, (int) offset.Y, width * 32, height * 32);
+            Rectangle mapBounds = new Rectangle((int)offset.X - 16, (int) offset.Y - 16, width * 32, height * 32);
             Boundary = new AABB(mapBounds, Color.Brown);
-            //Gizmo.Rectangle(mapBounds, Color.Violet, true);
-            //Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
-            //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
+            if (ProjectPivot.mapDebugEnabled) {
+                Gizmo.Rectangle(mapBounds, Color.Violet, true);
+                Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
+                //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
+            }
         }
 
 
@@ -53,6 +59,52 @@ namespace ProjectPivot.Entities {
             if (HollowCells.Count == 0) {
                 throw new Exception("Could not generate map, no hollow cells!");
             }
+            CreatePhysicsBounds();
+        }
+
+        public void CreatePhysicsBounds() {
+            Rectangle worldRect = Boundary.ToRectangle();
+            Body topBound = BodyFactory.CreateRectangle(
+                ProjectPivot.World,
+                ConvertUnits.ToSimUnits(worldRect.Width),
+                ConvertUnits.ToSimUnits(16),
+                1f,
+                ConvertUnits.ToSimUnits(
+                    new Vector2(Boundary.Center.X,
+                                Boundary.Center.Y - worldRect.Height / 2 - 8)),
+                0, BodyType.Static);
+            Body bottomBound = BodyFactory.CreateRectangle(
+                ProjectPivot.World,
+                ConvertUnits.ToSimUnits(worldRect.Width),
+                ConvertUnits.ToSimUnits(16),
+                1f,
+                ConvertUnits.ToSimUnits(
+                    new Vector2(Boundary.Center.X,
+                                Boundary.Center.Y + worldRect.Height / 2 + 8)),
+                0, BodyType.Static);
+            Body leftBound = BodyFactory.CreateRectangle(
+                ProjectPivot.World,
+                ConvertUnits.ToSimUnits(16),
+                ConvertUnits.ToSimUnits(worldRect.Height + 32),
+                1f,
+                ConvertUnits.ToSimUnits(
+                    new Vector2(Boundary.Center.X - worldRect.Width / 2 - 8,
+                                Boundary.Center.Y)),
+                0, BodyType.Static);
+            Body rightBound = BodyFactory.CreateRectangle(
+                ProjectPivot.World,
+                ConvertUnits.ToSimUnits(16),
+                ConvertUnits.ToSimUnits(worldRect.Height + 32),
+                1f,
+                ConvertUnits.ToSimUnits(
+                    new Vector2(Boundary.Center.X + worldRect.Width / 2 + 8,
+                                Boundary.Center.Y)),
+                0, BodyType.Static);
+            BulletPassthrough wall = new BulletPassthrough();
+            topBound.UserData = wall;
+            bottomBound.UserData = wall;
+            leftBound.UserData = wall;
+            rightBound.UserData = wall;
         }
 
         public void Draw(Camera camera, SpriteBatch spriteBatch) {

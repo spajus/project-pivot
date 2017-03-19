@@ -13,11 +13,13 @@ namespace ProjectPivot {
         public string AtlasName { get; protected set; }
         private Rectangle region;
         private float initRotation;
-        public TextureRegion(string atlasName, string name, int x, int y, int width, int height, float initRotation = 0f) {
+        public int textureScale = 1;
+        public TextureRegion(string atlasName, string name, int x, int y, int width, int height, float initRotation = 0f, int textureScale = 1) {
             this.Name = name;
             this.AtlasName = atlasName;
             this.region = new Rectangle(x, y, width, height);
             this.initRotation = MathHelper.ToRadians(initRotation);
+            this.textureScale = textureScale;
         }
         public void Draw(
             SpriteBatch spriteBatch, 
@@ -26,13 +28,13 @@ namespace ProjectPivot {
             float rotation = 0f,
             SpriteEffects sfx = SpriteEffects.None) {
             spriteBatch.Draw(
-                Textures.Atlas(AtlasName), 
-                position, 
-                region, 
-                Color.White, 
-                initRotation + rotation, 
-                new Vector2(region.Width/2, region.Height/2), 
-                Vector2.One / 2,
+                Textures.Atlas(AtlasName),
+                position,
+                region,
+                Color.White,
+                initRotation + rotation,
+                new Vector2(region.Width / 2, region.Height / 2),
+                Vector2.One / textureScale,
                 sfx,
                 layerDepth);
 
@@ -48,19 +50,19 @@ namespace ProjectPivot {
             AddAtlas(content, "tilesheet_pp", "Images/tilesheet_pp");
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_00",
-                                        0, 0, 64, 64));
+                                        0, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_25", 
-                                        64, 0, 64, 64));
+                                        64, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_50",
-                                        128, 0, 64, 64));
+                                        128, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_75",
-                                        192, 0, 64, 64));
+                                        192, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_100",
-                                        256, 0, 64, 64));
+                                        256, 0, 64, 64, textureScale: 2));
 
             AddRegion(new TextureRegion("tilesheet_pa1", "player_down", 602, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));

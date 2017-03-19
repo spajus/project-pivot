@@ -19,11 +19,12 @@ namespace ProjectPivot
         public SamplerState globalSamplerState = SamplerState.PointWrap;
         public const double minPhysicsStepTime = 1.0 / 30.0;
         public const bool physicsDebugEnabled = false;
-        public const bool cellsDebugEnabled = true;
+        public const bool cellsDebugEnabled = false;
+        public const bool mapDebugEnabled = false;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 100;
-        public const int mapHeight = 100;
+        public const int mapWidth = 30;
+        public const int mapHeight = 30;
         public const int screenWidth = 1280;
         public const int screenHeight = 720;
 
@@ -74,7 +75,8 @@ namespace ProjectPivot
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
             fpsCounter = new FPSCounter();
 
-            map = new Map(mapWidth, mapHeight, new Vector2(2 * 32, 4 * 32) );
+            map = new Map(mapWidth, mapHeight, Vector2.Zero);
+            Map.Current = map;
             GameObjects.Initialize(map);
             map.Generate();
             player = new Player(map.RandomHollowCell().Position);

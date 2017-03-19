@@ -78,6 +78,7 @@ namespace ProjectPivot.Entities {
         #region Protected Functions
         protected override void OnUpdate(GameTime gameTime)
 		{
+            Vector2 previousPosition = Position;
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			ReactToUserInput(deltaTime);
 			zoom = MathHelper.Clamp(zoom, 75, 150);
@@ -85,7 +86,9 @@ namespace ProjectPivot.Entities {
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();
             // Gizmo.Rectangle(VisibleArea, Color.Pink);
-			// Rotation = ClampRotation();
+            // Rotation = ClampRotation();
+            //fixme
+            //clampToMapBounds(previousPosition);
 
 			Transform = 
                 Matrix.CreateTranslation(new Vector3((int) -Position.X,
@@ -101,6 +104,18 @@ namespace ProjectPivot.Entities {
 			// Gizmo.Rectangle(VisibleArea, Color.Blue);
 			// Gizmo.Line(Position, Target.Position, Color.Red);
 		}
+
+        // fixme
+        void clampToMapBounds(Vector2 previousPosition) {
+            Rectangle mapBounds = Map.Current.Boundary.ToRectangle();
+            Rectangle updatedVA = CalculateVisibleArea();
+            if (updatedVA.Top < mapBounds.Top || updatedVA.Bottom > mapBounds.Bottom) {
+                Position.Y = previousPosition.Y;
+            }
+            if (updatedVA.Left < mapBounds.Left || updatedVA.Right > mapBounds.Right) {
+                Position.X = previousPosition.X;
+            }
+        }
 
 		void ReactToUserInput(float deltaTime) {
             mouseState = Mouse.GetState();

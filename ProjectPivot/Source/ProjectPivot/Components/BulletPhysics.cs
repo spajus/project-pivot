@@ -46,6 +46,14 @@ namespace ProjectPivot.Components {
 
         private bool OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact) {
             GameObject.Position = ConvertUnits.ToDisplayUnits(Body.Position);
+            if (fixtureB.Body.UserData is Damageable) {
+                int damage = (int)Math.Round(Body.LinearVelocity.LengthSquared() / 100);
+                bool hit = ((Damageable)fixtureB.Body.UserData).TakeDamage(damage, GameObject);
+                if (hit) {
+                    Gizmo.Text(damage.ToString(), GameObject.Position, Color.Pink, true);
+                }
+                return hit;
+            }
             //GameObject.Destroy();
             return true;
         }
