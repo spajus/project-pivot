@@ -19,7 +19,12 @@ namespace ProjectPivot {
             this.region = new Rectangle(x, y, width, height);
             this.initRotation = MathHelper.ToRadians(initRotation);
         }
-        public void Draw(SpriteBatch spriteBatch, Vector2 position, float layerDepth = 0f, float rotation = 0f, SpriteEffects sfx = SpriteEffects.None) {
+        public void Draw(
+            SpriteBatch spriteBatch, 
+            Vector2 position, 
+            float layerDepth = 0f, 
+            float rotation = 0f,
+            SpriteEffects sfx = SpriteEffects.None) {
             spriteBatch.Draw(
                 Textures.Atlas(AtlasName), 
                 position, 
@@ -27,7 +32,7 @@ namespace ProjectPivot {
                 Color.White, 
                 initRotation + rotation, 
                 new Vector2(region.Width/2, region.Height/2), 
-                Vector2.One,
+                Vector2.One / 2,
                 sfx,
                 layerDepth);
 
@@ -40,6 +45,23 @@ namespace ProjectPivot {
 
         public static void LoadContent(ContentManager content) {
             AddAtlas(content, "tilesheet_pa1", "Images/tilesheet_pa1");
+            AddAtlas(content, "tilesheet_pp", "Images/tilesheet_pp");
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "cell_00",
+                                        0, 0, 64, 64));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "cell_25", 
+                                        64, 0, 64, 64));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "cell_50",
+                                        128, 0, 64, 64));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "cell_75",
+                                        192, 0, 64, 64));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "cell_100",
+                                        256, 0, 64, 64));
+
             AddRegion(new TextureRegion("tilesheet_pa1", "player_down", 602, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_left", 676, 226, 38, 38));
@@ -52,8 +74,9 @@ namespace ProjectPivot {
             return atlases[name];
         }
 
-        public static void Draw(SpriteBatch spriteBatch, string regionName, Vector2 position, 
-            float layerDepth = 0f, float rotation = 0f, SpriteEffects sfx = SpriteEffects.None) {
+        public static void Draw(SpriteBatch spriteBatch, string regionName, Vector2 position,
+                                float layerDepth = 0f, float rotation = 0f, SpriteEffects sfx = SpriteEffects.None) {
+
             regions[regionName].Draw(spriteBatch, position, layerDepth, rotation, sfx);
         }
 

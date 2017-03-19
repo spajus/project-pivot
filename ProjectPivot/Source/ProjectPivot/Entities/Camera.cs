@@ -88,10 +88,13 @@ namespace ProjectPivot.Entities {
 			// Rotation = ClampRotation();
 
 			Transform = 
-				Matrix.CreateTranslation(new Vector3(-Position.X, -Position.Y, 0)) *
+                Matrix.CreateTranslation(new Vector3((int) -Position.X,
+                                                     (int) -Position.Y, 0)) *
 				Matrix.CreateRotationZ(Rotation) *
-				 Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-				      Matrix.CreateTranslation(viewport.Width * 0.5f, viewport.Height * 0.5f, 0);
+                      Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
+                      Matrix.CreateTranslation((int) (viewport.Width * 0.5f), 
+                                               (int) (viewport.Height * 0.5f),
+                                               0);
 
 			InverseTransform = Matrix.Invert(Transform);
 

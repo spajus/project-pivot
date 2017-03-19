@@ -16,7 +16,7 @@ namespace ProjectPivot
     public class ProjectPivot : Game
     {
         // CONSTANTS
-        public SamplerState globalSamplerState = SamplerState.AnisotropicWrap;
+        public SamplerState globalSamplerState = SamplerState.PointWrap;
         public const double minPhysicsStepTime = 1.0 / 30.0;
         public const bool physicsDebugEnabled = false;
         public const bool cellsDebugEnabled = true;
@@ -157,7 +157,7 @@ namespace ProjectPivot
 
 			// TODO: Add your drawing code here
 			spriteBatch.Begin(SpriteSortMode.BackToFront,
-                              BlendState.AlphaBlend, 
+                              BlendState.AlphaBlend,
                               globalSamplerState,
                               DepthStencilState.Default,
                               RasterizerState.CullNone,
