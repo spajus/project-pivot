@@ -42,7 +42,7 @@ namespace ProjectPivot.Entities {
             float[,] noise = SimplexNoise.Calc2D(Width, Height, 0.04f);
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
-                    int health = (int)((noise[x, y] - 40) / 255 * 100);
+                    int health = (int)((noise[x, y] - 10) / 255 * 100);
                     cells[x, y] = new Cell(x, y, 32, 32, health, offset);
                     GameObjects.Add(cells[x, y]);
                     if (!cells[x, y].IsHealthy) {
