@@ -25,7 +25,7 @@ namespace ProjectPivot.Components {
             Body.BodyType = BodyType.Dynamic;
 			Body.Friction = 0.001f;
             Body.FixedRotation = true;
-            Body.Restitution = .0f; //bounce
+            Body.Restitution = 0.02f; //bounce
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
             Body.LinearDamping = 0.001f;
             Body.UserData = GameObject;

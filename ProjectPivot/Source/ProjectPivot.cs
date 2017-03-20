@@ -23,8 +23,8 @@ namespace ProjectPivot
         public const bool mapDebugEnabled = false;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 30;
-        public const int mapHeight = 30;
+        public const int mapWidth = 300;
+        public const int mapHeight = 300;
         public const int screenWidth = 1280;
         public const int screenHeight = 720;
 

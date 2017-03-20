@@ -37,6 +37,11 @@ namespace ProjectPivot.Components {
             Console.WriteLine("init cell");
         }
 
+        public override void Update(GameTime gameTime) {
+            this.rotation += (float) gameTime.ElapsedGameTime.TotalSeconds;
+            base.Update(gameTime);
+        }
+
         public override void Draw(SpriteBatch spriteBatch) {
             Textures.Draw(spriteBatch,
                           currentTexture(),

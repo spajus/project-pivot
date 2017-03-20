@@ -42,7 +42,7 @@ namespace ProjectPivot.Entities {
 
         #region Constructor
 		public Camera(Viewport viewport, Vector2 position) : base(position) {
-            this.Rotation = 0.0f;
+            this.Rotation = 0;
             this.viewport = viewport;
             this.Crosshair = AddComponent<Crosshair>(new Crosshair());
         }
