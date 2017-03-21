@@ -34,12 +34,11 @@ namespace ProjectPivot.Components {
                 case 3: { sfx = SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally; break; }
             }
             health = GameObject.GetComponent<Health>();
-            Console.WriteLine("init cell");
         }
 
         public override void Update(GameTime gameTime) {
-            this.rotation += (float) gameTime.ElapsedGameTime.TotalSeconds;
-            base.Update(gameTime);
+            //this.rotation += (float) gameTime.ElapsedGameTime.TotalSeconds;
+            //base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch) {

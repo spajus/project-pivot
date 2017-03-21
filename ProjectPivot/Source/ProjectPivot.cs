@@ -163,7 +163,7 @@ namespace ProjectPivot
                               globalSamplerState,
                               DepthStencilState.Default,
                               RasterizerState.CullNone,
-                              null,
+                              Textures.Shader1,
                 camera.Transform);
 
             base.Draw(gameTime);

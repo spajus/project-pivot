@@ -35,7 +35,7 @@ namespace ProjectPivot.Components {
             Body.Restitution = 0.02f;
             Body.BodyType = BodyType.Dynamic;
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
-            Body.LinearDamping = 3f;
+            Body.LinearDamping = 1f;
             Body.IgnoreCollisionWith(Shooter.PhysicsBody());
             Body.OnCollision += OnCollision;
             Body.UserData = GameObject;

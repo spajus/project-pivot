@@ -44,6 +44,7 @@ namespace ProjectPivot {
         private static Dictionary<string, Texture2D> atlases = new Dictionary<string, Texture2D>();
         private static Dictionary<string, TextureRegion> regions = new Dictionary<string, TextureRegion>();
         private static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        public static Effect Shader1;
 
         public static void LoadContent(ContentManager content) {
             AddAtlas(content, "tilesheet_pa1", "Images/tilesheet_pa1");
@@ -70,6 +71,7 @@ namespace ProjectPivot {
             AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
             AddRegion(new TextureRegion("tilesheet_pa1", "small_bullet", 196, 308, 22, 22));
             AddTexture(content, "crosshair", "Images/crosshair");
+            Shader1 = content.Load<Effect>("Shaders/Shader1");
         }
 
         public static Texture2D Atlas(string name) {
