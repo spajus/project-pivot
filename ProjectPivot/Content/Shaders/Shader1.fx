@@ -10,7 +10,7 @@ struct VertexShaderOutput {
 	float2 TextureCoordinate: TEXCOORD0;
 };
 
-// our shader
+// Grayscale shader
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0{
 	float4 color = tex2D(TextureSampler, input.TextureCoordinate);
 

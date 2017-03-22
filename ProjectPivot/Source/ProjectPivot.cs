@@ -28,6 +28,7 @@ namespace ProjectPivot
         public const int screenWidth = 1280;
         public const int screenHeight = 720;
 
+        public Effect GlobalShader = null;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -163,7 +164,7 @@ namespace ProjectPivot
                               globalSamplerState,
                               DepthStencilState.Default,
                               RasterizerState.CullNone,
-                              Textures.Shader1,
+                              GlobalShader,
                 camera.Transform);
 
             base.Draw(gameTime);

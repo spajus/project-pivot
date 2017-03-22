@@ -80,6 +80,11 @@
     <Compile Include="Source\ProjectPivot\Entities\GameObjects.cs" />
     <Compile Include="Source\ProjectPivot\Entities\WeaponPrototype.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Weapons.cs" />
+    <Compile Include="Source\ProjectPivot\Pathfinding\AStar.cs" />
+    <Compile Include="Source\ProjectPivot\Pathfinding\CellGraph.cs" />
+    <Compile Include="Source\ProjectPivot\Pathfinding\Edge.cs" />
+    <Compile Include="Source\ProjectPivot\Pathfinding\Node.cs" />
+    <Compile Include="Source\ProjectPivot\Pathfinding\PathfindingPriorityQueue.cs" />
     <Compile Include="Source\ProjectPivot\Utils\AABB.cs" />
     <Compile Include="Source\ProjectPivot\Utils\Direction.cs" />
     <Compile Include="Source\ProjectPivot\Utils\FPSCounter.cs" />
@@ -112,6 +117,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Priority Queue, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedPriorityQueue.4.0.3\lib\net45\Priority Queue.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -155,6 +164,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Shaders\BloomCombine.fx" />
+    <Content Include="Content\Shaders\BloomExtract.fx" />
     <Content Include="Content\Shaders\Shader1.fx" />
     <Content Include="Data\Weapons.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

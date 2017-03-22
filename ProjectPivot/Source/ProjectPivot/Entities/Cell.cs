@@ -49,6 +49,60 @@ namespace ProjectPivot.Entities {
             }
         }
 
+        public float PathfindingCost {
+            get {
+                if (IsHealthy) {
+                    return 0f;
+                } else {
+                    return 1f;
+                }
+            }
+        }
+        
+        public bool IsClippingCorner(Cell neighbourCell) {
+            // If the movement from curr to neigh is diagonal (e.g. N-E)
+            // Then check to make sure we aren't clipping (e.g. N and E are both walkable)
+            int dX = this.X - neighbourCell.X;
+            int dY = this.Y - neighbourCell.Y;
+
+            if (Math.Abs(dX) + Math.Abs(dY) == 2) {
+                // We are diagonal
+                if (Map.Current.CellAt(X - dX, Y).PathfindingCost < 0.01f) {
+                    // East or West is unwalkable, therefore this would be a clipped movement.
+                    return true;
+                }
+
+                if (Map.Current.CellAt(X, Y - dY).PathfindingCost < 0.01f) {
+                    // North or South is unwalkable, therefore this would be a clipped movement.
+                    return true;
+                }
+
+                // If we reach here, we are diagonal, but not clipping
+            }
+
+            // If we are here, we are either not clipping, or not diagonal
+            return false;
+        }
+
+        public Cell[] Neighbours(bool diagonalOk = false, bool nullOk = false) {
+            Cell[] cells = new Cell[8];
+            cells[0] = Map.Current.CellAt(MapX, MapY + 1);
+            cells[1] = Map.Current.CellAt(MapX + 1, MapY);
+            cells[2] = Map.Current.CellAt(MapX, MapY - 1);
+            cells[3] = Map.Current.CellAt(MapX - 1, MapY);
+            if (diagonalOk) {
+                cells[4] = Map.Current.CellAt(MapX + 1, MapY + 1);
+                cells[5] = Map.Current.CellAt(MapX + 1, MapY - 1);
+                cells[6] = Map.Current.CellAt(MapX - 1, MapY + 1);
+                cells[7] = Map.Current.CellAt(MapX - 1, MapY - 1);
+            }
+            if (nullOk) {
+                return cells;
+            } else {
+                return cells.Where(cell => cell != null).ToArray();
+            }
+        }
+
         public bool TakeDamage(int damage, GameObject source) {
             health.Decrease(damage / 2);
             return true;

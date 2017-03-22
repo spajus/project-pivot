@@ -12,6 +12,7 @@ using System.Diagnostics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics;
+using ProjectPivot.Pathfinding;
 
 namespace ProjectPivot.Entities {
     public class Map {
@@ -41,6 +42,18 @@ namespace ProjectPivot.Entities {
             }
         }
 
+        public Cell CellAtWorld(Vector2 position) {
+            int x = (int) position.X / 32;
+            int y = (int) position.Y / 32;
+            return CellAt(x, y);
+        }
+
+        public Cell CellAt(int x, int y) {
+            if (x >= Width || x < 0 || y >= Height || y < 0) {
+                return null;
+            }
+            return cells[x, y];
+        }
 
         public void Generate() {
             Random rand = new Random();
@@ -60,6 +73,11 @@ namespace ProjectPivot.Entities {
                 throw new Exception("Could not generate map, no hollow cells!");
             }
             CreatePhysicsBounds();
+            CalculatePathfinding();
+        }
+
+        public void CalculatePathfinding() {
+            CellGraph.Current = new CellGraph(this);
         }
 
         public void CreatePhysicsBounds() {
