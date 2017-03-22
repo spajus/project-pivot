@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProjectPivot.Components;
 using ProjectPivot.Entities;
+using ProjectPivot.Rendering;
 using ProjectPivot.Utils;
 using System;
 
@@ -25,10 +26,13 @@ namespace ProjectPivot
         public const bool gizmoGridEnabled = false;
         public const int mapWidth = 300;
         public const int mapHeight = 300;
-        public const int screenWidth = 1280;
-        public const int screenHeight = 720;
+        public const int screenWidth = 1600;
+        public const int screenHeight = 800;
 
         public Effect GlobalShader = null;
+
+        BloomComponent bloom;
+        int bloomSettingsIndex = 0;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -55,6 +59,9 @@ namespace ProjectPivot
             graphics.PreferredBackBufferHeight = screenHeight;
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = false;
+
+            bloom = new BloomComponent(this);
+            Components.Add(bloom);
         }
 
         /// <summary>
@@ -141,6 +148,13 @@ namespace ProjectPivot
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.X)) {
+                bloom.Visible = false;
+            } else {
+                bloom.Visible = true;
+            }
+            //bloom.ShowBuffer++;
 
             base.Update(gameTime);
 
@@ -156,6 +170,7 @@ namespace ProjectPivot
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            bloom.BeginDraw();
             GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
@@ -167,7 +182,6 @@ namespace ProjectPivot
                               GlobalShader,
                 camera.Transform);
 
-            base.Draw(gameTime);
 
             fpsCounter.Update(gameTime);
             fpsCounter.Draw(spriteBatch, camera);
@@ -179,10 +193,11 @@ namespace ProjectPivot
             }
 
 			//Gizmo.Rectangle(new Rectangle(5, 5, 200, 100));
-
             Gizmo.Draw(spriteBatch, gizmoGridEnabled);
 			spriteBatch.End();
+            base.Draw(gameTime);
 
+            
             if (physicsDebugEnabled) {
                 physicsDebug.Draw();
             }

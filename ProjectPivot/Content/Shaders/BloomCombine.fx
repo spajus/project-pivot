@@ -1,7 +1,13 @@
 ﻿// Pixel shader extracts the brighter areas of an image.
 // This is the first step in applying a bloom postprocess.
 sampler BloomSampler : register(s0);
-sampler BaseSampler : register(s1);
+sampler BaseSampler : register(s1)
+{ 
+    Texture = (BaseTexture);  
+    Filter = Linear;  
+    AddressU = clamp;
+    AddressV = clamp;
+};
 float BloomIntensity;
 float BaseIntensity;
 float BloomSaturation;

@@ -85,6 +85,8 @@
     <Compile Include="Source\ProjectPivot\Pathfinding\Edge.cs" />
     <Compile Include="Source\ProjectPivot\Pathfinding\Node.cs" />
     <Compile Include="Source\ProjectPivot\Pathfinding\PathfindingPriorityQueue.cs" />
+    <Compile Include="Source\ProjectPivot\Rendering\BloomComponent.cs" />
+    <Compile Include="Source\ProjectPivot\Rendering\BloomSettings.cs" />
     <Compile Include="Source\ProjectPivot\Utils\AABB.cs" />
     <Compile Include="Source\ProjectPivot\Utils\Direction.cs" />
     <Compile Include="Source\ProjectPivot\Utils\FPSCounter.cs" />
@@ -166,6 +168,7 @@
   <ItemGroup>
     <Content Include="Content\Shaders\BloomCombine.fx" />
     <Content Include="Content\Shaders\BloomExtract.fx" />
+    <Content Include="Content\Shaders\GaussianBlur.fx" />
     <Content Include="Content\Shaders\Shader1.fx" />
     <Content Include="Data\Weapons.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
