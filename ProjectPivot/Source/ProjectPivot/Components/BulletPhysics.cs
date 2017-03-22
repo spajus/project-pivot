@@ -41,7 +41,7 @@ namespace ProjectPivot.Components {
             Body.UserData = GameObject;
             Vector2 shotForce = (Target - GameObject.Position);
             shotForce.Normalize();
-            Body.ApplyForce(ConvertUnits.ToSimUnits(shotForce) * 2000f);
+            Body.ApplyLinearImpulse(ConvertUnits.ToSimUnits(shotForce) * 20f);
         }
 
         private bool OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact) {

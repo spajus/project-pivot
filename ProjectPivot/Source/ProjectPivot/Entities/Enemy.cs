@@ -8,6 +8,7 @@ namespace ProjectPivot.Entities {
             AddComponent(new PawnBody());
             AddComponent(new PawnGraphics());
             AddComponent(new EnemyInput());
+            AddComponent(new EnemyAI());
         }
     }
 }

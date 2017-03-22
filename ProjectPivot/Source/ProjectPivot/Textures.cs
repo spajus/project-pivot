@@ -53,7 +53,7 @@ namespace ProjectPivot {
                                         "cell_00",
                                         0, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
-                                        "cell_25", 
+                                        "cell_25",
                                         64, 0, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_50",
@@ -71,7 +71,8 @@ namespace ProjectPivot {
             AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
             AddRegion(new TextureRegion("tilesheet_pa1", "small_bullet", 196, 308, 22, 22));
             AddTexture(content, "crosshair", "Images/crosshair");
-            Shader1 = content.Load<Effect>("Shaders/Shader1");
+
+ //Shader1 = content.Load<Effect>("Shaders/Shader1");
         }
 
         public static Texture2D Atlas(string name) {

@@ -11,6 +11,7 @@ namespace ProjectPivot.Components {
     public class CellGraphics : Component {
         private Health health;
         private static Vector2 cellOrigin = new Vector2(16, 16);
+        private static Random random = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         private static Dictionary<int, string> textures;
         public float rotation;
         public SpriteEffects sfx;
@@ -26,8 +27,8 @@ namespace ProjectPivot.Components {
         }
 
         public override void Initialize() {
-            rotation = MathHelper.ToRadians(new Random().Next(4) * 90);
-            switch (new Random().Next(4)) {
+            rotation = MathHelper.ToRadians(random.Next(4) * 90);
+            switch (random.Next(4)) {
                 case 0: { sfx = SpriteEffects.None; break; }
                 case 1: { sfx = SpriteEffects.FlipVertically; break; }
                 case 2: { sfx = SpriteEffects.FlipHorizontally; break; }

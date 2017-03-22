@@ -9,13 +9,11 @@ using ProjectPivot.Rendering;
 using ProjectPivot.Utils;
 using System;
 
-namespace ProjectPivot
-{
+namespace ProjectPivot {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class ProjectPivot : Game
-    {
+    public class ProjectPivot : Game {
         // CONSTANTS
         public SamplerState globalSamplerState = SamplerState.PointWrap;
         public const double minPhysicsStepTime = 1.0 / 30.0;
@@ -26,7 +24,7 @@ namespace ProjectPivot
         public const bool gizmoGridEnabled = false;
         public const int mapWidth = 300;
         public const int mapHeight = 300;
-        public const int screenWidth = 1600;
+        public const int screenWidth = 1200;
         public const int screenHeight = 800;
 
         public Effect GlobalShader = null;
@@ -46,10 +44,9 @@ namespace ProjectPivot
         public static World World { get; protected set; }
 
         public static Texture2D DebugPixel;
-        
-        public ProjectPivot()
-        {
-			World = new World(Vector2.Zero);
+
+        public ProjectPivot() {
+            World = new World(Vector2.Zero);
 
             if (physicsDebugEnabled) {
                 physicsDebug = new PhysicsDebug(World);
@@ -60,8 +57,10 @@ namespace ProjectPivot
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = false;
 
+#if WINDOWS
             bloom = new BloomComponent(this);
             Components.Add(bloom);
+#endif
         }
 
         /// <summary>
@@ -70,14 +69,13 @@ namespace ProjectPivot
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
             // TODO: Add your initialization logic here
 
             for (int i = 0; i < 16; i++) {
                 GraphicsDevice.SamplerStates[0] = globalSamplerState;
             }
-                
+
             Gizmo.Initialize(GraphicsDevice);
             Weapons.Initialize();
             //GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
@@ -116,8 +114,7 @@ namespace ProjectPivot
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent()
-        {
+        protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             Gizmo.LoadContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -135,8 +132,7 @@ namespace ProjectPivot
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
         /// </summary>
-        protected override void UnloadContent()
-        {
+        protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
         }
 
@@ -148,13 +144,15 @@ namespace ProjectPivot
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
+#if WINDOWS
             if (Keyboard.GetState().IsKeyDown(Keys.X)) {
                 bloom.Visible = false;
             } else {
                 bloom.Visible = true;
             }
-            //bloom.ShowBuffer++;
+            //bloom.ShowBuffer++
+#endif
 
             base.Update(gameTime);
 
@@ -170,7 +168,9 @@ namespace ProjectPivot
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            bloom.BeginDraw();
+            if (bloom != null) {
+                bloom.BeginDraw();
+            }
             GraphicsDevice.Clear(Color.Black);
 
 			// TODO: Add your drawing code here
