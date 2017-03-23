@@ -4,6 +4,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Entities;
+using ProjectPivot.Pathfinding;
 
 namespace ProjectPivot.Components {
     public class CellBody : Component {
@@ -28,6 +29,7 @@ namespace ProjectPivot.Components {
         public override void Update(GameTime gameTime) {
             if (!health.IsHealthy && Body != null) {
                 ProjectPivot.World.RemoveBody(Body);
+                CellGraph.Current.RegenerateGraphAtCell((Cell) GameObject);
                 Body = null;
             }
         }

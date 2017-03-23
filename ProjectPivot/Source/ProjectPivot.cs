@@ -1,3 +1,5 @@
+#define WINDOWS
+
 using FarseerPhysics.DebugView;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
@@ -22,8 +24,8 @@ namespace ProjectPivot {
         public const bool mapDebugEnabled = false;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 300;
-        public const int mapHeight = 300;
+        public const int mapWidth = 30;
+        public const int mapHeight = 30;
         public const int screenWidth = 1200;
         public const int screenHeight = 800;
 
@@ -89,12 +91,12 @@ namespace ProjectPivot {
             GameObjects.Add(player, true);
 
             Enemy enemy1 = new Enemy(map.RandomHollowCell().Position);
-            Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
-            Enemy enemy3 = new Enemy(map.RandomHollowCell().Position);
+            //Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
+            //Enemy enemy3 = new Enemy(map.RandomHollowCell().Position);
 
             GameObjects.Add(enemy1, true);
-            GameObjects.Add(enemy2, true);
-            GameObjects.Add(enemy3, true);
+            //GameObjects.Add(enemy2, true);
+            //GameObjects.Add(enemy3, true);
 
             Weapon w = Weapons.Build("sniper_rifle");
             player.TakeWeapon(w);

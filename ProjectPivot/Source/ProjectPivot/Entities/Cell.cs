@@ -103,6 +103,10 @@ namespace ProjectPivot.Entities {
             }
         }
 
+        public bool IsNeighbour(Cell cell, bool diagonalOk = true) {
+            return Neighbours(diagonalOk).Contains(cell);
+        } 
+
         public bool TakeDamage(int damage, GameObject source) {
             health.Decrease(damage / 2);
             return true;

@@ -37,6 +37,7 @@ namespace ProjectPivot.Pathfinding {
 
             HashSet<Node<Cell>> closedSet = new HashSet<Node<Cell>>();
             PathfindingPriorityQueue<Node<Cell>> openSet = new PathfindingPriorityQueue<Node<Cell>>();
+            openSet.Enqueue(start, 0);
 
             Dictionary<Node<Cell>, Node<Cell>> cameFrom = new Dictionary<Node<Cell>, Node<Cell>>();
             Dictionary<Node<Cell>, float> gScore = new Dictionary<Node<Cell>, float>();
