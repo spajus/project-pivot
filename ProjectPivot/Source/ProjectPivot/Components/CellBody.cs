@@ -31,6 +31,7 @@ namespace ProjectPivot.Components {
                 ProjectPivot.World.RemoveBody(Body);
                 CellGraph.Current.RegenerateGraphAtCell((Cell) GameObject);
                 Body = null;
+                Map.Current.HollowCells.Add((Cell)GameObject);
             }
         }
     }

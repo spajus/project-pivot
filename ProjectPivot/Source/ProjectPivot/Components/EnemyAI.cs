@@ -13,6 +13,8 @@ namespace ProjectPivot.Components {
         AiVision vision;
         AStar path;
         Map map;
+        float spentInCurrentCell = 0f;
+        Cell currentCell;
 
         Cell targetCell;
         Cell nextCell;
@@ -25,7 +27,27 @@ namespace ProjectPivot.Components {
         }
 
         public override void Update(GameTime gameTime) {
-            Cell currentCell = map.CellAtWorld(GameObject.Position);
+            if (path != null) {
+                foreach (Cell c in path.List()) {
+                    Gizmo.Rectangle(c.Area, Color.Blue);
+                }
+            }
+
+            Cell newCurrentCell = map.CellAtWorld(GameObject.Position);
+            if (currentCell == newCurrentCell) {
+                spentInCurrentCell += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            } else {
+                spentInCurrentCell = 0f;
+                currentCell = newCurrentCell;
+            }
+
+            if (targetCell != null && spentInCurrentCell > 1000f) {
+                Console.WriteLine("Stuck, dropping target");
+                nextCell = null;
+                targetCell = null;
+                spentInCurrentCell = 0f;
+            }
+
             if (targetCell == null) {
                 targetCell = map.RandomHollowCell();
                 Console.WriteLine("Retargeting");
@@ -44,7 +66,7 @@ namespace ProjectPivot.Components {
             if (nextCell == null) {
                 input.Heading = Vector2.Zero;
             } else {
-                if (nextCell == currentCell || nextCell.IsNeighbour(currentCell)) {
+                if (nextCell == currentCell || (nextCell.IsNeighbour(currentCell, true))) {
                     // on to next cell
                     nextCell = null;
                 } else {
