@@ -1,4 +1,4 @@
-#define WINDOWS
+//#define WINDOWS
 
 using FarseerPhysics.DebugView;
 using FarseerPhysics.Dynamics;
@@ -91,11 +91,13 @@ namespace ProjectPivot {
             GameObjects.Add(player, true);
 
             Enemy enemy1 = new Enemy(map.RandomHollowCell().Position);
-            //Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
+            Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
+            enemy1.Target = player;
+            enemy2.Target = player;
             //Enemy enemy3 = new Enemy(map.RandomHollowCell().Position);
 
             GameObjects.Add(enemy1, true);
-            //GameObjects.Add(enemy2, true);
+            GameObjects.Add(enemy2, true);
             //GameObjects.Add(enemy3, true);
 
             Weapon w = Weapons.Build("sniper_rifle");
