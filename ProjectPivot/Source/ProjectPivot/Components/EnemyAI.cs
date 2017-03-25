@@ -57,6 +57,12 @@ namespace ProjectPivot.Components {
             if (rethinkCooldown > 0f) {
                 rethinkCooldown -= gameTime.ElapsedGameTime.Milliseconds;
             }
+
+            if (enemy.Target != null && Vector2.DistanceSquared(
+                enemy.Position, enemy.Target.Position) <= (32 * 32 * 20 * 20)
+                    && enemy.Weapon != null) {
+                enemy.Weapon.Fire(enemy.Target.Position);
+            }
         }
 
         private void updateNearbyStuff() {

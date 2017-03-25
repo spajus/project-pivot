@@ -7,7 +7,6 @@ namespace ProjectPivot.Components {
         public override void Update(GameTime gameTime) {
             //PawnBody.Body.LinearVelocity = Heading * (float) gameTime.ElapsedGameTime.TotalSeconds;
             ApplyVelocity(gameTime, Heading.X, Heading.Y, true, normalize: false);
-            
         }
     }
 }

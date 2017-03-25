@@ -5,7 +5,7 @@ using ProjectPivot.Components;
 namespace ProjectPivot.Entities {
     public class WeaponGraphics : Component {
         private GameObject owner;
-        private PlayerInput input;
+        private PawnInput input;
         public string sprite;
 
         public WeaponGraphics() {
@@ -17,7 +17,7 @@ namespace ProjectPivot.Entities {
         }
         public override void Initialize() {
             owner = ((Weapon) GameObject).Owner;
-            input = owner.GetComponent<PlayerInput>();
+            input = owner.GetComponent<PawnInput>();
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
