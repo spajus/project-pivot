@@ -10,7 +10,7 @@ namespace ProjectPivot.Components {
         public float speed = 100f;
         public PawnBody PawnBody;
         public Weapon Weapon;
-        public Direction direction;
+        public Direction Direction;
         public float Rotation = 0f;
         // 0 deg = 9 o'clock
         public float RotationDeg { get { return MathHelper.ToDegrees(Rotation) + 180; } }

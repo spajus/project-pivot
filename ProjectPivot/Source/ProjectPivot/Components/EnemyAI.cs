@@ -13,6 +13,7 @@ namespace ProjectPivot.Components {
         AiVision vision;
         AStar path;
         Map map;
+        Enemy enemy;
         float spentInCurrentCell = 0f;
         Cell currentCell;
 
@@ -22,6 +23,7 @@ namespace ProjectPivot.Components {
         }
 
         public override void Initialize() {
+            enemy = (Enemy)GameObject;
             map = Map.Current;
             input = GameObject.GetComponent<EnemyInput>();
         }
@@ -49,12 +51,23 @@ namespace ProjectPivot.Components {
             }
 
             if (targetCell == null) {
-                targetCell = map.RandomHollowCell();
+                if (enemy.Target != null) {
+                    targetCell = map.CellAtWorld(enemy.Target.Position);
+
+                    if (currentCell.IsNeighbour(targetCell) || currentCell == targetCell) {
+                        path = null;
+                        return;
+                    }
+                } else {
+                    targetCell = map.RandomHollowCell();
+                }
                 Console.WriteLine("Retargeting");
                 path = new AStar(map, currentCell, targetCell);
             }
             if (nextCell == null) {
-                nextCell = path.Dequeue();
+                if (path != null) {
+                    nextCell = path.Dequeue();
+                }
                 if (nextCell == null) {
                     targetCell = null;
                 }
@@ -70,8 +83,8 @@ namespace ProjectPivot.Components {
                     // on to next cell
                     nextCell = null;
                 } else {
-                    Gizmo.Rectangle(targetCell.Area, Color.Red);
-                    Gizmo.Rectangle(nextCell.Area, Color.Green);
+                    //Gizmo.Rectangle(targetCell.Area, Color.Red);
+                    //Gizmo.Rectangle(nextCell.Area, Color.Green);
                     // position between where we are and where we want to be
                     input.Heading = nextCell.Position - GameObject.Position;
                     input.Heading.Normalize();

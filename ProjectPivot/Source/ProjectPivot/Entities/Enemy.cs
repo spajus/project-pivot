@@ -4,6 +4,7 @@ using ProjectPivot.Components;
 
 namespace ProjectPivot.Entities {
     public class Enemy : GameObject {
+        public GameObject Target;
         public Enemy(Vector2 position) : base(position) {
             AddComponent(new PawnBody());
             AddComponent(new PawnGraphics());
