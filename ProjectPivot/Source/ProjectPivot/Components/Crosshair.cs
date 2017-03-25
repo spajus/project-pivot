@@ -10,6 +10,7 @@ namespace ProjectPivot.Components {
         public Vector2 Position { get; protected set; }
         public Vector2 WorldPosition { get; protected set; }
         public Vector2 spriteCenter = new Vector2(16, 16);
+        public Cell HoverCell;
         private Camera camera;
         public Crosshair() {
 
@@ -23,6 +24,7 @@ namespace ProjectPivot.Components {
             MouseState mouse = Mouse.GetState();
             Position = new Vector2(mouse.Position.X, mouse.Position.Y);
             WorldPosition = Camera.Main.ToWorldCoordinates(Position);
+            HoverCell = Map.Current.CellAtWorld(WorldPosition);
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
@@ -34,8 +36,6 @@ namespace ProjectPivot.Components {
                 Vector2.One / Camera.Main.Zoom,
                 SpriteEffects.None,
                 0f);
-
         }
-
     }
 }

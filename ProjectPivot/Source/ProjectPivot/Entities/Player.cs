@@ -11,10 +11,12 @@ using FarseerPhysics.Dynamics;
 
 namespace ProjectPivot.Entities {
     public class Player : GameObject {
+        public static Player Current;
         public float Speed = 200f;
         public Weapon Weapon { get; protected set; }
         private PlayerInput input;
         private PawnBody body;
+        public Cell CurrentCell;
 
         public Player(Vector2 position) : base(position) {
             AddComponent(new PawnGraphics());
@@ -27,6 +29,10 @@ namespace ProjectPivot.Entities {
             Weapon = weapon;
             weapon.Initialize();
             input.Weapon = weapon;
+        }
+
+        protected override void OnUpdate(GameTime gameTime) {
+            CurrentCell = Map.Current.CellAtWorld(Position);
         }
 
         public override Body PhysicsBody() {

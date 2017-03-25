@@ -125,21 +125,25 @@
 
 #begin Shaders/Shader1.fx
 /importer:EffectImporter
-/processor:PassThroughProcessor
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
 /build:Shaders/Shader1.fx
 
 #begin Shaders/BloomCombine.fx
 /importer:EffectImporter
-/processor:PassThroughProcessor
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
 /build:Shaders/BloomCombine.fx
 
 #begin Shaders/BloomExtract.fx
 /importer:EffectImporter
-/processor:PassThroughProcessor
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
 /build:Shaders/BloomExtract.fx
 
 #begin Shaders/GaussianBlur.fx
 /importer:EffectImporter
-/processor:PassThroughProcessor
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
 /build:Shaders/GaussianBlur.fx
 

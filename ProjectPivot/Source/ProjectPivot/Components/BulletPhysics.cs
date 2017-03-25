@@ -55,10 +55,10 @@ namespace ProjectPivot.Components {
                                    Color.Pink,
                                    1000f,
                                    2f);
+                    GameObject.Destroy();
                 }
                 return hit;
             }
-            //GameObject.Destroy();
             return true;
         }
 

@@ -46,6 +46,17 @@ namespace ProjectPivot.Entities {
             return gameObject;
         }
 
+        public static List<T> Nearby<T>(Vector2 position, float maxDistance) {
+            float hx = position.X + maxDistance;
+            float hy = position.Y + maxDistance;
+            float maxDistanceSquared = maxDistance * maxDistance;
+            List<GameObject> results = gameObjectTree.QueryRange(new AABB(position.X, position.Y, hx, hy));
+            results.AddRange(alwaysUpdated);
+            return results.Where(
+                result => (result is T) && (Vector2.DistanceSquared(position, result.Position) 
+                    <= maxDistanceSquared)).Cast<T>().ToList();
+        }
+
         public static void Initialize(Map map) {
             if (useQuadTree) {
                 gameObjectTree = new QuadTree(map.Boundary);

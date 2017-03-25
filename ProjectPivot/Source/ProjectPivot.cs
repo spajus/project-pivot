@@ -1,4 +1,4 @@
-//#define WINDOWS
+#define WINDOWS
 
 using FarseerPhysics.DebugView;
 using FarseerPhysics.Dynamics;
@@ -24,8 +24,8 @@ namespace ProjectPivot {
         public const bool mapDebugEnabled = false;
         public const bool gizmosEnabled = true;
         public const bool gizmoGridEnabled = false;
-        public const int mapWidth = 30;
-        public const int mapHeight = 30;
+        public const int mapWidth = 100;
+        public const int mapHeight = 100;
         public const int screenWidth = 1200;
         public const int screenHeight = 800;
 
@@ -87,18 +87,13 @@ namespace ProjectPivot {
             Map.Current = map;
             GameObjects.Initialize(map);
             map.Generate();
-            player = new Player(map.RandomHollowCell().Position);
+            Player.Current = player = new Player(map.RandomHollowCell().Position);
             GameObjects.Add(player, true);
 
-            Enemy enemy1 = new Enemy(map.RandomHollowCell().Position);
-            Enemy enemy2 = new Enemy(map.RandomHollowCell().Position);
-            enemy1.Target = player;
-            enemy2.Target = player;
-            //Enemy enemy3 = new Enemy(map.RandomHollowCell().Position);
-
-            GameObjects.Add(enemy1, true);
-            GameObjects.Add(enemy2, true);
-            //GameObjects.Add(enemy3, true);
+            for (int i = 0; i < 20; i++) {
+                Enemy enemy = new Enemy(map.RandomHollowCell().Position);
+                GameObjects.Add(enemy, true);
+            }
 
             Weapon w = Weapons.Build("sniper_rifle");
             player.TakeWeapon(w);

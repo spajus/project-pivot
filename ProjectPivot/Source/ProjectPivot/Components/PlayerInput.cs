@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : PawnInput {
+        private float digCooldownMs = 0f;
+
         public override void Update(GameTime gameTime) {
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
@@ -39,9 +41,28 @@ namespace ProjectPivot.Components {
             ApplyVelocity(gameTime, newX, newY, changed);
 
             changeDirection();
+            dig(mouseState, gameTime);
+        }
+
+        private void dig(MouseState mouseState, GameTime gameTime) {
+            bool canDig = false;
+            if (Camera.Main.Crosshair.HoverCell != null && 
+                ((Player)GameObject).CurrentCell.IsNeighbour(Camera.Main.Crosshair.HoverCell)) {
+                Gizmo.Rectangle(Camera.Main.Crosshair.HoverCell.Area, Color.WhiteSmoke);
+                canDig = true;
+            }
 
             if (mouseState.LeftButton == ButtonState.Pressed) {
                 Weapon.Fire(Camera.Main.Crosshair.WorldPosition);
+            }
+            if (mouseState.RightButton == ButtonState.Pressed) {
+                if (canDig && digCooldownMs <= 0f) {
+                    Camera.Main.Crosshair.HoverCell.TakeDamage(25, GameObject);
+                    digCooldownMs = 250f;
+                }
+            }
+            if (digCooldownMs > 0f) {
+                digCooldownMs -= gameTime.ElapsedGameTime.Milliseconds;
             }
         }
 

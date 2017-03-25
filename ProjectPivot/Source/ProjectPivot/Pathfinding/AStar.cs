@@ -10,6 +10,15 @@ namespace ProjectPivot.Pathfinding {
     public class AStar {
         private Queue<Cell> path;
 
+        public int Length {
+            get {
+                if (path == null) {
+                    return 0;
+                }
+                return path.Count;
+            }
+        }
+
         public AStar(Queue<Cell> path) {
             if (path == null || !path.Any()) {
                 Console.WriteLine("Created path with no cells");
@@ -73,27 +82,19 @@ namespace ProjectPivot.Pathfinding {
                 }
             }
 
-            Console.WriteLine("Burned out through patfhinding without result");
+            // Console.WriteLine("Burned out through patfhinding without result");
         }
 
         public Cell Dequeue() {
             if (path == null) {
-                Console.WriteLine("Trying to dequeue AStar from null queue");
                 return null;
             }
             if (path.Count <= 0) {
-                Console.WriteLine("Trying to dequeue AStar from empty queue");
                 return null;
             }
             return path.Dequeue();
         }
 
-        public int Length() {
-            if (path == null) {
-                return 0;
-            }
-            return path.Count;
-        }
 
         public Cell EndCell() {
             if (path == null || path.Count == 0) {
