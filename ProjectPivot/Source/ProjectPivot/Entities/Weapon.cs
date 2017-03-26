@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectPivot.Utils;
+using ProjectPivot.Components;
 
 namespace ProjectPivot.Entities {
     public class Weapon : GameObject {
@@ -23,6 +24,11 @@ namespace ProjectPivot.Entities {
         protected override void OnUpdate(GameTime gameTime) {
             if (Owner != null) {
                 Position = Owner.Position;
+                if (Owner.GetComponent<PawnInput>().IsMoving) {
+                    Position += new Vector2(
+                        2* (float)Math.Cos(gameTime.TotalGameTime.TotalSeconds * 10),
+                        3*(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 15));
+                    }
                 // todo sway
             }
             if (remainingCooldownTime > 0) {
@@ -36,6 +42,8 @@ namespace ProjectPivot.Entities {
             } else {
                 remainingCooldownTime = CooldownTime;
             }
+
+
 
             Bullet b = new Bullet(Owner, Position, target);
             GameObjects.Add(b, true);

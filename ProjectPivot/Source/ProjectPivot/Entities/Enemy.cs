@@ -34,6 +34,7 @@ namespace ProjectPivot.Entities {
             }
             Health.Decrease(damage);
             if (Health.Value <= 0f) {
+                Weapon.Owner = null;
                 ProjectPivot.World.RemoveBody(PhysicsBody());
                 Destroy();
             }
