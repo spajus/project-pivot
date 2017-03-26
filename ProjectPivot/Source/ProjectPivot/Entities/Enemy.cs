@@ -27,7 +27,10 @@ namespace ProjectPivot.Entities {
 
         public bool TakeDamage(int damage, GameObject source) {
             if (source is Bullet) {
-                Target = ((Bullet)source).Shooter;
+                GameObject shooter = ((Bullet)source).Shooter;
+                if (shooter is Player) {
+                    Target = shooter;
+                }
             }
             Health.Decrease(damage);
             if (Health.Value <= 0f) {

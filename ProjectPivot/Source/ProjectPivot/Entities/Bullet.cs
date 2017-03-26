@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectPivot.Entities {
-    class Bullet : GameObject, Damageable {
+    class Bullet : GameObject {
         private BulletPhysics physics;
         public GameObject Shooter;
         public Bullet(GameObject shooter, Vector2 origin, Vector2 target) : base(origin) {
@@ -19,10 +19,6 @@ namespace ProjectPivot.Entities {
 
         protected override void OnDestroy() {
             ProjectPivot.World.RemoveBody(physics.Body);
-        }
-
-        public bool TakeDamage(int damage, GameObject source) {
-            return false;
         }
     }
 }

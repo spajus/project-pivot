@@ -37,6 +37,8 @@ namespace ProjectPivot.Components {
             Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
             Body.LinearDamping = 1f;
             Body.IgnoreCollisionWith(Shooter.PhysicsBody());
+            Body.CollisionCategories = Category.Cat11;
+            Body.IgnoreCCDWith = Category.Cat11;
             Body.OnCollision += OnCollision;
             Body.UserData = GameObject;
             Vector2 shotForce = (Target - GameObject.Position);

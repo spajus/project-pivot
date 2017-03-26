@@ -50,6 +50,8 @@ namespace ProjectPivot {
         public static Texture2D DebugPixel;
 
         public ProjectPivot() {
+            FarseerPhysics.Settings.ContinuousPhysics = true;
+            FarseerPhysics.Settings.AllowSleep = true;
             World = new World(Vector2.Zero);
 
             if (physicsDebugEnabled) {
