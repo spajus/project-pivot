@@ -69,7 +69,7 @@ namespace ProjectPivot {
             AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_left", 676, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
-            AddRegion(new TextureRegion("tilesheet_pa1", "small_bullet", 196, 308, 22, 22));
+            AddRegion(new TextureRegion("tilesheet_pp", "small_bullet", 25, 89, 14, 14, textureScale: 2));
             AddTexture(content, "crosshair", "Images/crosshair");
 
  //Shader1 = content.Load<Effect>("Shaders/Shader1");
