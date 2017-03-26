@@ -89,8 +89,7 @@ namespace ProjectPivot.Entities {
                 1f,
                 ConvertUnits.ToSimUnits(
                     new Vector2(Boundary.Center.X,
-                                Boundary.Center.Y - worldRect.Height / 2 - 8)),
-                0, BodyType.Static);
+                                Boundary.Center.Y - worldRect.Height / 2 - 8)));
             Body bottomBound = BodyFactory.CreateRectangle(
                 ProjectPivot.World,
                 ConvertUnits.ToSimUnits(worldRect.Width),
@@ -98,8 +97,8 @@ namespace ProjectPivot.Entities {
                 1f,
                 ConvertUnits.ToSimUnits(
                     new Vector2(Boundary.Center.X,
-                                Boundary.Center.Y + worldRect.Height / 2 + 8)),
-                0, BodyType.Static);
+                                Boundary.Center.Y + worldRect.Height / 2 + 8)));
+
             Body leftBound = BodyFactory.CreateRectangle(
                 ProjectPivot.World,
                 ConvertUnits.ToSimUnits(16),
@@ -107,8 +106,7 @@ namespace ProjectPivot.Entities {
                 1f,
                 ConvertUnits.ToSimUnits(
                     new Vector2(Boundary.Center.X - worldRect.Width / 2 - 8,
-                                Boundary.Center.Y)),
-                0, BodyType.Static);
+                                Boundary.Center.Y)));
             Body rightBound = BodyFactory.CreateRectangle(
                 ProjectPivot.World,
                 ConvertUnits.ToSimUnits(16),
@@ -116,13 +114,16 @@ namespace ProjectPivot.Entities {
                 1f,
                 ConvertUnits.ToSimUnits(
                     new Vector2(Boundary.Center.X + worldRect.Width / 2 + 8,
-                                Boundary.Center.Y)),
-                0, BodyType.Static);
+                                Boundary.Center.Y)));
             BulletPassthrough wall = new BulletPassthrough();
             topBound.UserData = wall;
+            topBound.BodyType = BodyType.Static;
             bottomBound.UserData = wall;
+            bottomBound.BodyType = BodyType.Static;
             leftBound.UserData = wall;
+            leftBound.BodyType = BodyType.Static;
             rightBound.UserData = wall;
+            rightBound.BodyType = BodyType.Static;
         }
 
         public void Draw(Camera camera, SpriteBatch spriteBatch) {
