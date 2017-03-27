@@ -11,7 +11,6 @@ namespace ProjectPivot.Components {
     public class EnemyAI : Component {
         EnemyInput input;
         AiMotion motion;
-        AiVision vision;
         AStar path;
         Map map;
         Enemy enemy;

@@ -2,6 +2,7 @@ using System;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Components;
+using ProjectPivot.Components.AI;
 
 namespace ProjectPivot.Entities {
     public class Enemy : GameObject, Damageable {
@@ -10,12 +11,19 @@ namespace ProjectPivot.Entities {
         public Weapon Weapon;
         private EnemyInput input;
         private PawnBody body;
+        public EnemyVision Vision;
+
+        private EnemyState motionState;
+        private EnemyState weaponState;
+
         public Enemy(Vector2 position) : base(position) {
             body = AddComponent<PawnBody>(new PawnBody());
-            AddComponent(new PawnGraphics());
             input = AddComponent<EnemyInput>(new EnemyInput());
-            AddComponent(new EnemyAI());
+            AddComponent(new PawnGraphics());
             Health = AddComponent<Health>(new Health(100));
+            Vision = AddComponent<EnemyVision>(new EnemyVision());
+            //AddComponent(new EnemyAI());
+            motionState = new MotionIdleState(this);
         }
 
         public void TakeWeapon(Weapon weapon) {
@@ -23,6 +31,24 @@ namespace ProjectPivot.Entities {
             Weapon = weapon;
             weapon.Initialize();
             input.Weapon = weapon;
+            weaponState = new WeaponIdleState(this);
+        }
+
+        protected override void OnUpdate(GameTime gameTime) {
+            EnemyState newMotionState = motionState.Update(gameTime);
+            if (newMotionState != motionState) {
+                motionState.Leave(newMotionState);
+                motionState = newMotionState;
+                newMotionState.Enter(motionState);
+            }
+            if (weaponState != null) {
+                EnemyState newWeaponState = weaponState.Update(gameTime);
+                if (newWeaponState != weaponState) {
+                    weaponState.Leave(newWeaponState);
+                    weaponState = newWeaponState;
+                    newWeaponState.Enter(weaponState);
+                }
+            }
         }
 
         public bool TakeDamage(int damage, GameObject source) {
@@ -38,6 +64,8 @@ namespace ProjectPivot.Entities {
                 ProjectPivot.World.RemoveBody(PhysicsBody());
                 Destroy();
             }
+            motionState.TakeDamage(damage, source);
+            weaponState.TakeDamage(damage, source);
             return true;
         }
 

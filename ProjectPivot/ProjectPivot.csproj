@@ -65,7 +65,11 @@
     <Compile Include="Source\FarseerPhysics\DebugViewXNA.cs" />
     <Compile Include="Source\FarseerPhysics\PrimitiveBatch.cs" />
     <Compile Include="Source\ProjectPivot\Components\AI\AiMotion.cs" />
-    <Compile Include="Source\ProjectPivot\Components\AI\AiVision.cs" />
+    <Compile Include="Source\ProjectPivot\Components\EnemyVision.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\EnemyFSM.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\EnemyIdleState.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\EnemyState.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\MotionIdleState.cs" />
     <Compile Include="Source\ProjectPivot\Components\BulletGraphics.cs" />
     <Compile Include="Source\ProjectPivot\Components\BulletPhysics.cs" />
     <Compile Include="Source\ProjectPivot\Components\CellGraphics.cs" />
@@ -144,6 +148,7 @@
     </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />
+    <Compile Include="Source\ProjectPivot\Components\AI\WeaponIdleState.cs" />
     <None Include="x64\libopenal.so.1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
