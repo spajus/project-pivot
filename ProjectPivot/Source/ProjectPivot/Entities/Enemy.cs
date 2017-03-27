@@ -66,6 +66,8 @@ namespace ProjectPivot.Entities {
             }
             motionState.TakeDamage(damage, source);
             weaponState.TakeDamage(damage, source);
+            GameObjects.Add(new BloodSplat(Position));
+            AddComponent(new PawnBlood());
             return true;
         }
 
