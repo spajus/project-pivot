@@ -3,17 +3,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ProjectPivot.Components {
-    public class PawnBlood : Component {
+    public class CellDebris : Component {
         float rotation;
         SpriteEffects sfx;
         string textureName;
-        public float LayerDepth = 0.18f; // just above pawn
+        public float LayerDepth = 0.93f; // just above ground
         public static Random random = new Random();
 
-        public PawnBlood() {
+        public CellDebris() {
             rotation = MathHelper.ToRadians(random.Next(360));
             int texNum = random.Next(1, 4);
-            this.textureName = $"blood_splat{texNum}";
+            this.textureName = $"debris{texNum}";
 
             switch (random.Next(4)) {
                 case 0: { sfx = SpriteEffects.None; break; }

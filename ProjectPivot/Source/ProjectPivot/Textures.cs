@@ -65,6 +65,16 @@ namespace ProjectPivot {
                                         "cell_100",
                                         256, 0, 64, 64, textureScale: 2));
 
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "debris1",
+                                        256, 64, 64, 64, textureScale: 2));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "debris2",
+                                        320, 64, 64, 64, textureScale: 2));
+            AddRegion(new TextureRegion("tilesheet_pp",
+                                        "debris3",
+                                        384, 64, 64, 64, textureScale: 2));
+
 
             AddRegion(new TextureRegion("tilesheet_pa1", "player_down", 602, 226, 38, 38));
             AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));

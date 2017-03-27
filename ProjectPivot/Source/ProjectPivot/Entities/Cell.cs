@@ -108,7 +108,11 @@ namespace ProjectPivot.Entities {
         } 
 
         public bool TakeDamage(int damage, GameObject source) {
+            bool wasHealthy = health.IsHealthy;
             health.Decrease(damage / 2);
+            if (wasHealthy && !health.IsHealthy) {
+                AddComponent(new CellDebris());
+            }
             return true;
         }
     }
