@@ -23,7 +23,7 @@ namespace ProjectPivot.Entities {
             Health = AddComponent<Health>(new Health(100));
             Vision = AddComponent<EnemyVision>(new EnemyVision());
             //AddComponent(new EnemyAI());
-            motionState = new MotionIdleState(this);
+            ChangeMotionState(new MotionIdleState(this));
         }
 
         public void TakeWeapon(Weapon weapon) {
@@ -35,19 +35,28 @@ namespace ProjectPivot.Entities {
         }
 
         protected override void OnUpdate(GameTime gameTime) {
-            EnemyState newMotionState = motionState.Update(gameTime);
+            ChangeMotionState(motionState.Update(gameTime));
+            if (weaponState != null) {
+                ChangeWeaponState(weaponState.Update(gameTime));
+            }
+        }
+
+        public void ChangeMotionState(EnemyState newMotionState) {
             if (newMotionState != motionState) {
-                motionState.Leave(newMotionState);
+                if (motionState != null) {
+                    motionState.Leave(newMotionState);
+                }
                 motionState = newMotionState;
                 newMotionState.Enter(motionState);
             }
-            if (weaponState != null) {
-                EnemyState newWeaponState = weaponState.Update(gameTime);
-                if (newWeaponState != weaponState) {
+        }
+        public void ChangeWeaponState(EnemyState newWeaponState) {
+            if (newWeaponState != weaponState) {
+                if (weaponState != null) {
                     weaponState.Leave(newWeaponState);
-                    weaponState = newWeaponState;
-                    newWeaponState.Enter(weaponState);
                 }
+                weaponState = newWeaponState;
+                newWeaponState.Enter(weaponState);
             }
         }
 
