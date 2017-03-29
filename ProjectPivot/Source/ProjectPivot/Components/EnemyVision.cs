@@ -21,5 +21,10 @@ namespace ProjectPivot.Components {
             }
             updateCooldownMs -= gameTime.ElapsedGameTime.Milliseconds;
         }
+
+        public List<Cell> HealthyCells() {
+            return VisibleObjects.FindAll(c => (c is Cell) && !((Cell)c).IsHealthy)
+                .Cast<Cell>().ToList();
+        }
     }
 }

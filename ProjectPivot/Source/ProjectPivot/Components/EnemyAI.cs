@@ -10,7 +10,6 @@ using System.Collections.Generic;
 namespace ProjectPivot.Components {
     public class EnemyAI : Component {
         EnemyInput input;
-        AiMotion motion;
         AStar path;
         Map map;
         Enemy enemy;

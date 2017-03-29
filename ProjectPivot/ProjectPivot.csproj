@@ -64,10 +64,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\FarseerPhysics\DebugViewXNA.cs" />
     <Compile Include="Source\FarseerPhysics\PrimitiveBatch.cs" />
-    <Compile Include="Source\ProjectPivot\Components\AI\AiMotion.cs" />
     <Compile Include="Source\ProjectPivot\Components\EnemyVision.cs" />
-    <Compile Include="Source\ProjectPivot\Components\AI\EnemyFSM.cs" />
-    <Compile Include="Source\ProjectPivot\Components\AI\EnemyIdleState.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\MotionRoamingState.cs" />
     <Compile Include="Source\ProjectPivot\Components\AI\EnemyState.cs" />
     <Compile Include="Source\ProjectPivot\Components\AI\MotionIdleState.cs" />
     <Compile Include="Source\ProjectPivot\Components\BulletGraphics.cs" />
