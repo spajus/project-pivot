@@ -26,5 +26,9 @@ namespace ProjectPivot.Components {
             return VisibleObjects.FindAll(c => (c is Cell) && !((Cell)c).IsHealthy)
                 .Cast<Cell>().ToList();
         }
+
+        public T FindVisible<T>() {
+            return VisibleObjects.FindAll(c => c is T).Cast<T>().FirstOrDefault();
+        }
     }
 }

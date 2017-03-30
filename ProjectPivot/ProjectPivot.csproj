@@ -64,6 +64,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\FarseerPhysics\DebugViewXNA.cs" />
     <Compile Include="Source\FarseerPhysics\PrimitiveBatch.cs" />
+    <Compile Include="Source\ProjectPivot\Components\AI\WeaponAttackingState.cs" />
     <Compile Include="Source\ProjectPivot\Components\EnemyVision.cs" />
     <Compile Include="Source\ProjectPivot\Components\AI\MotionRoamingState.cs" />
     <Compile Include="Source\ProjectPivot\Components\AI\EnemyState.cs" />
