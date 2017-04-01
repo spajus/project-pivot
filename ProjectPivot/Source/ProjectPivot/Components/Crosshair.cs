@@ -4,6 +4,7 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Entities;
 using ProjectPivot.Utils;
+using FarseerPhysics;
 
 namespace ProjectPivot.Components {
     public class Crosshair : Component {
@@ -25,9 +26,14 @@ namespace ProjectPivot.Components {
             Position = new Vector2(mouse.Position.X, mouse.Position.Y);
             WorldPosition = Camera.Main.ToWorldCoordinates(Position);
             HoverCell = Map.Current.CellAtWorld(WorldPosition);
+            RaycastHit hit = PhysicsTools.RaycastFirst(Player.Current.Position, WorldPosition);
+            if (hit != null) {
+                Gizmo.Line(Player.Current.Position, hit.Point, Color.Azure);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
+
             spriteBatch.Draw(Textures.Texture("crosshair"),
                 WorldPosition,
                 new Rectangle(0, 0, 32, 32),

@@ -6,7 +6,7 @@ using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components {
     public class PawnInput : Component {
-        public const float maxSpeed = 5f;
+        public float maxSpeed = 5f;
         public float speed = 100f;
         public PawnBody PawnBody;
         public Weapon Weapon;

@@ -118,10 +118,12 @@
     <Compile Include="Source\ProjectPivot\Entities\BloodSplat.cs" />
     <Compile Include="Source\ProjectPivot\Components\PawnBlood.cs" />
     <Compile Include="Source\ProjectPivot\Components\CellDebris.cs" />
+    <Compile Include="Source\ProjectPivot\Utils\PhysicsTools.cs" />
+    <Compile Include="Source\ProjectPivot\Utils\RaycastHit.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FarseerPhysics MonoGame, Version=3.5.0.40766, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FarseerPhysics.MonoGame.Unofficial.3.5.0\lib\FarseerPhysics MonoGame.dll</HintPath>
+    <Reference Include="FarseerPhysics.Portable, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FarseerPhysics.Portable.3.5.1\lib\portable-net4+sl4+wp8+win8\FarseerPhysics.Portable.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MonoGame.Framework">
