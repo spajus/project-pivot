@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Utils;
@@ -27,6 +27,7 @@ namespace ProjectPivot.Entities {
             if (lifetimeMillis <= 0) {
                 Destroy();
             }
+            Position += new Vector2(0, -10) * gameTime.ElapsedGameTime.Seconds;
             scale -= (float) gameTime.ElapsedGameTime.TotalSeconds;
         }
 
