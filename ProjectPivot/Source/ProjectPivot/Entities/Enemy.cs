@@ -70,7 +70,7 @@ namespace ProjectPivot.Entities {
             Health.Decrease(damage);
             if (Health.Value <= 0f) {
                 Weapon.Owner = null;
-                ProjectPivot.World.RemoveBody(PhysicsBody());
+                Map.Current.World.RemoveBody(PhysicsBody());
                 Destroy();
             }
             motionState.TakeDamage(damage, source);

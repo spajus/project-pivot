@@ -80,7 +80,7 @@
     <Compile Include="Source\ProjectPivot\Entities\Bullet.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Cell.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObject.cs" />
-    <Compile Include="Source\ProjectPivot.cs" />
+    <Compile Include="Source\ProjectPivotOld.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObjects.cs" />
     <Compile Include="Source\ProjectPivot\Entities\WeaponPrototype.cs" />
@@ -120,6 +120,10 @@
     <Compile Include="Source\ProjectPivot\Components\CellDebris.cs" />
     <Compile Include="Source\ProjectPivot\Utils\PhysicsTools.cs" />
     <Compile Include="Source\ProjectPivot\Utils\RaycastHit.cs" />
+    <Compile Include="Source\ProjectPivot\Screens\GameScreen.cs" />
+    <Compile Include="Source\ProjectPivot.cs" />
+    <Compile Include="Source\ProjectPivot\Screens\BootScreen.cs" />
+    <Compile Include="Source\ProjectPivot\Screens\MainMenuScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FarseerPhysics.Portable, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -202,6 +206,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Source\ProjectPivot\Screens\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

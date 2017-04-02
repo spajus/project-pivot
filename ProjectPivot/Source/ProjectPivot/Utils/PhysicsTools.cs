@@ -3,6 +3,7 @@ using FarseerPhysics;
 using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
+using ProjectPivot.Entities;
 
 namespace ProjectPivot.Utils {
     public static class PhysicsTools {
@@ -24,7 +25,7 @@ namespace ProjectPivot.Utils {
             //     return 1:        don't clip the ray and continue
             from = ConvertUnits.ToSimUnits(from);
             to = ConvertUnits.ToSimUnits(to);
-            ProjectPivot.World.RayCast(cb, from, to);
+            Map.Current.World.RayCast(cb, from, to);
             return hit;
         }
     }

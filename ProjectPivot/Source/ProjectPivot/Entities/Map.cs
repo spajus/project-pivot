@@ -25,6 +25,7 @@ namespace ProjectPivot.Entities {
         private Cell[,] cells;
         public List<Cell> HollowCells = new List<Cell>();
         private Random rand;
+        public World World;
 
 
         public Map(int width, int height, Vector2 offset) {
@@ -35,7 +36,7 @@ namespace ProjectPivot.Entities {
             this.offset = offset;
             Rectangle mapBounds = new Rectangle((int)offset.X - 16, (int) offset.Y - 16, width * 32, height * 32);
             Boundary = new AABB(mapBounds, Color.Brown);
-            if (ProjectPivot.mapDebugEnabled) {
+            if (ProjectPivotOld.mapDebugEnabled) {
                 Gizmo.Rectangle(mapBounds, Color.Violet, true);
                 Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
                 //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
@@ -83,7 +84,7 @@ namespace ProjectPivot.Entities {
         public void CreatePhysicsBounds() {
             Rectangle worldRect = Boundary.ToRectangle();
             Body topBound = BodyFactory.CreateRectangle(
-                ProjectPivot.World,
+                World,
                 ConvertUnits.ToSimUnits(worldRect.Width),
                 ConvertUnits.ToSimUnits(16),
                 1f,
@@ -91,7 +92,7 @@ namespace ProjectPivot.Entities {
                     new Vector2(Boundary.Center.X,
                                 Boundary.Center.Y - worldRect.Height / 2 - 8)));
             Body bottomBound = BodyFactory.CreateRectangle(
-                ProjectPivot.World,
+                World,
                 ConvertUnits.ToSimUnits(worldRect.Width),
                 ConvertUnits.ToSimUnits(16),
                 1f,
@@ -100,7 +101,7 @@ namespace ProjectPivot.Entities {
                                 Boundary.Center.Y + worldRect.Height / 2 + 8)));
 
             Body leftBound = BodyFactory.CreateRectangle(
-                ProjectPivot.World,
+                World,
                 ConvertUnits.ToSimUnits(16),
                 ConvertUnits.ToSimUnits(worldRect.Height + 32),
                 1f,
@@ -108,7 +109,7 @@ namespace ProjectPivot.Entities {
                     new Vector2(Boundary.Center.X - worldRect.Width / 2 - 8,
                                 Boundary.Center.Y)));
             Body rightBound = BodyFactory.CreateRectangle(
-                ProjectPivot.World,
+                World,
                 ConvertUnits.ToSimUnits(16),
                 ConvertUnits.ToSimUnits(worldRect.Height + 32),
                 1f,

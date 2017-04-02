@@ -15,7 +15,7 @@ namespace ProjectPivot.Components {
             this.health = GameObject.GetComponent<Health>();
             if (health.IsHealthy) {
                 this.Body = BodyFactory.CreateRectangle(
-                    ProjectPivot.World,
+                    Map.Current.World,
                     ConvertUnits.ToSimUnits(32),
                     ConvertUnits.ToSimUnits(32),
                     1.0f);
@@ -29,7 +29,7 @@ namespace ProjectPivot.Components {
 
         public override void Update(GameTime gameTime) {
             if (!health.IsHealthy && Body != null) {
-                ProjectPivot.World.RemoveBody(Body);
+                Map.Current.World.RemoveBody(Body);
                 CellGraph.Current.RegenerateGraphAtCell((Cell) GameObject);
                 Body = null;
                 Map.Current.HollowCells.Add((Cell)GameObject);

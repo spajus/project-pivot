@@ -17,7 +17,7 @@ namespace ProjectPivot.Components {
         public Body Body { get; protected set; }
         public override void Initialize() {
             this.Body = BodyFactory.CreateCircle(
-                ProjectPivot.World,
+                Map.Current.World,
                 ConvertUnits.ToSimUnits(15),
                 //ConvertUnits.ToSimUnits(32),
                 1.0f);

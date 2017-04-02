@@ -15,6 +15,8 @@ namespace ProjectPivot.Utils {
         static List<GizmoLine> permalines = new List<GizmoLine>();
         static List<GizmoText> permatexts = new List<GizmoText>();
 
+        const bool enabled = true;
+
         public static void Initialize(GraphicsDevice graphics) {
             Pixel = new Texture2D(graphics, 1, 1, false, SurfaceFormat.Color);
             Pixel.SetData(new[] { Color.White });
@@ -25,7 +27,7 @@ namespace ProjectPivot.Utils {
         }
 
         public static void Line(Vector2 from, Vector2 to, Color color, bool permanent = false) {
-            if (!ProjectPivot.gizmosEnabled) { return; }
+            if (!enabled) { return; }
             if (permanent) {
                 permalines.Add(new GizmoLine(from, to, color));
             } else {
@@ -34,7 +36,7 @@ namespace ProjectPivot.Utils {
         }
 
         public static void Text(string what, Vector2 position, Color color, bool permanent = false) {
-            if (!ProjectPivot.gizmosEnabled) { return; }
+            if (!enabled) { return; }
             if (permanent) {
                 permatexts.Add(new GizmoText(what, position, color));
             } else {
@@ -43,7 +45,7 @@ namespace ProjectPivot.Utils {
         }
 
         public static void Rectangle(Rectangle rect, Color color, bool permanent = false) {
-            if (!ProjectPivot.gizmosEnabled) { return; }
+            if (!enabled) { return; }
             Line(
                 new Vector2(rect.Left, rect.Top),
                 new Vector2(rect.Right, rect.Top), color, permanent);
@@ -59,7 +61,7 @@ namespace ProjectPivot.Utils {
         }
 
         public static void Draw(SpriteBatch spriteBatch, bool grid = true) {
-            if (!ProjectPivot.gizmosEnabled) { return; }
+            if (!enabled) { return; }
             if (grid) {
                 new GizmoText("(X)", Vector2.Zero, Color.WhiteSmoke).Draw(spriteBatch, Font);
                 for (int x = -200 * 32; x < 200 * 32; x += 32) {

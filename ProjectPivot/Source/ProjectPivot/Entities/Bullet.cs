@@ -18,7 +18,7 @@ namespace ProjectPivot.Entities {
         }
 
         protected override void OnDestroy() {
-            ProjectPivot.World.RemoveBody(physics.Body);
+            Map.Current.World.RemoveBody(physics.Body);
         }
     }
 }
