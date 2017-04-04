@@ -58,6 +58,9 @@ namespace ProjectPivot.Entities {
         }
 
         public static void Initialize(Map map) {
+            gameObjects.Clear();
+            alwaysUpdated.Clear();
+            pendingDestruction.Clear();
             if (useQuadTree) {
                 gameObjectTree = new QuadTree(map.Boundary);
             }

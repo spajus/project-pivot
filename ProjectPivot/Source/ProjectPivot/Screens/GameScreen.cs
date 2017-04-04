@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -8,14 +8,16 @@ namespace ProjectPivot.Screens {
     public abstract class GameScreen {
         public static Dictionary<string, GameScreen> Screens = new Dictionary<string, GameScreen>();
         public static GameScreen Current = null;
+        public bool IsActive = false;
 
-        public static void InitializeScreens() {
+        public static void InitializeScreens(GraphicsDevice graphics) {
             // Add all screens here
             Screens.Add("boot", new BootScreen());
             Screens.Add("mainmenu", new MainMenuScreen());
+            Screens.Add("maingame", new MainGameScreen());
 
             foreach (GameScreen screen in Screens.Values) {
-                screen.Initialize();
+                screen.Initialize(graphics);
             }
 
             Current = Screens["boot"];
@@ -33,9 +35,10 @@ namespace ProjectPivot.Screens {
             Current = newScreen;
         }
 
-        public virtual void Enter(GameScreen oldScreen) { }
-        public virtual void Leave(GameScreen newScreen) { }
-        public virtual void Initialize() { }
+        public virtual void Enter(GameScreen oldScreen) { IsActive = true; }
+        public virtual void Leave(GameScreen newScreen) { IsActive = false; }
+        public virtual void ResetState() { }
+        public virtual void Initialize(GraphicsDevice graphics) { }
         public virtual void LoadContent(ContentManager content) { }
         public virtual void UnloadContent() { }
         public virtual GameScreen Update(GameTime gameTime) { return this; }

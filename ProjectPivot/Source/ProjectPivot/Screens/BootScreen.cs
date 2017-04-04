@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Screens {
     public class BootScreen : GameScreen {
@@ -9,7 +10,12 @@ namespace ProjectPivot.Screens {
 
         float screenTimeoutMs = 1000f;
 
+        public override void Initialize(GraphicsDevice graphics) {
+            Gizmo.Initialize(graphics);
+        }
+
         public override void LoadContent(ContentManager content) {
+            Gizmo.LoadContent(content);
             studioScreen = content.Load<Texture2D>("images/gh_studios");
         }
 

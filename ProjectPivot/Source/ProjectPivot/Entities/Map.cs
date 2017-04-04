@@ -43,6 +43,9 @@ namespace ProjectPivot.Entities {
             }
         }
 
+        public Map() {
+        }
+
         public Cell CellAtWorld(Vector2 position) {
             int x = (int) (position.X + 16) / 32;
             int y = (int) (position.Y + 16) / 32;

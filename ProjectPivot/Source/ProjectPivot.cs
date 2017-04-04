@@ -1,11 +1,14 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectPivot.Screens;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot {
     public class ProjectPivot : Game {
 
+        public static ProjectPivot Current;
+        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -13,6 +16,7 @@ namespace ProjectPivot {
         public const int screenHeight = 800;
 
         public ProjectPivot() {
+            Current = this;
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = screenWidth;
             graphics.PreferredBackBufferHeight = screenHeight;
@@ -21,7 +25,7 @@ namespace ProjectPivot {
         }
 
         protected override void Initialize() {
-            GameScreen.InitializeScreens();
+            GameScreen.InitializeScreens(GraphicsDevice);
             base.Initialize();
         }
 
@@ -37,6 +41,7 @@ namespace ProjectPivot {
         }
 
         protected override void Update(GameTime gameTime) {
+            UserInput.Update(gameTime);
             GameScreen newScreen = GameScreen.Current.Update(gameTime);
             if (newScreen != GameScreen.Current) {
                 GameScreen.SwitchTo(newScreen);

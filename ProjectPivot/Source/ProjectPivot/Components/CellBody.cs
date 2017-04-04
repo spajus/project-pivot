@@ -15,7 +15,7 @@ namespace ProjectPivot.Components {
             this.health = GameObject.GetComponent<Health>();
             if (health.IsHealthy) {
                 this.Body = BodyFactory.CreateRectangle(
-                    Map.Current.World,
+                    GameWorld.Current.World,
                     ConvertUnits.ToSimUnits(32),
                     ConvertUnits.ToSimUnits(32),
                     1.0f);
