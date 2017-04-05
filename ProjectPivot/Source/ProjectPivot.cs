@@ -50,7 +50,7 @@ namespace ProjectPivot {
         }
 
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Settings.BACKGROUND_COLOR);
             GameScreen.Current.Draw(gameTime, spriteBatch, GraphicsDevice);
             base.Draw(gameTime);
         }

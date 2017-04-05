@@ -40,6 +40,7 @@ namespace ProjectPivot.Screens {
         }
 
         public override void Enter(GameScreen oldScreen) {
+            Settings.BACKGROUND_COLOR = Color.Black;
             if (!GameWorld.Initialized) {
                 ResetState();
             }
@@ -47,6 +48,8 @@ namespace ProjectPivot.Screens {
         }
 
         public override void Leave(GameScreen newScreen) {
+            Settings.BACKGROUND_COLOR = Color.White;
+            PlayerInput.Enabled = false;
             base.Leave(newScreen);
         }
 

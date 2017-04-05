@@ -16,9 +16,11 @@ namespace ProjectPivot.Pathfinding {
                 for (int y = 0; y < map.Height; y++) {
                     Cell c = map.CellAt(x, y);
 
-                    Node<Cell> n = new Node<Entities.Cell>();
-                    n.Data = c;
-                    Nodes.Add(c, n);
+                    if (c != null) {
+                        Node<Cell> n = new Node<Entities.Cell>();
+                        n.Data = c;
+                        Nodes.Add(c, n);
+                    }
                 }
             }
 

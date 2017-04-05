@@ -26,6 +26,7 @@ namespace ProjectPivot.Entities {
         public List<Cell> HollowCells = new List<Cell>();
         private Random rand;
         public World World;
+        BulletPassthrough wall = new BulletPassthrough();
 
 
         public Map(int width, int height, Vector2 offset) {
@@ -59,18 +60,42 @@ namespace ProjectPivot.Entities {
             return cells[x, y];
         }
 
+        // http://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
+        bool pointInMapEllipse(int x, int y) {
+            float centerX = Width / 2 + offset.X;
+            float centerY = Height / 2 + offset.Y;  
+            return Math.Pow(x - centerX, 2) / Math.Pow(Width / 2, 2) 
+                + Math.Pow(y - centerY, 2) / Math.Pow(Height / 2, 2) <= 1;
+        }
+
         public void Generate() {
             Random rand = new Random();
             SimplexNoise.Seed = (int) rand.Next() * 10000000;
+            Vector2 center = new Vector2(Width / 2, Height / 2);
             float[,] noise = SimplexNoise.Calc2D(Width, Height, 0.04f);
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
-                    int health = (int)((noise[x, y] - 10) / 255 * 100);
-                    cells[x, y] = new Cell(x, y, 32, 32, health, offset);
-                    GameObjects.Add(cells[x, y]);
-                    if (!cells[x, y].IsHealthy) {
-                        HollowCells.Add(cells[x, y]);
+                    if (pointInMapEllipse(x, y)) {
+                        int health = (int)((noise[x, y] - 10) / 255 * 100);
+                        cells[x, y] = new Cell(x, y, 32, 32, health, offset);
+                        GameObjects.Add(cells[x, y]);
+                        if (!cells[x, y].IsHealthy) {
+                            HollowCells.Add(cells[x, y]);
+                        }
+                    } else {
+                        // still let's add a cell body so nothing can go through
+                        Body nullCell = BodyFactory.CreateRectangle(
+                            World,
+                            ConvertUnits.ToSimUnits(32),
+                            ConvertUnits.ToSimUnits(32),
+                            1f);
+                        nullCell.Mass = 1f;
+                        nullCell.Restitution = 0.02f;
+                        nullCell.BodyType = BodyType.Static;
+                        nullCell.UserData = wall;
+                        nullCell.Position = ConvertUnits.ToSimUnits(new Vector2(32 * x, 32 * y) + offset);
                     }
+
                 }
             }
             if (HollowCells.Count == 0) {
@@ -119,7 +144,6 @@ namespace ProjectPivot.Entities {
                 ConvertUnits.ToSimUnits(
                     new Vector2(Boundary.Center.X + worldRect.Width / 2 + 8,
                                 Boundary.Center.Y)));
-            BulletPassthrough wall = new BulletPassthrough();
             topBound.UserData = wall;
             topBound.BodyType = BodyType.Static;
             bottomBound.UserData = wall;

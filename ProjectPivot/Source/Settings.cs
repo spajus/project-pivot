@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot {
     public static class Settings {
+        public static Color BACKGROUND_COLOR = Color.White;
         public static bool PHYSICS_DEBUG = true;
         public static bool DEBUG_GRID = false;
         public static double MIN_PHYSICS_STEP_TIME = 1.0 / 30.0;

@@ -13,11 +13,16 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot.Components {
     public class PlayerInput : PawnInput {
+        public static bool Enabled = false;
         private float digCooldownMs = 0f;
 
         public override void Update(GameTime gameTime) {
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
+            if (!Enabled) {
+                Enabled = true; // Enabled after first skip ( to avoid bullets shooting on menu click)
+                return;
+            }
 			float newX = 0f; //GameObject.Position.X;
 			float newY = 0f; //GameObject.Position.Y;
 			bool changed = false;
