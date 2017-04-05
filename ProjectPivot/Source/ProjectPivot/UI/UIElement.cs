@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 namespace ProjectPivot.UI {
     public class UIElement {
         public event OnClickHandler OnClick;
-        public delegate void OnClickHandler(UIElement element);
+        public delegate bool OnClickHandler(UIElement element);
         public string Id { get; protected set; }
         Color bgColor;
         Rectangle position;
         string text;
+        bool IsHovering = false;
 
         public UIElement(string id, string text, Rectangle position) {
             this.Id = id;
@@ -26,11 +27,18 @@ namespace ProjectPivot.UI {
         public void Update(GameTime gameTime) {
             MouseState mState = Mouse.GetState();
             if (position.Contains(mState.Position)) {
+                if (!IsHovering) {
+                    Sounds.PlayEffect("bleep01", 50f);
+                }
                 bgColor = Color.LightYellow;
                 if (mState.LeftButton == ButtonState.Pressed) {
-                    OnClick(this);
+                    if (OnClick(this)) {
+                        Sounds.PlayEffect("bleep02", 50f);
+                    }
                 }
+                IsHovering = true;
             } else {
+                IsHovering = false;
                 bgColor = Color.LightGray;
             }
         }

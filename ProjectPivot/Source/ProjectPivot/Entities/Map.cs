@@ -13,6 +13,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics;
 using ProjectPivot.Pathfinding;
+using SharpNoise.Modules;
 
 namespace ProjectPivot.Entities {
     public class Map {
@@ -22,17 +23,33 @@ namespace ProjectPivot.Entities {
         public int Height { get; protected set; }
         public AABB Boundary { get; protected set; }
         private Vector2 offset;
-        private Cell[,] cells;
+        private Dictionary<Point, Cell> cells;
         public List<Cell> HollowCells = new List<Cell>();
+
+        internal List<Cell> CellsAroundWorldPoint(Vector2 position, int radius = 15) {
+            int cx = (int) (position.X + 16) / 32;
+            int cy = (int) (position.Y + 16) / 32;
+            List<Cell> result = new List<Cell>();
+            for (int x = cx - radius; x <= cx + radius; x++) {
+                for (int y = cy - radius; y <= cy + radius; y++) {
+                    result.Add(CellAt(x, y));
+                }
+            }
+            return result;
+        }
+
         private Random rand;
         public World World;
+
         BulletPassthrough wall = new BulletPassthrough();
+
+        Perlin noise;
 
 
         public Map(int width, int height, Vector2 offset) {
             Width = width;
             Height = height;
-            cells = new Cell[width, height];
+            cells = new Dictionary<Point, Cell>();
             rand = new Random();
             this.offset = offset;
             Rectangle mapBounds = new Rectangle((int)offset.X - 16, (int) offset.Y - 16, width * 32, height * 32);
@@ -42,9 +59,13 @@ namespace ProjectPivot.Entities {
                 Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
                 //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
             }
-        }
-
-        public Map() {
+            noise = new Perlin {
+                Frequency = 0.073,
+                Persistence = 0.5,
+                Lacunarity = 1,
+                OctaveCount = 1,
+                Quality = SharpNoise.NoiseQuality.Standard
+            };
         }
 
         public Cell CellAtWorld(Vector2 position) {
@@ -54,10 +75,13 @@ namespace ProjectPivot.Entities {
         }
 
         public Cell CellAt(int x, int y) {
-            if (x >= Width || x < 0 || y >= Height || y < 0) {
-                return null;
+            Point p = new Point(x, y);
+            if (cells.ContainsKey(p)) {
+                return cells[p];
+            } else {
+                Cell c = GenerateCellAt(x, y);
+                return c; 
             }
-            return cells[x, y];
         }
 
         // http://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
@@ -68,40 +92,57 @@ namespace ProjectPivot.Entities {
                 + Math.Pow(y - centerY, 2) / Math.Pow(Height / 2, 2) <= 1;
         }
 
+        public void Update(GameTime gameTime) {
+            Rectangle visible = Camera.Main.VisibleArea;
+            for (int x = (visible.X / 32) - 1 ; x <= ((visible.X + visible.Width) / 32) + 1; x++) {
+                for (int y = (visible.Y / 32) - 1; y <= ((visible.Y + visible.Height) / 32) + 1; y++) {
+                    Cell c = CellAt(x, y);
+                    if (c == null) {
+                        c = GenerateCellAt(x, y);
+                    }
+                    if (c != null) {
+                        c.Update(gameTime);
+                    }
+                }
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch) {
+            Rectangle visible = Camera.Main.VisibleArea;
+            for (int x = (visible.X / 32) - 1; x <= ((visible.X + visible.Width) / 32) + 1; x++) {
+                for (int y = (visible.Y / 32) - 1; y <= ((visible.Y + visible.Height) / 32) + 1; y++) {
+                    Cell c = CellAt(x, y);
+                    if (c != null) {
+                        c.Draw(spriteBatch);
+                    }
+                }
+            }
+        }
+
+        public Cell GenerateCellAt(int x, int y) {
+            int health = (int) ((noise.GetValue(x, y, 0) + 1) * 50);
+            Cell c = cells[new Point(x, y)] = new Cell(x, y, 32, 32, health, offset);
+            c.Initialize();
+            if (!c.IsHealthy) {
+                HollowCells.Add(c);
+            }
+            return c;
+        }
+
         public void Generate() {
             Random rand = new Random();
             SimplexNoise.Seed = (int) rand.Next() * 10000000;
             Vector2 center = new Vector2(Width / 2, Height / 2);
-            float[,] noise = SimplexNoise.Calc2D(Width, Height, 0.04f);
+
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
-                    if (pointInMapEllipse(x, y)) {
-                        int health = (int)((noise[x, y] - 10) / 255 * 100);
-                        cells[x, y] = new Cell(x, y, 32, 32, health, offset);
-                        GameObjects.Add(cells[x, y]);
-                        if (!cells[x, y].IsHealthy) {
-                            HollowCells.Add(cells[x, y]);
-                        }
-                    } else {
-                        // still let's add a cell body so nothing can go through
-                        Body nullCell = BodyFactory.CreateRectangle(
-                            World,
-                            ConvertUnits.ToSimUnits(32),
-                            ConvertUnits.ToSimUnits(32),
-                            1f);
-                        nullCell.Mass = 1f;
-                        nullCell.Restitution = 0.02f;
-                        nullCell.BodyType = BodyType.Static;
-                        nullCell.UserData = wall;
-                        nullCell.Position = ConvertUnits.ToSimUnits(new Vector2(32 * x, 32 * y) + offset);
-                    }
-
+                    GenerateCellAt(x, y);
                 }
             }
             if (HollowCells.Count == 0) {
                 throw new Exception("Could not generate map, no hollow cells!");
             }
-            CreatePhysicsBounds();
+            // CreatePhysicsBounds();
             CalculatePathfinding();
         }
 
@@ -152,14 +193,6 @@ namespace ProjectPivot.Entities {
             leftBound.BodyType = BodyType.Static;
             rightBound.UserData = wall;
             rightBound.BodyType = BodyType.Static;
-        }
-
-        public void Draw(Camera camera, SpriteBatch spriteBatch) {
-            foreach (Cell cell in cells) {
-                if (camera.IsVisible(cell.Area)) {
-                    cell.Draw(spriteBatch);
-                }
-            }
         }
 
         public Cell RandomHollowCell() {

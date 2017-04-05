@@ -50,6 +50,10 @@ namespace ProjectPivot.Components {
                           rotation: rotation,
                           sfx: this.sfx);
 
+            if (Settings.DEBUG_CELL_HEALTH) {
+                health.DrawHealth();
+            }
+
             /*
             spriteBatch.Draw(
                 currentTexture(),

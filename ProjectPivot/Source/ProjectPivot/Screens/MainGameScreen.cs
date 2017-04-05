@@ -14,10 +14,13 @@ using ProjectPivot.Utils;
 namespace ProjectPivot.Screens {
     public class MainGameScreen : GameScreen {
 
+        PhysicsDebug physicsDebug;
+
         bool isPaused = false;
 
         public override void Initialize(GraphicsDevice graphics) {
             UserInput.OnKeyPressed += UserInput_OnKeyPressed;
+
         }
 
         private void UserInput_OnKeyPressed(Keys keys) {
@@ -61,12 +64,23 @@ namespace ProjectPivot.Screens {
             // variable time step but never less then 30 Hz
             double frameTime = gameTime.ElapsedGameTime.TotalSeconds;
             GameWorld.Current.World.Step((float)Math.Min(frameTime, Settings.MIN_PHYSICS_STEP_TIME));
-            GameObjects.Update(gameTime);
+            GameWorld.Current.Update(gameTime);
             return base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice) {
 			// TODO: Add your drawing code here
+            // TODO: bloom map
+			spriteBatch.Begin(SpriteSortMode.BackToFront,
+                              BlendState.AlphaBlend,
+                              Settings.SAMPLER_STATE,
+                              DepthStencilState.Default,
+                              RasterizerState.CullNone,
+                              Settings.GLOBAL_SHADER,
+                              Camera.Main.Transform);
+            GameWorld.Current.Map.Draw(spriteBatch);
+            spriteBatch.End();
+
 			spriteBatch.Begin(SpriteSortMode.BackToFront,
                               BlendState.AlphaBlend,
                               Settings.SAMPLER_STATE,
@@ -88,6 +102,16 @@ namespace ProjectPivot.Screens {
             GameObjects.Draw(spriteBatch);
             Gizmo.Draw(spriteBatch, Settings.DEBUG_GRID);
             spriteBatch.End();
+
+            if (Settings.PHYSICS_DEBUG) {
+                if (physicsDebug == null) {
+                    physicsDebug = new PhysicsDebug(GameWorld.Current.World);
+                    physicsDebug.LoadContent(
+                        ProjectPivot.Current.GraphicsDevice, 
+                        ProjectPivot.Current.Content);
+                }
+                physicsDebug.Draw();
+            } 
 
             base.Draw(gameTime, spriteBatch, graphicsDevice);
         }

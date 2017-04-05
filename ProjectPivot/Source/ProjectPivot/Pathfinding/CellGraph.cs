@@ -12,27 +12,32 @@ namespace ProjectPivot.Pathfinding {
 
         public CellGraph(Map map) {
             Nodes = new Dictionary<Cell, Node<Cell>>();
-            for (int x = 0; x < map.Width; x++) {
-                for (int y = 0; y < map.Height; y++) {
-                    Cell c = map.CellAt(x, y);
-
-                    if (c != null) {
-                        Node<Cell> n = new Node<Entities.Cell>();
-                        n.Data = c;
-                        Nodes.Add(c, n);
-                    }
+            foreach (Cell c in map.HollowCells) {
+                if (c != null) {
+                    Node<Cell> n = new Node<Entities.Cell>();
+                    n.Data = c;
+                    Nodes.Add(c, n);
                 }
             }
 
-            foreach (Cell c in Nodes.Keys) {
-                GenerateEdgesByCell(c);
+            for (int i = 0; i < Nodes.Count; i++) {
+                GenerateEdgesByCell(Nodes.ElementAt(i).Key);
             }
+        }
+
+        private Node<Cell> getNodeFor(Cell cell) {
+            if (!Nodes.ContainsKey(cell)) {
+                Node<Cell> n = new Node<Cell>();
+                n.Data = cell;
+                Nodes.Add(cell, n);
+            }
+            return Nodes[cell];
         }
 
         private void GenerateEdgesByCell(Cell cell) {
             if (cell == null) { return; }
 
-            Node<Cell> node = Nodes[cell];
+            Node<Cell> node = getNodeFor(cell);
             List<Edge<Cell>> edges = new List<Edge<Cell>>();
 
             Cell[] neighbours = cell.Neighbours(diagonalOk: true);
@@ -42,7 +47,7 @@ namespace ProjectPivot.Pathfinding {
                     && !cell.IsClippingCorner(neighbours[i])) {
                     Edge<Cell> edge = new Edge<Cell>();
                     edge.Cost = neighbours[i].PathfindingCost;
-                    edge.Node = Nodes[neighbours[i]];
+                    edge.Node = getNodeFor(neighbours[i]);
 
                     edges.Add(edge);
                 }

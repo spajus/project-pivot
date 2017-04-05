@@ -11,6 +11,7 @@ namespace ProjectPivot.Components {
         Enemy enemy;
         float updateCooldownMs = 0f;
         public List<GameObject> VisibleObjects = new List<GameObject>();
+        public List<Cell> VisibleCells = new List<Cell>();
         public override void Initialize() {
             enemy = (Enemy)GameObject;
         }
@@ -19,12 +20,12 @@ namespace ProjectPivot.Components {
                 VisibleObjects = GameObjects.Nearby<GameObject>(enemy.Position, 15f * 32);
                 updateCooldownMs = 500f;
             }
+            VisibleCells = Map.Current.CellsAroundWorldPoint(enemy.Position);
             updateCooldownMs -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public List<Cell> HealthyCells() {
-            return VisibleObjects.FindAll(c => (c is Cell) && !((Cell)c).IsHealthy)
-                .Cast<Cell>().ToList();
+        public List<Cell> HollowCells() {
+            return VisibleCells.FindAll(c => !c.IsHealthy).ToList();
         }
 
         public T FindVisible<T>() {

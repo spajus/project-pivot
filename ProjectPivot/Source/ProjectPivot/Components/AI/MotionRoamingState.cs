@@ -19,7 +19,7 @@ namespace ProjectPivot.Components.AI {
             input = enemy.GetComponent<EnemyInput>();
             input.InMotion = true;
             setCurrentCell();
-            List<Cell> healthyCells = enemy.Vision.HealthyCells();
+            List<Cell> healthyCells = enemy.Vision.HollowCells();
             destination = healthyCells[random.Next(healthyCells.Count)] as Cell;
             AStar path = new AStar(Map.Current, currentCell, destination);
             if (path.Length > 0) {

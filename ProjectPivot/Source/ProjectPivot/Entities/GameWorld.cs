@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Entities {
     public class GameWorld {
         public static GameWorld Current;
-        public int MapWidth = 60;
+        public int MapWidth = 30;
         public int MapHeight = 30;
         public World World;
         public Map Map;
@@ -40,6 +40,12 @@ namespace ProjectPivot.Entities {
             GameObjects.Add(Player.Current.Weapon, true);
 
             Initialized = true;
+        }
+
+        public void Update(GameTime gameTime) {
+            GameWorld.Current.Map.Update(gameTime);
+            EnemySpawn.Update(gameTime);
+            GameObjects.Update(gameTime);
         }
 
         public GameWorld() {

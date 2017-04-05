@@ -16,6 +16,7 @@ namespace ProjectPivot.Screens {
 
         public override void LoadContent(ContentManager content) {
             Gizmo.LoadContent(content);
+            Sounds.LoadContent(content);
             studioScreen = content.Load<Texture2D>("images/gh_studios");
         }
 

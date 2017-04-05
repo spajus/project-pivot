@@ -155,3 +155,15 @@
 /processorParam:TextureFormat=Color
 /build:Images/gh_studios.png
 
+#begin Sounds/bleep01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bleep01.wav
+
+#begin Sounds/bleep02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bleep02.wav
+

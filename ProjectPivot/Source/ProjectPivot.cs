@@ -42,6 +42,7 @@ namespace ProjectPivot {
 
         protected override void Update(GameTime gameTime) {
             UserInput.Update(gameTime);
+            Sounds.Update(gameTime);
             GameScreen newScreen = GameScreen.Current.Update(gameTime);
             if (newScreen != GameScreen.Current) {
                 GameScreen.SwitchTo(newScreen);

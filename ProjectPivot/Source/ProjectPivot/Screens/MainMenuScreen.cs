@@ -45,17 +45,19 @@ namespace ProjectPivot.Screens {
             }
         }
 
-        private void uiClick(UIElement element) {
+        private bool uiClick(UIElement element) {
             switch (element.Id) {
                 case "btnContinue": {
                         if (GameWorld.Initialized) {
                             nextScreen = GameScreen.Screens["maingame"];
+                            return true;
                         }
                         break;
                     }
                 case "btnNewGame": {
                         nextScreen = GameScreen.Screens["maingame"];
                         nextScreen.ResetState();
+                        return true;
                         break;
                     }
                 case "btnExit": {
@@ -64,6 +66,7 @@ namespace ProjectPivot.Screens {
                         break;
                     }
             }
+            return false;
         }
 
         public override GameScreen Update(GameTime gameTime) {
