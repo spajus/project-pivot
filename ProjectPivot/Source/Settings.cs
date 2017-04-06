@@ -19,5 +19,6 @@ namespace ProjectPivot {
         public static double MIN_PHYSICS_STEP_TIME = 1.0 / 30.0;
         public static SamplerState SAMPLER_STATE = SamplerState.PointWrap;
         public static Effect GLOBAL_SHADER = null;
+		public static bool ENABLE_AUDIO = false;
     }
 }
