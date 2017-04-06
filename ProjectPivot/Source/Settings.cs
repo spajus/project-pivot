@@ -10,7 +10,7 @@ namespace ProjectPivot {
     public static class Settings {
         public static Color BACKGROUND_COLOR = Color.White;
 
-        public static bool PHYSICS_DEBUG = true;
+        public static bool PHYSICS_DEBUG = false;
 
         public static bool DEBUG_GRID = false;
         public static bool DEBUG_MAP_BOUNDS = false;

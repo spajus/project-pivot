@@ -15,11 +15,13 @@ namespace ProjectPivot.Screens {
     public class MainGameScreen : GameScreen {
 
         PhysicsDebug physicsDebug;
+        FPSCounter fpsCounter;
 
         bool isPaused = false;
 
         public override void Initialize(GraphicsDevice graphics) {
             UserInput.OnKeyPressed += UserInput_OnKeyPressed;
+            fpsCounter = new FPSCounter();
 
         }
 
@@ -40,6 +42,7 @@ namespace ProjectPivot.Screens {
         public override void LoadContent(ContentManager content) {
             Textures.LoadContent(content);
             CellGraphics.LoadContent(content);
+            fpsCounter.LoadContent(content);
         }
 
         public override void Enter(GameScreen oldScreen) {
@@ -101,6 +104,10 @@ namespace ProjectPivot.Screens {
                               Camera.Main.Transform);
             GameObjects.Draw(spriteBatch);
             Gizmo.Draw(spriteBatch, Settings.DEBUG_GRID);
+
+            fpsCounter.Update(gameTime);
+            fpsCounter.Draw(spriteBatch, Camera.Main);
+
             spriteBatch.End();
 
             if (Settings.PHYSICS_DEBUG) {

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectPivot.Entities;
 using ProjectPivot.Screens;
 using ProjectPivot.Utils;
 
@@ -53,6 +54,7 @@ namespace ProjectPivot {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Settings.BACKGROUND_COLOR);
             GameScreen.Current.Draw(gameTime, spriteBatch, GraphicsDevice);
+
             base.Draw(gameTime);
         }
     }
