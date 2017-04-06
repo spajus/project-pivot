@@ -12,6 +12,10 @@ namespace ProjectPivot.Components {
         public float Value { get; protected set; }
         public bool IsHealthy { get { return Value >= 40; } }
 
+        public static bool IsGameObjectHealthy(float health) {
+            return health >= 40;
+        }
+
         public Health(float value) {
             Value = value;
         }

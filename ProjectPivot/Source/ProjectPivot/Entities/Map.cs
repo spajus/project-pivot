@@ -14,6 +14,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics;
 using ProjectPivot.Pathfinding;
 using SharpNoise.Modules;
+using ProjectPivot.Components;
 
 namespace ProjectPivot.Entities {
     public class Map {
@@ -54,7 +55,7 @@ namespace ProjectPivot.Entities {
             this.offset = offset;
             Rectangle mapBounds = new Rectangle((int)offset.X - 16, (int) offset.Y - 16, width * 32, height * 32);
             Boundary = new AABB(mapBounds, Color.Brown);
-            if (ProjectPivotOld.mapDebugEnabled) {
+            if (Settings.DEBUG_MAP_BOUNDS) {
                 Gizmo.Rectangle(mapBounds, Color.Violet, true);
                 Gizmo.Rectangle(Boundary.ToRectangle(), Color.Brown, true);
                 //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
@@ -68,9 +69,46 @@ namespace ProjectPivot.Entities {
             };
         }
 
+        public float CellHealthAt(int x, int y) {
+            Point p = new Point(x, y);
+            if (cells.ContainsKey(p)) {
+                return cells[p].Health;
+            }
+            return CellHealthFromNoise(x, y);
+            
+        }
+
+        float CellHealthFromNoise(int x, int y) {
+            return (float) ((noise.GetValue(x, y, 0) + 1) * 50);
+        }
+
+        public bool HasUnhealthyNeighbours(Cell cell) {
+            for (int x = cell.MapX - 1; x <= cell.MapX + 1; x += 1) {
+                for (int y = cell.MapY - 1; y <= cell.MapY + 1; y +=1) {
+                    if (!Health.IsGameObjectHealthy(CellHealthAt(x, y))) {
+                        return true;
+                    }
+
+                }
+            }
+            return false;
+        }
+
         public Cell CellAtWorld(Vector2 position) {
-            int x = (int) (position.X + 16) / 32;
-            int y = (int) (position.Y + 16) / 32;
+            int x = 0;
+            int y = 0;
+            if (position.X >= 0) {
+                x = (int) (position.X + 16) / 32;
+            } else {
+                x = (int) (position.X - 16) / 32;
+
+            }
+            if (position.Y >= 0) {
+                y = (int) (position.Y + 16) / 32;
+            } else {
+                y = (int) (position.Y - 16) / 32;
+
+            }
             return CellAt(x, y);
         }
 
@@ -120,7 +158,7 @@ namespace ProjectPivot.Entities {
         }
 
         public Cell GenerateCellAt(int x, int y) {
-            int health = (int) ((noise.GetValue(x, y, 0) + 1) * 50);
+            int health = (int)CellHealthFromNoise(x, y);
             Cell c = cells[new Point(x, y)] = new Cell(x, y, 32, 32, health, offset);
             c.Initialize();
             if (!c.IsHealthy) {
@@ -142,12 +180,6 @@ namespace ProjectPivot.Entities {
             if (HollowCells.Count == 0) {
                 throw new Exception("Could not generate map, no hollow cells!");
             }
-            // CreatePhysicsBounds();
-            CalculatePathfinding();
-        }
-
-        public void CalculatePathfinding() {
-            CellGraph.Current = new CellGraph(this);
         }
 
         public void CreatePhysicsBounds() {

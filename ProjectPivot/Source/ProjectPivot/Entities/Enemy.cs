@@ -3,6 +3,7 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Components;
 using ProjectPivot.Components.AI;
+using ProjectPivot.Pathfinding;
 
 namespace ProjectPivot.Entities {
     public class Enemy : GameObject, Damageable {
@@ -15,6 +16,9 @@ namespace ProjectPivot.Entities {
 
         private EnemyState motionState;
         private EnemyState weaponState;
+
+        public CellGraph CellGraph;
+        public AStar Path;
 
         public Enemy(Vector2 position) : base(position) {
             body = AddComponent<PawnBody>(new PawnBody());

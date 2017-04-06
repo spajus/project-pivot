@@ -10,9 +10,9 @@ namespace ProjectPivot.Pathfinding {
         public Dictionary<Cell, Node<Cell>> Nodes;
         public static CellGraph Current;
 
-        public CellGraph(Map map) {
+        public CellGraph(List<Cell> cells) {
             Nodes = new Dictionary<Cell, Node<Cell>>();
-            foreach (Cell c in map.HollowCells) {
+            foreach (Cell c in cells) {
                 if (c != null) {
                     Node<Cell> n = new Node<Entities.Cell>();
                     n.Data = c;

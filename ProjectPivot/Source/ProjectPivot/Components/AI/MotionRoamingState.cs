@@ -21,7 +21,7 @@ namespace ProjectPivot.Components.AI {
             setCurrentCell();
             List<Cell> healthyCells = enemy.Vision.HollowCells();
             destination = healthyCells[random.Next(healthyCells.Count)] as Cell;
-            AStar path = new AStar(Map.Current, currentCell, destination);
+            AStar path = new AStar(enemy.CellGraph, currentCell, destination);
             if (path.Length > 0) {
                 this.path = path;
             }

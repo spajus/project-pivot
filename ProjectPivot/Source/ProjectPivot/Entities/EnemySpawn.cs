@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Entities {
     public static class EnemySpawn {
         static float nextSpawnCooldownMs = 1000f;
+        static public int EnemyCount = 0;
 
         public static void Update(GameTime gameTime) {
+            if (EnemyCount >= 5) { return; }
             nextSpawnCooldownMs -= gameTime.ElapsedGameTime.Milliseconds;
             if (nextSpawnCooldownMs <= 0f) {
                 Enemy enemy = new Enemy(GameWorld.Current.Map.RandomHollowCell().Position);
@@ -18,6 +20,7 @@ namespace ProjectPivot.Entities {
                 GameObjects.Add(enemy, true);
                 GameObjects.Add(wp, true);
                 nextSpawnCooldownMs = 10000f;
+                EnemyCount += 1;
             }
         }
     }

@@ -20,6 +20,7 @@ namespace ProjectPivot.Entities {
 
         private Health health;
         public bool IsHealthy { get { return health.IsHealthy; } }
+        public float Health { get { return health.Value; } }
 
         public Cell(int mapX, int mapY, int width, int height, int health, Vector2 offset) : 
                 base(position: new Vector2(mapX * width, mapY * height) + offset) {
@@ -84,7 +85,7 @@ namespace ProjectPivot.Entities {
             return false;
         }
 
-        public Cell[] Neighbours(bool diagonalOk = false, bool nullOk = false) {
+        public Cell[] Neighbours(bool diagonalOk = false) {
             Cell[] cells = new Cell[8];
             cells[0] = Map.Current.CellAt(MapX, MapY + 1);
             cells[1] = Map.Current.CellAt(MapX + 1, MapY);
@@ -96,11 +97,7 @@ namespace ProjectPivot.Entities {
                 cells[6] = Map.Current.CellAt(MapX - 1, MapY + 1);
                 cells[7] = Map.Current.CellAt(MapX - 1, MapY - 1);
             }
-            if (nullOk) {
-                return cells;
-            } else {
-                return cells.Where(cell => cell != null).ToArray();
-            }
+            return cells;
         }
 
         public bool IsNeighbour(Cell cell, bool diagonalOk = true) {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Entities;
+using ProjectPivot.Pathfinding;
 
 namespace ProjectPivot.Components {
     public class EnemyVision : Component {
@@ -19,8 +20,11 @@ namespace ProjectPivot.Components {
             if (updateCooldownMs <= 0f) {
                 VisibleObjects = GameObjects.Nearby<GameObject>(enemy.Position, 15f * 32);
                 updateCooldownMs = 500f;
+                VisibleCells = Map.Current.CellsAroundWorldPoint(enemy.Position);
+                if (enemy.CellGraph == null) {
+                    enemy.CellGraph = new CellGraph(VisibleCells);
+                }
             }
-            VisibleCells = Map.Current.CellsAroundWorldPoint(enemy.Position);
             updateCooldownMs -= gameTime.ElapsedGameTime.Milliseconds;
         }
 

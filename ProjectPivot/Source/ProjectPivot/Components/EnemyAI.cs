@@ -120,7 +120,7 @@ namespace ProjectPivot.Components {
             if (enemy.Target == null && nearbyStuff.Contains(Player.Current)) {
                 // check if path is possible to current player
                 Cell playerCell = map.CellAtWorld(Player.Current.Position);
-                AStar ppath = new AStar(Map.Current, currentCell, playerCell);
+                AStar ppath = new AStar(enemy.CellGraph, currentCell, playerCell);
                 if (ppath.Length > 0) {
                     path = ppath;
                     enemy.Target = Player.Current;
@@ -139,7 +139,7 @@ namespace ProjectPivot.Components {
                         // return;
                 }
                 if (path == null) {
-                    path = new AStar(map, currentCell, targetCell);
+                    path = new AStar(enemy.CellGraph, currentCell, targetCell);
                 }
                 if (path.Length == 0) {
                     // oh well

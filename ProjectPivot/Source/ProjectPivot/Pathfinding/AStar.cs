@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Pathfinding {
     public class AStar {
         private Queue<Cell> path;
+        private CellGraph graph;
 
         public int Length {
             get {
@@ -26,12 +27,10 @@ namespace ProjectPivot.Pathfinding {
             this.path = path;
         }
 
-        public AStar(Map map, Cell cellStart, Cell goal) {
+        public AStar(CellGraph cellGraph, Cell cellStart, Cell goal) {
             path = new Queue<Cell>();
-            if (CellGraph.Current == null) {
-                CellGraph.Current = new CellGraph(map);
-            }
-            Dictionary<Cell, Node<Cell>> nodes = CellGraph.Current.Nodes;
+            this.graph = cellGraph;
+            Dictionary<Cell, Node<Cell>> nodes = graph.Nodes;
             if (nodes.ContainsKey(cellStart) == false) {
                 Console.WriteLine("Starting cell is not in AStar CellGraph node list!");
                 return;

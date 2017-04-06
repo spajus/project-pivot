@@ -5,6 +5,8 @@ using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Entities;
 using ProjectPivot.Pathfinding;
+using System.Collections.Generic;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components {
     public class CellBody : Component {
@@ -13,7 +15,18 @@ namespace ProjectPivot.Components {
 
         public override void Initialize() {
             this.health = GameObject.GetComponent<Health>();
-            if (health.IsHealthy) {
+            AddBodyIfNecessary();
+        }
+
+        public void AddBodyIfNecessary() {
+            if (this.Body != null) {
+                return;
+            }
+            if (!health.IsHealthy) {
+                return;
+            }
+
+            if (Map.Current.HasUnhealthyNeighbours((Cell)GameObject)) {
                 this.Body = BodyFactory.CreateRectangle(
                     GameWorld.Current.World,
                     ConvertUnits.ToSimUnits(32),
@@ -24,15 +37,17 @@ namespace ProjectPivot.Components {
                 Body.BodyType = BodyType.Static;
                 Body.Position = ConvertUnits.ToSimUnits(GameObject.Position);
                 Body.UserData = GameObject;
-           }
+            }
         }
 
         public override void Update(GameTime gameTime) {
             if (!health.IsHealthy && Body != null) {
                 Map.Current.World.RemoveBody(Body);
-                CellGraph.Current.RegenerateGraphAtCell((Cell) GameObject);
                 Body = null;
                 Map.Current.HollowCells.Add((Cell)GameObject);
+                foreach (Cell c in ((Cell) GameObject).Neighbours(true)) {
+                    c.GetComponent<CellBody>().AddBodyIfNecessary();
+                }
             }
         }
     }
