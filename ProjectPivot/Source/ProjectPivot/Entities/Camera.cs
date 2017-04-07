@@ -81,6 +81,7 @@ namespace ProjectPivot.Entities {
             Vector2 previousPosition = Position;
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			ReactToUserInput(deltaTime);
+            // 75 - 150
 			zoom = MathHelper.Clamp(zoom, 75, 150);
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
