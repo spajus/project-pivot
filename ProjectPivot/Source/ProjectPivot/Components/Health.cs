@@ -28,7 +28,10 @@ namespace ProjectPivot.Components {
             Value += amount;
         }
         public void Decrease(float amount) {
-            Value -= amount;
+            // Make some objects invinsibruuuu!
+            if (Value < 150) {
+                Value -= amount;
+            }
         }
 
         public void DrawHealth() {
