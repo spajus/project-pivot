@@ -80,7 +80,7 @@ namespace ProjectPivot.Entities {
 
         float CellHealthFromNoise(int x, int y) {
             float distanceWeight = Vector2.DistanceSquared(new Vector2(x, y), new Vector2(Width / 2, Height / 2) + offset) / 100;
-            Console.WriteLine($"{x}:{y} -> {distanceWeight}");
+            // Console.WriteLine($"{x}:{y} -> {distanceWeight}");
             return (float) ((noise.GetValue(x, y, 0) + 1) * 50) + distanceWeight;
         }
 

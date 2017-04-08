@@ -18,6 +18,7 @@ namespace ProjectPivot.Entities {
 
         #region Fields
         private int zoom = 100;
+        private float wantZoom = 100;
         public float Zoom { get { return zoom / 100f; } }
         public Matrix Transform;
         public Matrix InverseTransform { get; protected set; }
@@ -81,8 +82,7 @@ namespace ProjectPivot.Entities {
             Vector2 previousPosition = Position;
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 			ReactToUserInput(deltaTime);
-            // 75 - 150
-			zoom = MathHelper.Clamp(zoom, 75, 150);
+            LerpToZoom(deltaTime);
 			LerpToTarget(deltaTime);
 			WorldPosition = ToWorldCoordinates(Position);
 			VisibleArea = CalculateVisibleArea();
@@ -118,6 +118,24 @@ namespace ProjectPivot.Entities {
             }
         }
 
+        void LerpToZoom(float deltaTime) {
+            // 75 - 150
+            /*
+            float distSquared = Vector2.Distance(Position, Crosshair.WorldPosition);
+            float lerpAmount = (int) 1 / (distSquared / 100f);
+
+            if (lerpAmount < 0.01f) {
+                lerpAmount = 0.01f;
+            } 
+            if (lerpAmount > 1f) {
+                lerpAmount = 1f;
+            }
+            wantZoom = MathHelper.Lerp(75f, 150f, lerpAmount);
+            zoom = (int) MathHelper.Lerp(zoom, wantZoom, deltaTime);
+            */
+            zoom = (int) MathHelper.Clamp(zoom, 75f, 150f);
+
+        }
 		void ReactToUserInput(float deltaTime) {
             mouseState = Mouse.GetState();
             if (mouseState.ScrollWheelValue > prevMouseScrollValue) {
@@ -130,9 +148,10 @@ namespace ProjectPivot.Entities {
         }
 
         void LerpToTarget(float deltaTime) {
-            Vector2 wantPosition = Vector2.Lerp(Target.Position, Crosshair.WorldPosition, 0.3f);
 			if (Target != null) {
-				if (Vector2.DistanceSquared(Position, wantPosition) > 500) {
+                Vector2 wantPosition = Vector2.Lerp(Target.Position, Crosshair.WorldPosition, 0.3f);
+                float distSquared = Vector2.DistanceSquared(Position, wantPosition);
+                if (distSquared > 500) {
 					Position = Vector2.Lerp(Position, wantPosition, deltaTime * cameraSpeed);
                 }
             }
