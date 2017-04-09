@@ -26,9 +26,11 @@ namespace ProjectPivot.Components {
             Position = new Vector2(mouse.Position.X, mouse.Position.Y);
             WorldPosition = Camera.Main.ToWorldCoordinates(Position);
             HoverCell = Map.Current.CellAtWorld(WorldPosition);
-            RaycastHit hit = PhysicsTools.RaycastFirst(Player.Current.Position, WorldPosition);
-            if (hit != null) {
-                Gizmo.Line(Player.Current.Position, hit.Point, Color.Azure);
+            if (Settings.DEBUG_RAYCAST) {
+                RaycastHit hit = PhysicsTools.RaycastFirst(Player.Current.Position, WorldPosition);
+                if (hit != null) {
+                    Gizmo.Line(Player.Current.Position, hit.Point, Color.Azure);
+                }
             }
         }
 

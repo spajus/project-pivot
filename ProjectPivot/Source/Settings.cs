@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -15,10 +15,12 @@ namespace ProjectPivot {
         public static bool DEBUG_GRID = false;
         public static bool DEBUG_MAP_BOUNDS = false;
         public static bool DEBUG_CELL_HEALTH = false;
+        public static bool DEBUG_PAWN_BODY = false;
+        public static bool DEBUG_RAYCAST = false;
 
         public static double MIN_PHYSICS_STEP_TIME = 1.0 / 30.0;
         public static SamplerState SAMPLER_STATE = SamplerState.PointWrap;
-        public static Effect GLOBAL_SHADER = null;
-		public static bool ENABLE_AUDIO = false;
+		public static Effect GLOBAL_SHADER = null;
+		public static bool ENABLE_AUDIO = true;
     }
 }

@@ -62,7 +62,7 @@ namespace ProjectPivot.Entities {
                 }
             }
 
-            Textures.Draw(spriteBatch, "sniper_rifle", GameObject.Position + gunOffset,
+            Textures.Draw(spriteBatch, sprite, GameObject.Position + gunOffset,
                 gunDepth, input.Rotation + gunAngleAdjustment, gunSfx);
         }
     }

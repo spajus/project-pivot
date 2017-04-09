@@ -12,10 +12,10 @@ namespace ProjectPivot.Utils {
         public static Dictionary<string, SoundEffect> Effects = new Dictionary<string, SoundEffect>();
         private static Dictionary<string, float> coolDownsMs = new Dictionary<string, float>();
         public static void LoadContent(ContentManager content) {
-			if (Settings.ENABLE_AUDIO) {
+            if (Settings.ENABLE_AUDIO) {
 				Effects.Add("bleep01", content.Load<SoundEffect>("Sounds/bleep01"));
 				Effects.Add("bleep02", content.Load<SoundEffect>("Sounds/bleep02"));
-			}
+            }
         }
 
         public static void Update(GameTime gameTime) {

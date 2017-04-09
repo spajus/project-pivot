@@ -34,7 +34,9 @@ namespace ProjectPivot.Components {
         public override void Update(GameTime gameTime) {
             Vector2 lastPos = GameObject.Position;
             GameObject.Position = ConvertUnits.ToDisplayUnits(Body.Position);
-                Gizmo.Rectangle(Map.Current.CellAtWorld(GameObject.Position).Area,Color.Aquamarine);
+            if (Settings.DEBUG_PAWN_BODY) {
+                Gizmo.Rectangle(Map.Current.CellAtWorld(GameObject.Position).Area, Color.Aquamarine);
+            }
             if (lastPos != GameObject.Position) {
                 GameObjects.UpdatePosition(GameObject);
             }
