@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components {
     public class CellDebris : Component {
@@ -8,9 +9,9 @@ namespace ProjectPivot.Components {
         SpriteEffects sfx;
         string textureName;
         public float LayerDepth = 0.93f; // just above ground
-        public static Random random = new Random();
 
         public CellDebris() {
+            Random random = Randomizer.Random;
             rotation = MathHelper.ToRadians(random.Next(360));
             int texNum = random.Next(1, 4);
             this.textureName = $"debris{texNum}";

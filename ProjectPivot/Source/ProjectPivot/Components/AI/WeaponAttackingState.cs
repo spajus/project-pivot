@@ -16,7 +16,6 @@ namespace ProjectPivot.Components.AI {
         EnemyInput input;
         const float shootingDistanceSquared = 15 * 32 * 15 * 32;
         float shotCooldownMs = 0f;
-        static Random random = new Random();
         public WeaponAttackingState(Enemy enemy, Player target) : base(enemy) {
             input = enemy.GetComponent<EnemyInput>();
             this.target = target;
@@ -30,6 +29,7 @@ namespace ProjectPivot.Components.AI {
                 input.Rotation = MathHelper.ToRadians(90) - (float)Math.Atan2(toTarget.X, toTarget.Y);
                 if (shotCooldownMs <= 0f) {
                     RaycastHit hit = PhysicsTools.RaycastFirst(enemy.Position, target.Position);
+                    Random random = Randomizer.Random;
                     if (hit != null && hit.Fixture.Body.UserData == target) {
                         // hand shakes
                         Vector2 offset = new Vector2(

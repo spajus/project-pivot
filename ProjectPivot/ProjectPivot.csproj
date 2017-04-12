@@ -106,6 +106,7 @@
     <Compile Include="Source\ProjectPivot\Utils\Gizmo.cs" />
     <Compile Include="Source\ProjectPivot\Utils\PhysicsDebug.cs" />
     <Compile Include="Source\ProjectPivot\Utils\QuadTree.cs" />
+    <Compile Include="Source\ProjectPivot\Utils\Randomizer.cs" />
     <Compile Include="Source\ProjectPivot\Utils\SimplexNoise.cs" />
     <Compile Include="Source\ProjectPivot\Components\CellBody.cs" />
     <Compile Include="Source\ProjectPivot\Components\Crosshair.cs" />

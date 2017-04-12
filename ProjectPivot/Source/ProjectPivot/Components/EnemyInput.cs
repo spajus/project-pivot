@@ -1,15 +1,15 @@
 using System;
 using Microsoft.Xna.Framework;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components {
     public class EnemyInput : PawnInput {
         public Vector2 Heading = Vector2.Zero;
         public bool InMotion = false;
-        static Random random = new Random();
 
         public override void Initialize() {
             base.Initialize();
-            this.maxSpeed = random.Next(300, 500) * 0.01f;
+            this.maxSpeed = Randomizer.Random.Next(300, 500) * 0.01f;
         }
 
         public override void Update(GameTime gameTime) {

@@ -20,7 +20,6 @@ namespace ProjectPivot.Components {
 
         Cell targetCell;
         Cell nextCell;
-        private static Random random = new Random(DateTime.Now.Millisecond);
         public EnemyAI() {
         }
 
@@ -128,7 +127,7 @@ namespace ProjectPivot.Components {
                 } 
             }
             List<GameObject> healthyCells = nearbyStuff.FindAll(c => (c is Cell) && !((Cell)c).IsHealthy) ;
-            return healthyCells[random.Next(healthyCells.Count)] as Cell;
+            return healthyCells[Randomizer.Random.Next(healthyCells.Count)] as Cell;
         }
 
         private void checkTargetCell() {

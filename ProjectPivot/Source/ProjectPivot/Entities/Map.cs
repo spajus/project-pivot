@@ -51,7 +51,7 @@ namespace ProjectPivot.Entities {
             Width = width;
             Height = height;
             cells = new Dictionary<Point, Cell>();
-            rand = new Random();
+            rand = Randomizer.Random;
             this.offset = offset;
             Rectangle mapBounds = new Rectangle((int)offset.X - 16, (int) offset.Y - 16, width * 32, height * 32);
             Boundary = new AABB(mapBounds, Color.Brown);
@@ -61,6 +61,7 @@ namespace ProjectPivot.Entities {
                 //Gizmo.Text("x", Boundary.Center, Color.Brown, true);
             }
             noise = new Perlin {
+                Seed = rand.Next(999999),
                 Frequency = 0.073,
                 Persistence = 0.5,
                 Lacunarity = 1,
@@ -157,6 +158,16 @@ namespace ProjectPivot.Entities {
                     }
                 }
             }
+            renderMiniMap(spriteBatch);
+        }
+
+        void renderMiniMap(SpriteBatch spriteBatch) {
+            List<Cell> cellsAround = CellsAroundWorldPoint(Player.Current.Position, 20);
+            foreach (Cell cell in cellsAround) {
+
+
+
+            }
         }
 
         public Cell GenerateCellAt(int x, int y) {
@@ -170,7 +181,6 @@ namespace ProjectPivot.Entities {
         }
 
         public void Generate() {
-            Random rand = new Random();
             SimplexNoise.Seed = (int) rand.Next() * 10000000;
             Vector2 center = new Vector2(Width / 2, Height / 2);
 

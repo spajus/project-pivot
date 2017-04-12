@@ -57,6 +57,9 @@ namespace ProjectPivot.Components {
                                    Color.Pink,
                                    1000f,
                                    2f);
+
+                    string hitSound = $"shot0{Randomizer.Random.Next(1, 4)}";
+                    Sounds.PlayEffect(hitSound, 25);
                     GameObject.Destroy();
                 }
                 return hit;

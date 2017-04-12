@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ProjectPivot.Pathfinding;
+using ProjectPivot.Utils;
 
 namespace ProjectPivot.Components.AI {
     public class MotionRoamingState : EnemyState {
-        private static Random random = new Random();
         private Cell destination;
         private Cell currentCell;
         private Cell nextCell;
@@ -20,7 +20,7 @@ namespace ProjectPivot.Components.AI {
             input.InMotion = true;
             setCurrentCell();
             List<Cell> healthyCells = enemy.Vision.HollowCells();
-            destination = healthyCells[random.Next(healthyCells.Count)] as Cell;
+            destination = healthyCells[Randomizer.Random.Next(healthyCells.Count)] as Cell;
             AStar path = new AStar(enemy.CellGraph, currentCell, destination);
             if (path.Length > 0) {
                 this.path = path;

@@ -15,6 +15,12 @@ namespace ProjectPivot.Utils {
             if (Settings.ENABLE_AUDIO) {
 				Effects.Add("bleep01", content.Load<SoundEffect>("Sounds/bleep01"));
 				Effects.Add("bleep02", content.Load<SoundEffect>("Sounds/bleep02"));
+				Effects.Add("shot01", content.Load<SoundEffect>("Sounds/shot01"));
+				Effects.Add("shot02", content.Load<SoundEffect>("Sounds/shot02"));
+				Effects.Add("shot03", content.Load<SoundEffect>("Sounds/shot03"));
+				Effects.Add("bullet01", content.Load<SoundEffect>("Sounds/bullet01"));
+				Effects.Add("bullet02", content.Load<SoundEffect>("Sounds/bullet02"));
+				Effects.Add("bullet03", content.Load<SoundEffect>("Sounds/bullet03"));
             }
         }
 

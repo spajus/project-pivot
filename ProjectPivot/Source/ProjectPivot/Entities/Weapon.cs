@@ -43,10 +43,10 @@ namespace ProjectPivot.Entities {
                 remainingCooldownTime = CooldownTime;
             }
 
-
-
             Bullet b = new Bullet(Owner, Position, target);
             GameObjects.Add(b, true);
+            string shotSound = $"bullet0{Randomizer.Random.Next(1, 4)}";
+            Sounds.PlayEffect(shotSound, 25);
         }
     }
 }

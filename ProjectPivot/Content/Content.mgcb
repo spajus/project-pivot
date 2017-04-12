@@ -167,3 +167,39 @@
 /processorParam:Quality=Best
 /build:Sounds/bleep02.wav
 
+#begin Sounds/shot03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/shot03.wav
+
+#begin Sounds/shot02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/shot02.wav
+
+#begin Sounds/shot01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/shot01.wav
+
+#begin Sounds/bullet03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bullet03.wav
+
+#begin Sounds/bullet02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bullet02.wav
+
+#begin Sounds/bullet01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/bullet01.wav
+
