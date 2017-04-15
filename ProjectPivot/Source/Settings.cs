@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,9 @@ namespace ProjectPivot {
         public static Color BACKGROUND_COLOR = Color.White;
 
         public static bool PHYSICS_DEBUG = false;
+
+        public static int MAP_WIDTH = 200;
+        public static int MAP_HEIGHT = 200;
 
         public static bool DEBUG_GRID = false;
         public static bool DEBUG_MAP_BOUNDS = false;

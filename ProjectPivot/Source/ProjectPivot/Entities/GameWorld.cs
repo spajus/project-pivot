@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 namespace ProjectPivot.Entities {
     public class GameWorld {
         public static GameWorld Current;
-        public int MapWidth = 60;
-        public int MapHeight = 60;
         public World World;
         public Map Map;
         public static bool Initialized = false;
@@ -20,7 +18,7 @@ namespace ProjectPivot.Entities {
             FarseerPhysics.Settings.AllowSleep = true;
 
             World = new World(Vector2.Zero);
-            Map = Map.Current = new Map(MapWidth, MapHeight, Vector2.Zero);
+            Map = Map.Current = new Map(Settings.MAP_WIDTH, Settings.MAP_HEIGHT, Vector2.Zero);
             Map.World = World;
 
             GameObjects.Initialize(Map);

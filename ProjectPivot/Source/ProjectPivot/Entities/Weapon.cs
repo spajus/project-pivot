@@ -25,11 +25,11 @@ namespace ProjectPivot.Entities {
             if (Owner != null) {
                 Position = Owner.Position;
                 if (Owner.GetComponent<PawnInput>().IsMoving) {
+                    // Weapon Sway
                     Position += new Vector2(
                         2* (float)Math.Cos(gameTime.TotalGameTime.TotalSeconds * 10),
                         3*(float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 15));
                     }
-                // todo sway
             }
             if (remainingCooldownTime > 0) {
                 remainingCooldownTime -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
