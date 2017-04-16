@@ -1,4 +1,0 @@
-- 32 x 32 tiles
-- random generated map (indoors) - to begin with - empty square with floor and walls
-- camera follow
-- two axis controls (mouse + keyboard) - move around the map
