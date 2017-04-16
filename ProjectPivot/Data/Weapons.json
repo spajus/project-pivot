@@ -9,10 +9,10 @@
     "Children": null,
     "IsMarkedForDestruction": false,
     "QuadTreeBox": {
-      "Center": "26, 116",
-      "HalfDimension": "42, 132",
-      "DhX": 16.0,
-      "DhY": 16.0
+      "Center": "52, 238",
+      "HalfDimension": "84, 264",
+      "DhX": 32.0,
+      "DhY": 32.0
     },
     "X": 10,
     "Y": 100

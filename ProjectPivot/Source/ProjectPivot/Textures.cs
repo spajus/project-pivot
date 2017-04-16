@@ -47,7 +47,6 @@ namespace ProjectPivot {
         public static Effect Shader1;
 
         public static void LoadContent(ContentManager content) {
-            AddAtlas(content, "tilesheet_pa1", "Images/tilesheet_pa1");
             AddAtlas(content, "tilesheet_pp", "Images/tilesheet_pp");
             AddRegion(new TextureRegion("tilesheet_pp",
                                         "cell_00",
@@ -75,18 +74,20 @@ namespace ProjectPivot {
                                         "debris3",
                                         384, 64, 64, 64, textureScale: 2));
 
+            AddRegion(new TextureRegion("tilesheet_pp", "player_down", 0, 128, 64, 64, textureScale: 2));
+            AddRegion(new TextureRegion("tilesheet_pp", "player_up", 64, 128, 64, 64, textureScale: 2));
+            AddRegion(new TextureRegion("tilesheet_pp", "player_left", 128, 128, 64, 64, textureScale: 2));
 
-            AddRegion(new TextureRegion("tilesheet_pa1", "player_down", 602, 226, 38, 38));
-            AddRegion(new TextureRegion("tilesheet_pa1", "player_up", 640, 226, 38, 38));
-            AddRegion(new TextureRegion("tilesheet_pa1", "player_left", 676, 226, 38, 38));
-            AddRegion(new TextureRegion("tilesheet_pa1", "sniper_rifle", 565, 338, 38, 38, 45f));
+            AddRegion(new TextureRegion("tilesheet_pp", "sniper_rifle", 0, 192, 64, 64, 45f, textureScale: 2));
+
+
             AddRegion(new TextureRegion("tilesheet_pp", "small_bullet", 25, 89, 14, 14, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp", "blood_splat1", 64, 64, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp", "blood_splat2", 128, 64, 64, 64, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp", "blood_splat3", 192, 64, 64, 64, textureScale: 2));
             AddTexture(content, "crosshair", "Images/crosshair");
 
- //Shader1 = content.Load<Effect>("Shaders/Shader1");
+            //Shader1 = content.Load<Effect>("Shaders/Shader1");
         }
 
         public static Texture2D Atlas(string name) {
