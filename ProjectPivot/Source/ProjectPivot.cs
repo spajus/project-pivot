@@ -13,14 +13,11 @@ namespace ProjectPivot {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public const int screenWidth = 1200;
-        public const int screenHeight = 800;
-
         public ProjectPivot() {
             Current = this;
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = screenWidth;
-            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = Settings.SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = Settings.SCREEN_HEIGHT;
             Content.RootDirectory = "Content";
             this.IsFixedTimeStep = false;
         }

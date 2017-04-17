@@ -42,7 +42,7 @@ namespace ProjectPivot.Entities {
 
         public void Update(GameTime gameTime) {
             GameWorld.Current.Map.Update(gameTime);
-            //EnemySpawn.Update(gameTime);
+            EnemySpawn.Update(gameTime);
             GameObjects.Update(gameTime);
         }
 

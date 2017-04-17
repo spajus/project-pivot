@@ -10,6 +10,7 @@ using ProjectPivot.Entities;
 using ProjectPivot.Components;
 using Microsoft.Xna.Framework.Input;
 using ProjectPivot.Utils;
+using ProjectPivot.UI;
 
 namespace ProjectPivot.Screens {
     public class MainGameScreen : GameScreen {
@@ -17,12 +18,13 @@ namespace ProjectPivot.Screens {
         PhysicsDebug physicsDebug;
         FPSCounter fpsCounter;
 
+        HealthBar healthBar;
+
         bool isPaused = false;
 
         public override void Initialize(GraphicsDevice graphics) {
             UserInput.OnKeyPressed += UserInput_OnKeyPressed;
             fpsCounter = new FPSCounter();
-
         }
 
         private void UserInput_OnKeyPressed(Keys keys) {
@@ -37,6 +39,8 @@ namespace ProjectPivot.Screens {
         public override void ResetState() {
             GameWorld.Current = new GameWorld();
             GameWorld.Current.Initialize();
+            healthBar = new HealthBar(
+                new Rectangle(10, 10, 200, 20), Player.Current);
         }
 
         public override void LoadContent(ContentManager content) {
@@ -68,7 +72,25 @@ namespace ProjectPivot.Screens {
             double frameTime = gameTime.ElapsedGameTime.TotalSeconds;
             GameWorld.Current.World.Step((float)Math.Min(frameTime, Settings.MIN_PHYSICS_STEP_TIME));
             GameWorld.Current.Update(gameTime);
+            healthBar.Update(gameTime);
             return base.Update(gameTime);
+        }
+
+        public void drawUI(SpriteBatch spriteBatch, GameTime gameTime) {
+			spriteBatch.Begin(SpriteSortMode.BackToFront,
+                              BlendState.AlphaBlend,
+                              Settings.SAMPLER_STATE,
+                              DepthStencilState.Default,
+                              RasterizerState.CullNone,
+                              Settings.GLOBAL_SHADER,
+                              Camera.Main.Transform);
+
+            healthBar.Draw(spriteBatch, Camera.Main);
+
+            fpsCounter.Update(gameTime);
+            fpsCounter.Draw(spriteBatch, Camera.Main);
+
+            spriteBatch.End();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice) {
@@ -105,9 +127,6 @@ namespace ProjectPivot.Screens {
             GameObjects.Draw(spriteBatch);
             Gizmo.Draw(spriteBatch, Settings.DEBUG_GRID);
 
-            fpsCounter.Update(gameTime);
-            fpsCounter.Draw(spriteBatch, Camera.Main);
-
             spriteBatch.End();
 
             if (Settings.PHYSICS_DEBUG) {
@@ -118,7 +137,9 @@ namespace ProjectPivot.Screens {
                         ProjectPivot.Current.Content);
                 }
                 physicsDebug.Draw();
-            } 
+            }
+
+            drawUI(spriteBatch, gameTime); 
 
             base.Draw(gameTime, spriteBatch, graphicsDevice);
         }

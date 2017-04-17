@@ -95,6 +95,7 @@
     <Compile Include="Source\ProjectPivot\Rendering\BloomComponent.cs" />
     <Compile Include="Source\ProjectPivot\Rendering\BloomSettings.cs" />
     <Compile Include="Source\ProjectPivot\Screens\MainGameScreen.cs" />
+    <Compile Include="Source\ProjectPivot\UI\HealthBar.cs" />
     <Compile Include="Source\ProjectPivot\UI\UIElement.cs" />
     <Compile Include="Source\ProjectPivot\Utils\AABB.cs" />
     <Compile Include="Source\ProjectPivot\Utils\Direction.cs" />

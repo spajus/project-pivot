@@ -34,16 +34,17 @@ namespace ProjectPivot.Utils {
         }
         
         public void Draw(SpriteBatch spriteBatch, Camera camera) {
+            Vector2 position = Settings.DEBUG_POSITION;
             var fps = string.Format("FPS: {0}", Math.Round(AverageFPS));
             Vector2 bgSize = font.MeasureString(fps);
             spriteBatch.Draw(Gizmo.Pixel,
-                camera.ToWorldCoordinates(new Vector2(1, 1)),
+                camera.ToWorldCoordinates(position),
                 new Rectangle(0, 0, (int) bgSize.X, (int) bgSize.Y), 
                Color.Black, 0f, Vector2.Zero, Vector2.One / Camera.Main.Zoom, 
                SpriteEffects.None, 0.1f);
             spriteBatch.DrawString(
                 font, fps, 
-                camera.ToWorldCoordinates(new Vector2(1, 1)), 
+                camera.ToWorldCoordinates(position), 
                 Color.Green, 0f, Vector2.Zero, 
                 Vector2.One / Camera.Main.Zoom, SpriteEffects.None, 0);
         }

@@ -27,6 +27,7 @@ namespace ProjectPivot.Entities {
         public AABB VisibleAreaAABB { get {
                 return new AABB(EnlargeRect(VisibleArea, 32), Color.YellowGreen);}
         }
+
         public float Rotation;
         private Viewport viewport;
         private MouseState mouseState;
@@ -74,6 +75,10 @@ namespace ProjectPivot.Entities {
             return Vector2.Transform(screenPosition, InverseTransform);
         }
 
+        public Rectangle ToWorldRectangle(Rectangle mapRect) {
+            Vector2 screenPos = ToWorldCoordinates(mapRect.X, mapRect.Y);
+            return new Rectangle((int) screenPos.X, (int) screenPos.Y, mapRect.Width, mapRect.Height);
+        }
         #endregion
 
         #region Protected Functions

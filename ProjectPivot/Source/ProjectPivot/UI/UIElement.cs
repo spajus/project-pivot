@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectPivot.Entities;
 using ProjectPivot.Utils;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace ProjectPivot.UI {
         public event OnClickHandler OnClick;
         public delegate bool OnClickHandler(UIElement element);
         public string Id { get; protected set; }
-        Color bgColor;
-        Rectangle position;
+        protected Color bgColor;
+        protected Rectangle position;
         string text;
         bool IsHovering = false;
 
@@ -24,7 +25,7 @@ namespace ProjectPivot.UI {
             this.position = position;
         }
 
-        public void Update(GameTime gameTime) {
+        public virtual void Update(GameTime gameTime) {
             MouseState mState = Mouse.GetState();
             if (position.Contains(mState.Position)) {
                 if (!IsHovering) {

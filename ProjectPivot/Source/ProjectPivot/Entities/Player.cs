@@ -44,6 +44,8 @@ namespace ProjectPivot.Entities {
 
         public bool TakeDamage(int damage, GameObject source) {
             health.Decrease(damage);
+            GameObjects.Add(new BloodSplat(Position));
+            AddComponent(new PawnBlood());
             if (health.Value <= 0f) {
                 //Destroy();
             }

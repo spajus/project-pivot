@@ -114,7 +114,7 @@ namespace ProjectPivot.Entities {
                     visibleObject.Draw(spriteBatch);
                 }
             }
-            if (true) {
+            if (Settings.DEBUG_GAME_OBJECTS) {
                 Gizmo.Text(
                     $"Visible objects: {visibleObjects.Count}",
                     Camera.Main.ToWorldCoordinates(new Vector2(0, 40)), Color.White);

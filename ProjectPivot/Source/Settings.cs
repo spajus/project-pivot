@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace ProjectPivot {
     public static class Settings {
+
+        public const int SCREEN_WIDTH = 1200;
+        public const int SCREEN_HEIGHT = 800;
+
+        public static Vector2 DEBUG_POSITION = new Vector2(Settings.SCREEN_WIDTH - 200, 0);
+
         public static Color BACKGROUND_COLOR = Color.White;
 
         public static bool PHYSICS_DEBUG = false;
@@ -20,6 +26,7 @@ namespace ProjectPivot {
         public static bool DEBUG_CELL_HEALTH = false;
         public static bool DEBUG_PAWN_BODY = false;
         public static bool DEBUG_RAYCAST = false;
+        public static bool DEBUG_GAME_OBJECTS = false;
 
         public static double MIN_PHYSICS_STEP_TIME = 1.0 / 30.0;
         public static SamplerState SAMPLER_STATE = SamplerState.PointWrap;
