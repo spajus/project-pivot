@@ -77,8 +77,8 @@ namespace ProjectPivot.Screens {
         }
 
         public void drawUI(SpriteBatch spriteBatch, GameTime gameTime) {
-			spriteBatch.Begin(SpriteSortMode.BackToFront,
-                              BlendState.AlphaBlend,
+            spriteBatch.Begin(SpriteSortMode.BackToFront,
+                              BlendState.Opaque,
                               Settings.SAMPLER_STATE,
                               DepthStencilState.Default,
                               RasterizerState.CullNone,

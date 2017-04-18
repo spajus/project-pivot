@@ -44,15 +44,15 @@ namespace ProjectPivot.UI {
             spriteBatch.Draw(Gizmo.Pixel, 
                 camera.ToWorldCoordinates(position.X, position.Y), 
                 new Rectangle(0, 0, position.Width, position.Height),
-                Color.Black, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 1f);
+                Color.Black, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 0.9998f);
             spriteBatch.Draw(Gizmo.Pixel, 
                 camera.ToWorldCoordinates(damageRect.X, damageRect.Y), 
                 new Rectangle(0, 0, damageRect.Width, damageRect.Height),
-                Color.Red, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 0.95f);
+                Color.Red, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 0.9997f);
             spriteBatch.Draw(Gizmo.Pixel, 
                 camera.ToWorldCoordinates(healthRect.X, healthRect.Y), 
                 new Rectangle(0, 0, healthRect.Width, healthRect.Height),
-                Color.Green, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 0.90f);
+                Color.Green, 0f, Vector2.Zero, Vector2.One / camera.Zoom, SpriteEffects.None, 0.9996f);
         }
     }
 }

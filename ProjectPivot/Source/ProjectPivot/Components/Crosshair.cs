@@ -35,7 +35,6 @@ namespace ProjectPivot.Components {
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
-
             spriteBatch.Draw(Textures.Texture("crosshair"),
                 WorldPosition,
                 new Rectangle(0, 0, 32, 32),

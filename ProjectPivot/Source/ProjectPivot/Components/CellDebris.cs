@@ -8,7 +8,7 @@ namespace ProjectPivot.Components {
         float rotation;
         SpriteEffects sfx;
         string textureName;
-        public float LayerDepth = 0.93f; // just above ground
+        public float LayerDepth = 0.99999f; // just above ground
 
         public CellDebris() {
             Random random = Randomizer.Random;
