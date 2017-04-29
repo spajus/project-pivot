@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjectPivot.Entities.Items;
 
 namespace ProjectPivot.Entities {
     public class GameWorld {
@@ -33,9 +34,12 @@ namespace ProjectPivot.Entities {
             GameObjects.Add(Camera.Main, true);
 
             Weapons.Initialize();
+            ItemFactory.Initialize();
             Player.Current.TakeWeapon(Weapons.Build("sniper_rifle"));
-
             GameObjects.Add(Player.Current.Weapon, true);
+
+            Item rock = ItemFactory.Build("rock", Player.Current.Position + new Vector2(40, 50));
+            GameObjects.Add(rock);
 
             Initialized = true;
         }
