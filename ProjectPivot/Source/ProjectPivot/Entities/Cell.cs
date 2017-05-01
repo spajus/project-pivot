@@ -39,7 +39,7 @@ namespace ProjectPivot.Entities {
         }
 
         protected override void OnUpdate(GameTime gameTime) {
-            if (ProjectPivotOld.cellsDebugEnabled) {
+            if (Settings.DEBUG_CELLS) {
                 Rectangle xhrect = new Rectangle(
                     Camera.Main.Crosshair.WorldPosition.ToPoint(), new Point(1, 1));
                 if (Area.Intersects(xhrect)) {

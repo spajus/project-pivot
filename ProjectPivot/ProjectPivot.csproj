@@ -81,11 +81,9 @@
     <Compile Include="Source\ProjectPivot\Entities\Cell.cs" />
     <Compile Include="Source\ProjectPivot\Entities\EnemySpawn.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObject.cs" />
-    <Compile Include="Source\ProjectPivotOld.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameObjects.cs" />
     <Compile Include="Source\ProjectPivot\Entities\GameWorld.cs" />
-    <Compile Include="Source\ProjectPivot\Entities\WeaponPrototype.cs" />
     <Compile Include="Source\ProjectPivot\Entities\Weapons.cs" />
     <Compile Include="Source\ProjectPivot\Pathfinding\AStar.cs" />
     <Compile Include="Source\ProjectPivot\Pathfinding\CellGraph.cs" />
@@ -231,10 +229,7 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Source\ProjectPivot\Entities\Items\" />
-    <Folder Include="Source\ProjectPivot\Components\Items\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

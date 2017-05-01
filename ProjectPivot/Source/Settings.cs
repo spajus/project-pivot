@@ -24,6 +24,7 @@ namespace ProjectPivot {
         public static bool DEBUG_GRID = false;
         public static bool DEBUG_MAP_BOUNDS = false;
         public static bool DEBUG_CELL_HEALTH = false;
+        public static bool DEBUG_CELLS = false;
         public static bool DEBUG_PAWN_BODY = false;
         public static bool DEBUG_RAYCAST = false;
         public static bool DEBUG_GAME_OBJECTS = false;
