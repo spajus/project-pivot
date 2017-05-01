@@ -2,5 +2,9 @@
   "rock": {
     "Id": "rock",
     "Name": "Rock debris"
+  },
+  "grass": {
+    "Id": "grass",
+    "Name": "Grass"
   }
 }

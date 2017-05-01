@@ -18,6 +18,8 @@ namespace ProjectPivot.Entities {
             FarseerPhysics.Settings.ContinuousPhysics = true;
             FarseerPhysics.Settings.AllowSleep = true;
 
+            ItemFactory.Initialize();
+
             World = new World(Vector2.Zero);
             Map = Map.Current = new Map(Settings.MAP_WIDTH, Settings.MAP_HEIGHT, Vector2.Zero);
             Map.World = World;
@@ -34,7 +36,6 @@ namespace ProjectPivot.Entities {
             GameObjects.Add(Camera.Main, true);
 
             Weapons.Initialize();
-            ItemFactory.Initialize();
             Player.Current.TakeWeapon(Weapons.Build("sniper_rifle"));
             GameObjects.Add(Player.Current.Weapon, true);
 

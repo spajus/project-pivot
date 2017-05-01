@@ -82,6 +82,7 @@ namespace ProjectPivot {
 
             // Items row, starts with Y=256
             AddRegion(new TextureRegion("tilesheet_pp", "items/rock", 0, 256, 64, 64, 0, textureScale: 2));
+            AddRegion(new TextureRegion("tilesheet_pp", "items/grass", 64, 256, 64, 64, 0, textureScale: 2));
 
             AddRegion(new TextureRegion("tilesheet_pp", "small_bullet", 25, 89, 14, 14, textureScale: 2));
             AddRegion(new TextureRegion("tilesheet_pp", "blood_splat1", 64, 64, 64, 64, textureScale: 2));

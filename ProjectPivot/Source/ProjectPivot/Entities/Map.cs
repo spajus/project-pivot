@@ -15,6 +15,7 @@ using FarseerPhysics;
 using ProjectPivot.Pathfinding;
 using SharpNoise.Modules;
 using ProjectPivot.Components;
+using ProjectPivot.Entities.Items;
 
 namespace ProjectPivot.Entities {
     public class Map {
@@ -165,8 +166,6 @@ namespace ProjectPivot.Entities {
             List<Cell> cellsAround = CellsAroundWorldPoint(Player.Current.Position, 20);
             foreach (Cell cell in cellsAround) {
 
-
-
             }
         }
 
@@ -176,6 +175,9 @@ namespace ProjectPivot.Entities {
             c.Initialize();
             if (!c.IsHealthy) {
                 HollowCells.Add(c);
+                if (health < 30 && health > 20) {
+                    GameObjects.Add(ItemFactory.Build("grass", c.Position));
+                }
             }
             return c;
         }
