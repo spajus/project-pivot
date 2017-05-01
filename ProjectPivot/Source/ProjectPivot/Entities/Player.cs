@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FarseerPhysics.Dynamics;
+using ProjectPivot.Components.Items;
 
 namespace ProjectPivot.Entities {
     public class Player : GameObject, Damageable {
@@ -16,6 +17,7 @@ namespace ProjectPivot.Entities {
         public Weapon Weapon { get; protected set; }
         private PlayerInput input;
         private PawnBody body;
+        public Inventory Inventory { get; protected set; }
         public Cell CurrentCell;
         Health health;
 
@@ -24,7 +26,7 @@ namespace ProjectPivot.Entities {
             body = AddComponent<PawnBody>(new PawnBody());
             input = AddComponent<PlayerInput>(new PlayerInput()); //must go after body
             health = AddComponent<Health>(new Health(100f));
-
+            Inventory = AddComponent<Inventory>(new Inventory());
         }
 
         public void TakeWeapon(Weapon weapon) {
